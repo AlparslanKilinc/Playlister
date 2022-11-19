@@ -7,13 +7,6 @@ import IconButton from '@mui/material/IconButton';
 import ListItem from '@mui/material/ListItem';
 import TextField from '@mui/material/TextField';
 
-/*
-    This is a card in our list of top 5 lists. It lets select
-    a list for editing and it has controls for changing its 
-    name or deleting it.
-    
-    @author McKilla Gorilla
-*/
 function ListCard(props) {
     const { store } = useContext(GlobalStoreContext);
     const [editActive, setEditActive] = useState(false);
@@ -49,8 +42,6 @@ function ListCard(props) {
 
     async function handleDeleteList(event, id) {
         event.stopPropagation();
-        // let _id = event.target.id;
-        // _id = ("" + _id).substring("delete-list-".length);
         store.markListForDeletion(id);
     }
 
@@ -65,20 +56,12 @@ function ListCard(props) {
         setText(event.target.value);
     }
 
-    // let selectClass = "unselected-list-card";
-    // if (selected) {
-    //     selectClass = "selected-list-card";
-    // }
-    // let cardStatus = false;
-    // if (store.isListNameEditActive) {
-    //     cardStatus = true;
-    // }
     let cardElement =
         <ListItem
             id={idNamePair._id}
             key={idNamePair._id}
-            sx={{ marginTop: '15px', display: 'flex', p: 1 }}
-            style={{ width: '100%', fontSize: '48pt' }}
+            sx={{ marginTop: '15px', display: 'flex', p: 1 ,}}
+            style={{borderRadius:'20px',backgroundColor:'#eeeedd',width: '100%', fontSize: '48pt' }}
             button
             onClick={(event) => {
                 handleLoadList(event, idNamePair._id)

@@ -3,13 +3,13 @@ import Typography from '@mui/material/Typography';
 
 export default function Copyright(props) {
     return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
+        <Typography variant="h6" color="black" align="center" {...props}>
             {'Copyright © '}
-            <Link color="inherit" href="/">
-                Playlister
+            <Link underline="none" style={{color:'black'}} href="/">
+                Alparslan Kilinc
             </Link>{' '}
             {new Date().getFullYear()}
-            {'.'}
+            {''}
         </Typography>
     );
 }

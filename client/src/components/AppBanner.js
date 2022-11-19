@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom'
 import AuthContext from '../auth';
 import { GlobalStoreContext } from '../store'
 
+import YouTubeIcon from '@mui/icons-material/YouTube';
 import EditToolbar from './EditToolbar'
-
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -31,7 +31,11 @@ export default function AppBanner() {
     const handleLogout = () => {
         handleMenuClose();
         auth.logoutUser();
-        store.clearTransaction();
+        store.closeCurrentList();
+    }
+
+    const handleCloseList = () => {
+        store.closeCurrentList();
     }
 
     const menuId = 'primary-search-account-menu';
@@ -93,19 +97,24 @@ export default function AppBanner() {
     }
 
     return (
-        <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
+        <Box>
+            <AppBar style={{backgroundColor:"#071935"}} position="static">
                 <Toolbar>
-                    <Typography                        
-                        variant="h4"
+                 
+                        <Link style={{  display:'flex' , alignItems:'center', textDecoration: 'none', color: 'white' }} to='/' onClick={handleCloseList}>
+                            <YouTubeIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+                            <Typography                        
+                        variant="h6"
                         noWrap
                         component="div"
                         sx={{ display: { xs: 'none', sm: 'block' } }}                        
                     >
-                        <Link onClick={()=>store.clearTransaction()} style={{ textDecoration: 'none', color: 'white' }} to='/'>⌂</Link>
+                       Playlister
                     </Typography>
+                        </Link>
+                 
                     <Box sx={{ flexGrow: 1 }}>{editToolbar}</Box>
-                    <Box sx={{  display: { xs: 'none', md: 'flex' } }}>
+                    <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                         <IconButton
                             size="large"
                             edge="end"
@@ -119,7 +128,6 @@ export default function AppBanner() {
                         </IconButton>
                     </Box>
                 </Toolbar>
-            
             </AppBar>
             {
                 menu
