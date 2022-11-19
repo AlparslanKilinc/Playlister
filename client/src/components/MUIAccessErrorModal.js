@@ -1,0 +1,37 @@
+
+import { useContext } from 'react'
+import * as React from 'react';
+import { AlertTitle ,Typography, Button,Modal,Alert,Box } from '@mui/material';
+import { useHistory } from 'react-router-dom'
+import { GlobalStoreContext } from '../store/index.js'
+
+
+export default function MUIAccessErrorModal() {
+  const history = useHistory();
+  const { store } = useContext(GlobalStoreContext);
+
+
+  let handleClose = ()=>{
+    history.push("/");
+  }
+
+return(
+    <Modal
+        id='error-style'
+        open={store.isAccessErrorModalOpen()}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box>
+          <Alert severity ="warning">
+            <AlertTitle>Error</AlertTitle>
+            <div id='alert-style'> 
+            <Typography component="h1" variant="h5"> {store.message} </Typography>
+            <Button onClick={()=>handleClose()}variant="outlined" color="error">Close</Button>
+            </div>
+          </Alert>
+        </Box>
+      </Modal>
+
+  );
+}
