@@ -24,6 +24,8 @@ const HomeScreen = () => {
     function handleCreateNewList() {
         store.createNewList();
     }
+
+    
     let Lists = "";
     if (store) {
         Lists = 
