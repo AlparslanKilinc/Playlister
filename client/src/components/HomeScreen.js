@@ -10,11 +10,24 @@ import AppTools from './AppTools';
 import { ButtonGroup } from '@mui/material';
 import Button from '@mui/material/Button';
 import { VideoPlayer } from './VideoPlayer';
+import { Comments } from './Comments';
+import { ThemeProvider } from '@emotion/react';
+import { createTheme } from '@mui/material/styles';
 
 const HomeScreen = () => {
+    
+    const theme = createTheme({
+        palette: {
+          primary: {
+            main: '#071935',
+            darker: '#1565c0',
+          },
+        },
+      });
     const { store } = useContext(GlobalStoreContext);
-    const [selection, setSelection] = useState(0);
-    const [variant, setVariant] = useState(0);
+    const [selection, setSelection] = useState(<VideoPlayer/>);
+    const [playerVariant, setPlayerVariant] = useState("outlined");
+    const [commentsVariant, setCommentsVariant] = useState("contained");
 
     useEffect(() => {
         store.loadIdNamePairs();
@@ -25,7 +38,19 @@ const HomeScreen = () => {
         store.createNewList();
     }
 
-    
+    let toggleSelection = ()=>{
+        if(playerVariant==="outlined"){
+            setPlayerVariant("contained");
+            setCommentsVariant("outlined");
+            setSelection(<Comments/>);
+        }else{
+            setPlayerVariant("outlined");
+            setCommentsVariant("contained");
+            setSelection(<VideoPlayer/>);
+        }
+    }
+
+    //// Home Screen Loading 
     let Lists = "";
     if (store) {
         Lists = 
@@ -56,9 +81,7 @@ const HomeScreen = () => {
             }
             </List>;
     }
-
-    /// Selection 
-    let interaction = <VideoPlayer/>
+    //// Home Screen Loading END
     
     return (
         <div id="home-screen">
@@ -69,10 +92,12 @@ const HomeScreen = () => {
                 </div>
                 <div className='player-comments'>
                 <ButtonGroup className='buttonGroup'>
-                    <Button style={{border:'black solid 1px' , color:'#071935'}} variant="outlined" >Player</Button>
-                    <Button style={{backgroundColor:'#071935',color:'white'}} variant="contained">Comments</Button>
+                <ThemeProvider theme={theme}>
+                    <Button onClick={toggleSelection} color="primary"  variant={playerVariant} >Player</Button>
+                    <Button onClick={toggleSelection}  color="primary" variant={commentsVariant}>Comments</Button>
+                    </ThemeProvider>
                 </ButtonGroup>
-                {interaction}
+                {selection}
                 </div>
                 <MUIDeleteModal />
             </div>
