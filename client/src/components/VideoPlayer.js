@@ -23,8 +23,8 @@ export const VideoPlayer = () => {
   }, []);
 
 const playerOptions = {
-  width: '715px',
-  height: '280px',
+  height:'100%',
+  width:'100%',
   borderRadius:'10px',
   playerVars: {
       autoplay: 0,
@@ -121,17 +121,14 @@ function onPlayerStateChange(event) {
 
   return (
     <div className='video-player'>
-
-      <div className='video-area'>
           { store.currentList? 
           <YouTube
-          className='video'
+          className='video-area'
           videoId={store.currentList.songs[currentSong] ? store.currentList.songs[currentSong].youTubeId : ''}
           opts={playerOptions}
           onReady={onPlayerReady}
           onStateChange={onPlayerStateChange} />
-          :   ''}
-      </div>
+          : <Box className='video-area' />}
         <div className='video-actions'>
               {videoInfo}
               <Box className='video-buttons'>
@@ -145,7 +142,6 @@ function onPlayerStateChange(event) {
                   {theme.direction === 'rtl' ? <SkipPreviousIcon /> : <SkipNextIcon />}
                 </IconButton>
               </Box>
-
           </div>
     </div>
   )
