@@ -1,15 +1,15 @@
-import * as React from 'react';
+import React, { useContext, useEffect,useState } from 'react'
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import InputBase from '@mui/material/InputBase';
-import SearchIcon from '@mui/icons-material/Search';
 import HomeIcon from '@mui/icons-material/Home';
 import Groups3Icon from '@mui/icons-material/Groups3';
 import PersonIcon from '@mui/icons-material/Person';
 import StyledMenu from './StyledMenu'
+import TextField from '@mui/material/TextField';
 import { IconButton } from '@mui/material';
+import { GlobalStoreContext } from '../store'
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -26,39 +26,19 @@ const Search = styled('div')(({ theme }) => ({
   },
 }));
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      width: '12ch',
-      '&:focus': {
-        width: '20ch',
-      },
-    },
-  },
-}));
-
 export default function AppTools() {
+  const { store } = useContext(GlobalStoreContext);
+
+  const handleSearch = (event) => {
+    event.preventDefault();
+    store.setSearch(event.target.value);
+};
+
   return (
     <Box>
       <AppBar  position="static">
         <Toolbar id='AppTools' >
         <div className='tool-icons'>
-
         <IconButton aria-label="home">
           <HomeIcon/>
         </IconButton>
@@ -70,20 +50,18 @@ export default function AppTools() {
         <IconButton aria-label="users">
           <PersonIcon/>
         </IconButton>
-         
         </div>
 
-        <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ 'aria-label': 'search' }}
-            />
+        <Search >
+            <TextField      margin='normal'
+                            id="search"
+                            label="Search"
+                            name="search"
+                            autoFocus
+                            onChange={handleSearch}
+                        />
           </Search>
           <StyledMenu/>
-
         </Toolbar>
       </AppBar>
     </Box>

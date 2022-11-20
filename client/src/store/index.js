@@ -32,6 +32,7 @@ export const GlobalStoreActionType = {
     REMOVE_SONG: "REMOVE_SONG",
     ACCESS_ERROR: "ACCESS_ERROR",
     HIDE_MODALS: "HIDE_MODALS",
+    SET_SEARCH:"SET_SEARCH"
 }
 
 // WE'LL NEED THIS TO PROCESS TRANSACTIONS
@@ -60,6 +61,7 @@ function GlobalStoreContextProvider(props) {
         listIdMarkedForDeletion: null,
         listMarkedForDeletion: null,
         message:"",
+        search:"",
     });
     const history = useHistory();
 
@@ -87,8 +89,11 @@ function GlobalStoreContextProvider(props) {
                     listIdMarkedForDeletion: null,
                     listMarkedForDeletion: null,
                     message:store.message,
+                    search:"",
+                    
                 });
             }
+          
             // STOP EDITING THE CURRENT LIST
             case GlobalStoreActionType.CLOSE_CURRENT_LIST: {
                 return setStore({
@@ -102,6 +107,7 @@ function GlobalStoreContextProvider(props) {
                     listIdMarkedForDeletion: null,
                     listMarkedForDeletion: null,
                     message:store.message,
+                    search:"",
                 })
             }
             // CREATE A NEW LIST
@@ -117,6 +123,7 @@ function GlobalStoreContextProvider(props) {
                     listIdMarkedForDeletion: null,
                     listMarkedForDeletion: null,
                     message:store.message,
+                    search:"",
                 })
             }
             // GET ALL THE LISTS SO WE CAN PRESENT THEM
@@ -132,6 +139,7 @@ function GlobalStoreContextProvider(props) {
                     listIdMarkedForDeletion: null,
                     listMarkedForDeletion: null,
                     message:store.message,
+                    search:"",
                 });
             }
             // PREPARE TO DELETE A LIST
@@ -147,6 +155,7 @@ function GlobalStoreContextProvider(props) {
                     listIdMarkedForDeletion: payload.id,
                     listMarkedForDeletion: payload.playlist,
                     message:store.message,
+                    search:"",
                 });
             }
             // UPDATE A LIST
@@ -162,6 +171,7 @@ function GlobalStoreContextProvider(props) {
                     listIdMarkedForDeletion: null,
                     listMarkedForDeletion: null,
                     message:store.message,
+                    search:"",
                 });
             }
             // START EDITING A LIST NAME
@@ -177,6 +187,7 @@ function GlobalStoreContextProvider(props) {
                     listIdMarkedForDeletion: null,
                     listMarkedForDeletion: null,
                     message:store.message,
+                    search:"",
                 });
             }
             // 
@@ -192,6 +203,7 @@ function GlobalStoreContextProvider(props) {
                     listIdMarkedForDeletion: null,
                     listMarkedForDeletion: null,
                     message:store.message,
+                    search:"",
                 });
             }
             case GlobalStoreActionType.REMOVE_SONG: {
@@ -206,6 +218,7 @@ function GlobalStoreContextProvider(props) {
                     listIdMarkedForDeletion: null,
                     listMarkedForDeletion: null,
                     message:store.message,
+                    search:"",
                 });
             }
             case GlobalStoreActionType.HIDE_MODALS: {
@@ -220,6 +233,7 @@ function GlobalStoreContextProvider(props) {
                     listIdMarkedForDeletion: null,
                     listMarkedForDeletion: null,
                     message:store.message,
+                    search:"",
                 });
             }
             case GlobalStoreActionType.ACCESS_ERROR: {
@@ -233,7 +247,24 @@ function GlobalStoreContextProvider(props) {
                     listNameActive: store.listNameActive,
                     listIdMarkedForDeletion: store.listIdMarkedForDeletion,
                     listMarkedForDeletion: store.listIdMarkedForDeletion,
-                    message:payload
+                    message:payload,
+                    search:"",
+                });
+            }
+              /// Setting search
+              case GlobalStoreActionType.SET_SEARCH: {
+                return setStore({
+                    currentModal : CurrentModal.NONE,
+                    idNamePairs: store.idNamePairs,
+                    currentList: store.currentList,
+                    currentSongIndex: store.currentSongIndex,
+                    currentSong: store.currentSong,
+                    newListCounter: store.newListCounter,
+                    listNameActive: store.listNameActive,
+                    listIdMarkedForDeletion: store.listIdMarkedForDeletion,
+                    listMarkedForDeletion: store.listIdMarkedForDeletion,
+                    message:store.message,
+                    search:payload,
                 });
             }
             default:
@@ -415,7 +446,7 @@ function GlobalStoreContextProvider(props) {
                         type: GlobalStoreActionType.SET_CURRENT_LIST,
                         payload: playlist
                     });
-                    history.push("/playlist/" + playlist._id);
+                  
                 }
             }
         }catch(error){
@@ -427,6 +458,7 @@ function GlobalStoreContextProvider(props) {
         }
         asyncSetCurrentList(id);
     }
+
     store.getPlaylistSize = function() {
         return store.currentList.songs.length;
     }
@@ -554,6 +586,8 @@ function GlobalStoreContextProvider(props) {
         return (store.currentList !== null);
     }
 
+  
+
     // THIS FUNCTION ENABLES THE PROCESS OF EDITING A LIST NAME
     store.setIsListNameEditActive = function () {
         storeReducer({
@@ -561,6 +595,20 @@ function GlobalStoreContextProvider(props) {
             payload: null
         });
     }
+
+    ///// Search 
+    store.setSearch = (search)=>{
+        storeReducer({
+            type:GlobalStoreActionType.SET_SEARCH,
+            payload:search
+        });
+    }
+
+
+
+
+
+
 
     return (
         <GlobalStoreContext.Provider value={{

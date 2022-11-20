@@ -66,6 +66,7 @@ body{
 .home-main{
   display: flex;
   flex: 1;
+  max-height: 730px;
   justify-content:center;
 }
 .home-footer{
@@ -85,48 +86,45 @@ body{
 
 /* Video Player & Comments */
 .player-comments{
- flex: 1;
+  display: flex;
+  flex: 1;
+  max-height: 730px;
+  flex-direction: column;
+  padding: 5px;
 }
-
 /* Video Player*/
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.video-player{
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  height: 100%;
+ }
+.video-area{
+  display: flex;
+  height: 400px;
+  width: 950px;
+  background-color:#071935;
+}
+.video-actions{
+  display: flex;
+  flex-direction: column;
+  background-color:#e4f0ee ;
+  color: #071935;
+  border-radius: 3px;
+  min-height: 290px;
+  max-height: 290px;
+}
+.video-info{
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-height: 230px;
+  max-height: 230px;
+}
+.video-buttons{
+  margin-bottom: 1rem;
+  align-self: center;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
 /* Video Player End */
 
 

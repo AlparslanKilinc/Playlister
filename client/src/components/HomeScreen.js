@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect,useState } from 'react'
 import { GlobalStoreContext } from '../store'
 import ListCard from './ListCard.js'
 import MUIDeleteModal from './MUIDeleteModal'
@@ -7,10 +7,14 @@ import Fab from '@mui/material/Fab'
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography'
 import AppTools from './AppTools';
-import { Interaction } from './Interaction';
+import { ButtonGroup } from '@mui/material';
+import Button from '@mui/material/Button';
+import { VideoPlayer } from './VideoPlayer';
 
 const HomeScreen = () => {
     const { store } = useContext(GlobalStoreContext);
+    const [selection, setSelection] = useState(0);
+    const [variant, setVariant] = useState(0);
 
     useEffect(() => {
         store.loadIdNamePairs();
@@ -35,6 +39,25 @@ const HomeScreen = () => {
             }
             </List>;
     }
+    if(store.search){
+       let filtered=  store.idNamePairs.filter((pair) => pair.name.includes(store.search))
+        Lists = 
+            <List sx={{ width: '90%', left: '5%'}}>
+            {
+              filtered.map((pair) => (
+                <ListCard
+                    key={pair._id}
+                    idNamePair={pair}
+                    selected={false}
+                />
+            ))
+            }
+            </List>;
+    }
+
+    /// Selection 
+    let interaction = <VideoPlayer/>
+    
     return (
         <div id="home-screen">
             <AppTools/>
@@ -42,9 +65,15 @@ const HomeScreen = () => {
                 <div className='list-area'>
                     {Lists}
                 </div>
-                <Interaction/>
+                <div className='player-comments'>
+                <ButtonGroup className='buttonGroup'>
+                    <Button style={{border:'black solid 1px' , color:'#071935'}} variant="outlined" >Player</Button>
+                    <Button style={{backgroundColor:'#071935',color:'white'}} variant="contained">Comments</Button>
+                </ButtonGroup>
+                {interaction}
+                </div>
                 <MUIDeleteModal />
-            </div>
+                </div>
 
             <div className="home-footer">
             <Fab 
