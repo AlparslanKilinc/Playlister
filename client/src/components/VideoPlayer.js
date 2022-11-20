@@ -23,8 +23,9 @@ export const VideoPlayer = () => {
   }, []);
 
 const playerOptions = {
-  height: '30%',
-  width: '50%',
+  width: '715px',
+  height: '280px',
+  borderRadius:'10px',
   playerVars: {
       autoplay: 0,
   },
@@ -124,6 +125,7 @@ function onPlayerStateChange(event) {
       <div className='video-area'>
           { store.currentList? 
           <YouTube
+          className='video'
           videoId={store.currentList.songs[currentSong] ? store.currentList.songs[currentSong].youTubeId : ''}
           opts={playerOptions}
           onReady={onPlayerReady}

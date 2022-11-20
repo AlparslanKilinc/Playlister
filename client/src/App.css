@@ -96,13 +96,13 @@ body{
 .video-player{
   display: flex;
   flex-direction: column;
-  height: 100%;
+  flex: 1;
  }
 .video-area{
   display: flex;
-  height: 30%;
-  width: 50%;
+  flex: 1;
   background-color:#071935;
+  border-radius: 3px;
 }
 .video-actions{
   display: flex;
@@ -110,15 +110,13 @@ body{
   background-color:#e4f0ee ;
   color: #071935;
   border-radius: 3px;
-  min-height: 290px;
-  max-height: 290px;
+  flex: 0.6;
 }
 .video-info{
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  min-height: 230px;
-  max-height: 230px;
+  flex: 1;
 }
 .video-buttons{
   margin-bottom: 1rem;
