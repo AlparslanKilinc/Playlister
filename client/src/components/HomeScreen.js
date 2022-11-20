@@ -73,7 +73,7 @@ const HomeScreen = () => {
                 {interaction}
                 </div>
                 <MUIDeleteModal />
-                </div>
+            </div>
 
             <div className="home-footer">
             <Fab 

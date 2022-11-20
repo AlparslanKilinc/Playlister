@@ -23,8 +23,8 @@ export const VideoPlayer = () => {
   }, []);
 
 const playerOptions = {
-  height: '400px',
-  width: '950px',
+  height: '30%',
+  width: '50%',
   playerVars: {
       autoplay: 0,
   },

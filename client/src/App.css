@@ -100,8 +100,8 @@ body{
  }
 .video-area{
   display: flex;
-  height: 400px;
-  width: 950px;
+  height: 30%;
+  width: 50%;
   background-color:#071935;
 }
 .video-actions{
