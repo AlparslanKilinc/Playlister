@@ -124,7 +124,7 @@ function onPlayerStateChange(event) {
           { store.currentList? 
           <YouTube
           className='video-area'
-          videoId={store.currentList.songs[currentSong] ? store.currentList.songs[currentSong].youTubeId : ''}
+          videoId={store.currentList.songs[currentSong] ? store.currentList.songs[currentSong].youTubeId : 'empty'}
           opts={playerOptions}
           onReady={onPlayerReady}
           onStateChange={onPlayerStateChange} />

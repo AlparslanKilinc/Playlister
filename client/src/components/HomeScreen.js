@@ -38,17 +38,20 @@ const HomeScreen = () => {
         store.createNewList();
     }
 
-    let toggleSelection = ()=>{
-        if(playerVariant==="outlined"){
+    let togglePlayer = ()=>{
             setPlayerVariant("contained");
             setCommentsVariant("outlined");
             setSelection(<Comments/>);
-        }else{
-            setPlayerVariant("outlined");
+    }
+    let toggleComments =()=>{
+        setPlayerVariant("outlined");
             setCommentsVariant("contained");
             setSelection(<VideoPlayer/>);
-        }
+
     }
+            
+        
+    
 
     //// Home Screen Loading 
     let Lists = "";
@@ -93,8 +96,8 @@ const HomeScreen = () => {
                 <div className='player-comments'>
                 <ButtonGroup className='buttonGroup'>
                 <ThemeProvider theme={theme}>
-                    <Button onClick={toggleSelection} color="primary"  variant={playerVariant} >Player</Button>
-                    <Button onClick={toggleSelection}  color="primary" variant={commentsVariant}>Comments</Button>
+                    <Button onClick={togglePlayer} color="primary"  variant={playerVariant} >Player</Button>
+                    <Button onClick={toggleComments}  color="primary" variant={commentsVariant}>Comments</Button>
                     </ThemeProvider>
                 </ButtonGroup>
                 {selection}
