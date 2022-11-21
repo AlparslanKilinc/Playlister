@@ -1,5 +1,4 @@
 const Playlist = require('../models/playlist-model')
-const Published = require('../models/published-model')
 const User = require('../models/user-model');
 const auth = require('../auth')
 
@@ -271,52 +270,6 @@ updatePlaylist = async (req, res) => {
     })
 }
 
-//// Published Methods
-publishPlaylist = (req, res) => {
-    if(auth.verifyUser(req) === null){
-        return res.status(400).json({
-            errorMessage: 'UNAUTHORIZED'
-        })
-    }
-    const body = req.body;
-    if (!body) {
-        return res.status(400).json({
-            success: false,
-            error: 'You must provide a Playlist',
-        })
-    }
-    const publishedPlaylist = new Published(body);
-    if (!publishedPlaylist) {
-        return res.status(400).json({ success: false, error: err })
-    }
-    User.findOne({ _id: req.userId }, (err, user) => {
-        user
-            .save()
-            .then(() => {
-                publishedPlaylist
-                    .save()
-                    .then(() => {
-                        return res.status(201).json({
-                            publishedPlaylist: publishedPlaylist
-                        })
-                    })
-                    .catch(error => {
-                        return res.status(400).json({
-                            errorMessage: 'Playlist is not Published!'
-                        })
-                    })
-            });
-    })
-}
-
-
-
-
-
-
-
-
-
 
 module.exports = {
     createPlaylist,
@@ -325,5 +278,4 @@ module.exports = {
     getPlaylistPairs,
     getPlaylists,
     updatePlaylist,
-    publishPlaylist,
 }

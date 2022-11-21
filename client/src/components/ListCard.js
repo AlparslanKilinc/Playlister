@@ -6,6 +6,13 @@ import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 import ListItem from '@mui/material/ListItem';
 import TextField from '@mui/material/TextField';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import Typography from '@mui/material/Typography';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
+
 
 function ListCard(props) {
     const { store } = useContext(GlobalStoreContext);
@@ -14,16 +21,8 @@ function ListCard(props) {
     const { idNamePair} = props;
 
     function handleLoadList(event, id) {
-        console.log("handleLoadList for " + id);
         if (!event.target.disabled) {
-            let _id = event.target.id;
-            if (_id.indexOf('list-card-text-') >= 0)
-                _id = ("" + _id).substring("list-card-text-".length);
-
-            console.log("load " + event.target.id);
-            // CHANGE THE CURRENT LIST
             store.setCurrentList(id);
-            // store.publishList(idNamePair.name,[]);
         }
     }
 
@@ -58,28 +57,32 @@ function ListCard(props) {
 
     let cardElement =
         <ListItem
-            id={idNamePair._id}
             key={idNamePair._id}
-            sx={{ marginTop: '15px', display: 'flex', p: 1 ,}}
-            style={{borderRadius:'20px',backgroundColor:'#eeeedd',width: '100%', fontSize: '48pt' }}
+            id='user-list'
             button
             onClick={(event) => {
                 handleLoadList(event, idNamePair._id)
             }}
-        >
-            <Box sx={{ p: 1, flexGrow: 1 }}>{idNamePair.name}</Box>
-            <Box sx={{ p: 1 }}>
-                <IconButton onClick={handleToggleEdit} aria-label='edit'>
-                    <EditIcon style={{fontSize:'48pt'}} />
-                </IconButton>
-            </Box>
-            <Box sx={{ p: 1 }}>
-                <IconButton onClick={(event) => {
-                        handleDeleteList(event, idNamePair._id)
-                    }} aria-label='delete'>
-                    <DeleteIcon style={{fontSize:'48pt'}} />
-                </IconButton>
-            </Box>
+            onDoubleClick={handleToggleEdit}
+        > 
+           <Accordion style={{ backgroundColor:'transparent', boxShadow:'none'}}>
+                <AccordionSummary
+                expandIcon={<KeyboardDoubleArrowDownIcon/>}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+                style={{display:'flex', alignItems:'flex-end'}}
+                >
+                <Box >{idNamePair.name}
+                <Box style={{fontSize:'12pt'}} >By: {idNamePair.name} </Box>
+                </Box>
+                </AccordionSummary>
+                <AccordionDetails>
+                <Typography>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+                    malesuada lacus ex, sit amet blandit leo lobortis eget.
+                </Typography>
+                </AccordionDetails>
+            </Accordion>
         </ListItem>
 
     if (editActive) {
@@ -107,3 +110,18 @@ function ListCard(props) {
 }
 
 export default ListCard;
+
+
+////  Delete and Edit Buttton
+/* <Box sx={{ p: 1 }}>
+                <IconButton onClick={handleToggleEdit} aria-label='edit'>
+                    <EditIcon style={{fontSize:'48pt'}} />
+                </IconButton>
+            </Box>
+            <Box sx={{ p: 1 }}>
+                <IconButton onClick={(event) => {
+                        handleDeleteList(event, idNamePair._id)
+                    }} aria-label='delete'>
+                    <DeleteIcon style={{fontSize:'48pt'}} />
+                </IconButton>
+            </Box> */

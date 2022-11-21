@@ -84,6 +84,24 @@ body{
   overflow-x: hidden;
 }
 
+/* List */ 
+#user-list{
+  display: flex;
+  flex-direction: column;
+  margin-top: 15px;
+  padding: 1;
+  width: 100%;
+  font-size: 24pt;
+  background-color:#e4f0ee;
+  border-radius:5px;
+  border: #071935 solid 2px;
+  gap: 1rem;
+}
+
+
+
+
+
 /* Video Player & Comments */
 .player-comments{
   display: flex;
