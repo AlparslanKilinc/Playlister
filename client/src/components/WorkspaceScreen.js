@@ -8,6 +8,7 @@ import List from '@mui/material/List';
 import { GlobalStoreContext } from '../store/index.js'
 import {Statusbar} from './'
 import MUIAccessErrorModal from './MUIAccessErrorModal.js'
+import EditToolbar from './EditToolbar'
 
 /*
     This React component lets us edit a loaded list, which only
@@ -18,11 +19,11 @@ import MUIAccessErrorModal from './MUIAccessErrorModal.js'
 function WorkspaceScreen(props) {
    
     const { store } = useContext(GlobalStoreContext);
-    const {match} = props;
+    const {id} = props;
     store.history = useHistory();
-    let id = match.params.id;
+   
     useEffect(() => {
-          store.setCurrentList(id);
+          store.LoadPlaylists();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     
@@ -35,11 +36,11 @@ function WorkspaceScreen(props) {
     }
    
     return (
-        <Box>
+        <div className='workspace'>
         <MUIAccessErrorModal/>      
         <List 
             id="list-selector-list" 
-            sx={{ width: '100%', bgcolor: 'background.paper' }}
+            sx={{  width:'100%' , bgcolor: 'transparent' }}
         >
             {
                store.currentList? store.currentList.songs.map((song, index) => (
@@ -52,11 +53,10 @@ function WorkspaceScreen(props) {
                 )):""
             }
          </List> 
-         <Statusbar /> 
-             
+         <EditToolbar></EditToolbar>
          { modalJSX }
-         </Box>
+         </div>
     )
 }
 
-export default WorkspaceScreen;
+export default  WorkspaceScreen;

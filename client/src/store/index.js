@@ -32,7 +32,7 @@ export const GlobalStoreActionType = {
     REMOVE_SONG: "REMOVE_SONG",
     ACCESS_ERROR: "ACCESS_ERROR",
     HIDE_MODALS: "HIDE_MODALS",
-    SET_SEARCH:"SET_SEARCH"
+    SET_SEARCH:"SET_SEARCH",
 }
 
 // WE'LL NEED THIS TO PROCESS TRANSACTIONS
@@ -131,6 +131,21 @@ function GlobalStoreContextProvider(props) {
                 return setStore({
                     currentModal : CurrentModal.NONE,
                     playlists: payload,
+                    currentList: null,
+                    currentSongIndex: -1,
+                    currentSong: null,
+                    newListCounter: store.newListCounter,
+                    listNameActive: false,
+                    listIdMarkedForDeletion: null,
+                    listMarkedForDeletion: null,
+                    message:store.message,
+                    search:"",
+                });
+            }
+            case GlobalStoreActionType.LOAD_ID: {
+                return setStore({
+                    currentModal : CurrentModal,
+                    playlists: store.playlists,
                     currentList: null,
                     currentSongIndex: -1,
                     currentSong: null,
@@ -333,7 +348,8 @@ function GlobalStoreContextProvider(props) {
     // THIS FUNCTION CREATES A NEW LIST
     store.createNewList = async function () {
         let newListName = "Untitled" + store.newListCounter;
-        const response = await api.createPlaylist(newListName, [], auth,[]);
+        let name=auth.user.firstName+' '+auth.user.lastName;
+        const response = await api.createPlaylist(newListName, [], auth.user.email,[],name);
         console.log("createNewList response: " + response);
         if (response.status === 201) {
             tps.clearAllTransactions();
@@ -363,11 +379,12 @@ function GlobalStoreContextProvider(props) {
                 });
             }
             else {
-                console.log("API FAILED TO GET THE LIST PAIRS");
+                console.log("API FAILED TO GET Playlists");
             }
         }
         asyncLoadPlaylists();
     }
+
     store.updateCurrentList = function() {
         async function asyncUpdateCurrentList() {
             const response = await api.updatePlaylistById(store.currentList._id, store.currentList);

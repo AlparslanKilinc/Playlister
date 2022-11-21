@@ -12,13 +12,14 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
-
+import { WorkspaceScreen } from '.';
 
 function ListCard(props) {
     const { store } = useContext(GlobalStoreContext);
     const [editActive, setEditActive] = useState(false);
     const [text, setText] = useState("");
     const {List} = props;
+
 
     function handleLoadList(event, id) {
         if (!event.target.disabled) {
@@ -65,7 +66,7 @@ function ListCard(props) {
             }}
             onDoubleClick={handleToggleEdit}
         > 
-           <Accordion style={{ backgroundColor:'transparent', boxShadow:'none'}}>
+           <Accordion style={{ width:'100%', flex:'1', backgroundColor:'transparent', boxShadow:'none'}}>
                 <AccordionSummary
                 expandIcon={<KeyboardDoubleArrowDownIcon/>}
                 aria-controls="panel1a-content"
@@ -76,11 +77,9 @@ function ListCard(props) {
                 <Box style={{fontSize:'12pt'}} >By: {List.owner} </Box>
                 </Box>
                 </AccordionSummary>
-                <AccordionDetails>
-                <Typography>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                    malesuada lacus ex, sit amet blandit leo lobortis eget.
-                </Typography>
+                <AccordionDetails style={{display:'flex'}}>
+                <WorkspaceScreen 
+                id={List._id}/>
                 </AccordionDetails>
             </Accordion>
         </ListItem>

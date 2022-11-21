@@ -8,6 +8,7 @@ const playlistSchema = new Schema(
         owner:{type:String,required:true},
         date: {type:String , required:true},
         listens:{type:Number , required:true},
+        published:{type:Boolean , required:true},
         likes:{type:Number,required:true},
         dislikes:{type:Number,required:true},
         comments:{ type:[{

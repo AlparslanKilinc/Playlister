@@ -26,7 +26,8 @@ createPlaylist = (req, res) => {
 
     User.findOne({ _id: req.userId }, (err, user) => {
         console.log("user found: " + JSON.stringify(user));
-        if (playlist.ownerEmail == user.email) {
+        console.log(playlist);
+        if (playlist.ownerEmail === user.email) {
         user.playlists.push(playlist._id);
         user
             .save()
@@ -160,7 +161,8 @@ getPlaylistPairs = async (req, res) => {
                         let list = playlists[key];
                         let pair = {
                             _id: list._id,
-                            name: list.name
+                            name: list.name,
+                            comments:list.comments,
                         };
                         pairs.push(pair);
                     }
@@ -195,7 +197,7 @@ getPlaylists = async (req, res) => {
                         .json({ success: false, error: 'Playlists not found' })
                 }
                 else {
-                    console.log("Send the Playlists");
+                    
                     return res.status(200).json({ success: true, playlists: playlists })
                 }
             }).catch(err => console.log(err))
@@ -213,7 +215,7 @@ updatePlaylist = async (req, res) => {
     }
     const body = req.body
     console.log("updatePlaylist: " + JSON.stringify(body));
-    console.log("req.body.name: " + req.body.name);
+    console.log("req.body.name: " + req.body);
 
     if (!body) {
         return res.status(400).json({
@@ -242,6 +244,14 @@ updatePlaylist = async (req, res) => {
 
                     list.name = body.playlist.name;
                     list.songs = body.playlist.songs;
+                    list.ownerEmail=body.playlist.ownerEmail;
+                    list.owner=body.playlist.owner;
+                    list.date=body.playlist.date;
+                    list.published=body.playlist.published;
+                    list.listens=body.playlist.listens;
+                    list.likes=body.playlist.likes;
+                    list.dislikes=body.playlist.dislikes;
+                    list.comments=body.playlist.comments;
                     list
                         .save()
                         .then(() => {

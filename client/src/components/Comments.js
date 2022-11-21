@@ -5,11 +5,6 @@ export const Comments = () => {
     const { store } = useContext(GlobalStoreContext);
 
 
-    useEffect(() => {
-        /// Published list
-        store.loadIdNamePairs();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, []);
 
   return (
     <div className='comments'>
