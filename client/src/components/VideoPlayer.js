@@ -18,7 +18,7 @@ export const VideoPlayer = () => {
   const theme = useTheme();
   
   useEffect(() => {
-    store.loadIdNamePairs();
+    store.LoadPlaylists();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

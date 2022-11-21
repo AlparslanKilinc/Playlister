@@ -1,6 +1,6 @@
 const Playlist = require('../models/playlist-model')
 const User = require('../models/user-model');
-const auth = require('../auth')
+const auth = require('../auth');
 
 createPlaylist = (req, res) => {
     if(auth.verifyUser(req) === null){
@@ -196,7 +196,7 @@ getPlaylists = async (req, res) => {
                 }
                 else {
                     console.log("Send the Playlists");
-                    return res.status(200).json({ success: true, PlayLists: playlists })
+                    return res.status(200).json({ success: true, playlists: playlists })
                 }
             }).catch(err => console.log(err))
         }

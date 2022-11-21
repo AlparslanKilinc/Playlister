@@ -18,7 +18,7 @@ function ListCard(props) {
     const { store } = useContext(GlobalStoreContext);
     const [editActive, setEditActive] = useState(false);
     const [text, setText] = useState("");
-    const { idNamePair} = props;
+    const {List} = props;
 
     function handleLoadList(event, id) {
         if (!event.target.disabled) {
@@ -57,11 +57,11 @@ function ListCard(props) {
 
     let cardElement =
         <ListItem
-            key={idNamePair._id}
+            key={List._id}
             id='user-list'
             button
             onClick={(event) => {
-                handleLoadList(event, idNamePair._id)
+                handleLoadList(event, List._id)
             }}
             onDoubleClick={handleToggleEdit}
         > 
@@ -72,8 +72,8 @@ function ListCard(props) {
                 id="panel1a-header"
                 style={{display:'flex', alignItems:'flex-end'}}
                 >
-                <Box >{idNamePair.name}
-                <Box style={{fontSize:'12pt'}} >By: {idNamePair.name} </Box>
+                <Box >{List.name}
+                <Box style={{fontSize:'12pt'}} >By: {List.owner} </Box>
                 </Box>
                 </AccordionSummary>
                 <AccordionDetails>
@@ -91,14 +91,14 @@ function ListCard(props) {
                 margin="normal"
                 required
                 fullWidth
-                id={"list-" + idNamePair._id}
+                id={"list-" + List._id}
                 label="Playlist Name"
                 name="name"
                 autoComplete="Playlist Name"
                 className='list-card'
                 onKeyPress={handleKeyPress}
                 onChange={handleUpdateText}
-                defaultValue={idNamePair.name}
+                defaultValue={List.name}
                 inputProps={{style: {fontSize: 48}}}
                 InputLabelProps={{style: {fontSize: 17,} }}
                 autoFocus

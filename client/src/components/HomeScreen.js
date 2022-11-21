@@ -30,7 +30,7 @@ const HomeScreen = () => {
     const [commentsVariant, setCommentsVariant] = useState("contained");
 
     useEffect(() => {
-        store.loadIdNamePairs();
+        store.LoadPlaylists();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -55,14 +55,14 @@ const HomeScreen = () => {
 
     //// Home Screen Loading 
     let Lists = "";
-    if (store) {
+    if (store.playlists) {
         Lists = 
             <List sx={{ width: '90%', left: '5%'}}>
             {
-                store.idNamePairs.map((pair) => (
+                store.playlists.map((list) => (
                     <ListCard
-                        key={pair._id}
-                        idNamePair={pair}
+                        key={list._id}
+                        List={list}
                         selected={false}
                     />
                 ))
@@ -70,14 +70,14 @@ const HomeScreen = () => {
             </List>;
     }
     if(store.search){
-       let filtered=  store.idNamePairs.filter((pair) => pair.name.includes(store.search))
+       let filtered=  store.playlists.filter((list) => list.name.includes(store.search))
         Lists = 
             <List sx={{ width: '90%', left: '5%'}}>
             {
-              filtered.map((pair) => (
+              filtered.map((list) => (
                 <ListCard
-                    key={pair._id}
-                    idNamePair={pair}
+                    key={list._id}
+                    List={list}
                     selected={false}
                 />
             ))
