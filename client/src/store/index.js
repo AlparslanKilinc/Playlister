@@ -11,7 +11,7 @@ import AuthContext from '../auth'
     This is our global data store. Note that it uses the Flux design pattern,
     which makes use of things like actions and reducers. 
     
-    @a
+    
 */
 
 // THIS IS THE CONTEXT WE'LL USE TO SHARE OUR STORE
@@ -309,6 +309,13 @@ function GlobalStoreContextProvider(props) {
         asyncChangeListName(id);
        
     }
+    // THIS FUNCTION ENABLES THE PROCESS OF EDITING A LIST NAME
+    store.setIsListNameEditActive = function () {
+         storeReducer({
+                type: GlobalStoreActionType.SET_LIST_NAME_EDIT_ACTIVE,
+                payload: null
+        });
+    }
 
     // THIS FUNCTION PROCESSES CLOSING THE CURRENTLY LOADED LIST
     store.closeCurrentList = function () {
@@ -342,7 +349,23 @@ function GlobalStoreContextProvider(props) {
             console.log("API FAILED TO CREATE A NEW LIST");
         }
     }
-
+    /// This is for Publishing List 
+    store.publishList = async function (newListName,songs) {
+        const response = await api.publishPlaylist(newListName, songs, auth.user.email,[]);
+        if (response.status === 201) {
+            tps.clearAllTransactions();
+            let newList = response.data.playlist;
+            store.loadIdNamePairs();
+            storeReducer({
+                type: GlobalStoreActionType.CREATE_NEW_LIST,
+                payload: newList
+            }
+            );
+        }
+        else {
+            console.log("API FAILED TO CREATE A NEW LIST");
+        }
+    }
     // THIS FUNCTION LOADS ALL THE ID, NAME PAIRS SO WE CAN LIST ALL THE LISTS
     store.loadIdNamePairs = function () {
         async function asyncLoadIdNamePairs() {
@@ -359,6 +382,43 @@ function GlobalStoreContextProvider(props) {
             }
         }
         asyncLoadIdNamePairs();
+    }
+    store.updateCurrentList = function() {
+        async function asyncUpdateCurrentList() {
+            const response = await api.updatePlaylistById(store.currentList._id, store.currentList);
+            if (response.data.success) {
+                storeReducer({
+                    type: GlobalStoreActionType.SET_CURRENT_LIST,
+                    payload: store.currentList
+                });
+            }
+        }
+        asyncUpdateCurrentList();
+    }
+    store.setCurrentList = function (id) {
+        async function asyncSetCurrentList(id) {
+         try{
+            let response = await api.getPlaylistById(id);
+            if (response.data.success) {
+                let playlist = response.data.playlist;
+
+                response = await api.updatePlaylistById(playlist._id, playlist);
+                if (response.data.success) {
+                    storeReducer({
+                        type: GlobalStoreActionType.SET_CURRENT_LIST,
+                        payload: playlist
+                    });
+                  
+                }
+            }
+        }catch(error){
+            storeReducer({
+                type: GlobalStoreActionType.ACCESS_ERROR,
+                payload: error.response.data.errorMessage
+            });
+        }
+        }
+        asyncSetCurrentList(id);
     }
 
     // THE FOLLOWING 5 FUNCTIONS ARE FOR COORDINATING THE DELETION
@@ -393,9 +453,14 @@ function GlobalStoreContextProvider(props) {
         store.deleteList(store.listIdMarkedForDeletion);
         store.hideModals();
     }
-    // THIS FUNCTION SHOWS THE MODAL FOR PROMPTING THE USER
-    // TO SEE IF THEY REALLY WANT TO DELETE THE LIST
+    
 
+    store.setSearch = (search)=>{
+        storeReducer({
+            type:GlobalStoreActionType.SET_SEARCH,
+            payload:search
+        });
+    }
     store.showEditSongModal = (songIndex, songToEdit) => {
         storeReducer({
             type: GlobalStoreActionType.EDIT_SONG,
@@ -425,36 +490,6 @@ function GlobalStoreContextProvider(props) {
     }
     store.isAccessErrorModalOpen = ()=>{
         return store.currentModal === CurrentModal.ACCESS_ERROR;
-    }
-
-    // THE FOLLOWING 8 FUNCTIONS ARE FOR COORDINATING THE UPDATING
-    // OF A LIST, WHICH INCLUDES DEALING WITH THE TRANSACTION STACK. THE
-    // FUNCTIONS ARE setCurrentList, addMoveItemTransaction, addUpdateItemTransaction,
-    // moveItem, updateItem, updateCurrentList, undo, and redo
-    store.setCurrentList = function (id) {
-        async function asyncSetCurrentList(id) {
-         try{
-            let response = await api.getPlaylistById(id);
-            if (response.data.success) {
-                let playlist = response.data.playlist;
-
-                response = await api.updatePlaylistById(playlist._id, playlist);
-                if (response.data.success) {
-                    storeReducer({
-                        type: GlobalStoreActionType.SET_CURRENT_LIST,
-                        payload: playlist
-                    });
-                  
-                }
-            }
-        }catch(error){
-            storeReducer({
-                type: GlobalStoreActionType.ACCESS_ERROR,
-                payload: error.response.data.errorMessage
-            });
-        }
-        }
-        asyncSetCurrentList(id);
     }
 
     store.getPlaylistSize = function() {
@@ -553,18 +588,7 @@ function GlobalStoreContextProvider(props) {
         let transaction = new UpdateSong_Transaction(this, index, oldSongData, newSongData);        
         tps.addTransaction(transaction);
     }
-    store.updateCurrentList = function() {
-        async function asyncUpdateCurrentList() {
-            const response = await api.updatePlaylistById(store.currentList._id, store.currentList);
-            if (response.data.success) {
-                storeReducer({
-                    type: GlobalStoreActionType.SET_CURRENT_LIST,
-                    payload: store.currentList
-                });
-            }
-        }
-        asyncUpdateCurrentList();
-    }
+    
     store.undo = function () {
         tps.undoTransaction();
     }
@@ -583,30 +607,6 @@ function GlobalStoreContextProvider(props) {
     store.canClose = function() {
         return (store.currentList !== null);
     }
-
-  
-
-    // THIS FUNCTION ENABLES THE PROCESS OF EDITING A LIST NAME
-    store.setIsListNameEditActive = function () {
-        storeReducer({
-            type: GlobalStoreActionType.SET_LIST_NAME_EDIT_ACTIVE,
-            payload: null
-        });
-    }
-
-    ///// Search 
-    store.setSearch = (search)=>{
-        storeReducer({
-            type:GlobalStoreActionType.SET_SEARCH,
-            payload:search
-        });
-    }
-
-
-
-
-
-
 
     return (
         <GlobalStoreContext.Provider value={{

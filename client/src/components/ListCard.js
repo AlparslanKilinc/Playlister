@@ -21,9 +21,9 @@ function ListCard(props) {
                 _id = ("" + _id).substring("list-card-text-".length);
 
             console.log("load " + event.target.id);
-
             // CHANGE THE CURRENT LIST
             store.setCurrentList(id);
+            // store.publishList(idNamePair.name,[]);
         }
     }
 
