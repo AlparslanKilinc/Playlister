@@ -1,7 +1,6 @@
 import React, { useContext, useEffect,useState } from 'react'
 import { GlobalStoreContext } from '../store'
 import ListCard from './ListCard.js'
-import MUIDeleteModal from './MUIDeleteModal'
 import AddIcon from '@mui/icons-material/Add';
 import Fab from '@mui/material/Fab'
 import List from '@mui/material/List';
@@ -18,7 +17,9 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
 import { WorkspaceScreen } from '.';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import PublishedCard from './PublishedCard';
+import { useHistory } from 'react-router-dom'
+
 
 const HomeScreen = () => {
     
@@ -35,7 +36,7 @@ const HomeScreen = () => {
     const [playerVariant, setPlayerVariant] = useState("outlined");
     const [commentsVariant, setCommentsVariant] = useState("contained");
     const [id, setId] = useState(store.currentList);
-
+    store.history = useHistory();
     /// Accordion 
     const [expanded, setExpanded] = React.useState(false);
     const handleChange = (panel,id) => (event, isExpanded) => {
@@ -76,22 +77,25 @@ const HomeScreen = () => {
         <List sx={{width: '90%', left: '5%'}}>
         {
             store.playlists.map((list,id=0) => (
-            <Accordion id='user-list' expanded={expanded === 'panel'+id+1} onChange={handleChange('panel'+id+1,list._id)}>
+            <Accordion key={list._id} id='user-list' expanded={expanded === 'panel'+id+1} onChange={handleChange('panel'+id+1,list._id)}>
                 <AccordionSummary
                 expandIcon={<KeyboardDoubleArrowDownIcon />}
                 aria-controls="panel1bh-content"
                 id="panel1bh-header"
                 >
-                  <ListCard
-                    key={list._id}
-                    List={list}
-                    selected={false}
-                /> 
+                {   
+                    list.published ? <PublishedCard key={list._id} List={list} selected={false}/>
+                    : <ListCard key={list._id} List={list} selected={false}/> 
+                }
                 </AccordionSummary>
 
                 <AccordionDetails>
-                    <WorkspaceScreen id={list._id}/> 
+                {   
+                    list.published ? "published area"
+                    :<WorkspaceScreen key={list._id} id={list._id}/> 
+                }
                 </AccordionDetails>
+
             </Accordion>
             ))
        }

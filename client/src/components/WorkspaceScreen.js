@@ -1,5 +1,5 @@
 import { useContext,useEffect,useState } from 'react'
-import { useHistory } from 'react-router-dom'
+
 import SongCard from './SongCard.js'
 import MUIEditSongModal from './MUIEditSongModal'
 import MUIRemoveSongModal from './MUIRemoveSongModal'
@@ -11,13 +11,12 @@ import EditToolbar from './EditToolbar'
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import MUIDeleteModal from './MUIDeleteModal.js'
+import PublishedCard from './PublishedCard.js'
 
 function WorkspaceScreen(props) {
     const { store } = useContext(GlobalStoreContext);
     const {id} = props;
-    store.history = useHistory();
     
-   
     useEffect(() => {
           store.LoadPlaylists();
         // eslint-disable-next-line react-hooks/exhaustive-deps

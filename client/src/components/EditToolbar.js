@@ -12,6 +12,7 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 function EditToolbar(props) {
     const { store } = useContext(GlobalStoreContext);
     const {id} = props;
+    
     function handleUndo(event) {
         event.stopPropagation();
         store.undo();
@@ -25,9 +26,8 @@ function EditToolbar(props) {
         event.stopPropagation();
         store.markListForDeletion(id);
     }
-    async function handlePublish(event, id) {
-        event.stopPropagation();
-        console.log("publish");
+    function handlePublish() {
+        store.publishCurrentList();
     }
     async function handleDuplicate(event, id) {
         event.stopPropagation();
@@ -57,9 +57,7 @@ function EditToolbar(props) {
             <div> 
                 <Button 
                 variant="contained"
-                onClick={(event) => {
-                            handlePublish(event,id)
-                        }} 
+                onClick={handlePublish} 
                 aria-label='publish'>
                     <PublishIcon style={{fontSize:'22pt'}} />
                 </Button>

@@ -345,6 +345,8 @@ function GlobalStoreContextProvider(props) {
         tps.clearAllTransactions();
     }
 
+   
+
     // THIS FUNCTION CREATES A NEW LIST
     store.createNewList = async function () {
         let newListName = "Untitled" + store.newListCounter;
@@ -385,10 +387,17 @@ function GlobalStoreContextProvider(props) {
         asyncLoadPlaylists();
     }
 
+    store.publishCurrentList = function(){
+        let list =store.currentList;
+        list.published=true;
+        store.updateCurrentList();
+    }
+
     store.updateCurrentList = function() {
         async function asyncUpdateCurrentList() {
             const response = await api.updatePlaylistById(store.currentList._id, store.currentList);
             if (response.data.success) {
+                store.LoadPlaylists();
                 storeReducer({
                     type: GlobalStoreActionType.SET_CURRENT_LIST,
                     payload: store.currentList
@@ -396,6 +405,7 @@ function GlobalStoreContextProvider(props) {
             }
         }
         asyncUpdateCurrentList();
+        history.push('/');
     }
     store.setCurrentList = function (id) {
         async function asyncSetCurrentList(id) {
