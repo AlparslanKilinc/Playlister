@@ -15,8 +15,6 @@ function WorkspaceScreen(props) {
     const { store } = useContext(GlobalStoreContext);
     const {id} = props;
     store.history = useHistory();
-
-    const[list,setList]=useState([]);
     
    
     useEffect(() => {

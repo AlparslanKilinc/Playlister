@@ -13,6 +13,12 @@ import { VideoPlayer } from './VideoPlayer';
 import { Comments } from './Comments';
 import { ThemeProvider } from '@emotion/react';
 import { createTheme } from '@mui/material/styles';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
+import { WorkspaceScreen } from '.';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const HomeScreen = () => {
     
@@ -28,6 +34,12 @@ const HomeScreen = () => {
     const [selection, setSelection] = useState(<VideoPlayer/>);
     const [playerVariant, setPlayerVariant] = useState("outlined");
     const [commentsVariant, setCommentsVariant] = useState("contained");
+
+    /// Accordion 
+    const [expanded, setExpanded] = React.useState(false);
+    const handleChange = (panel) => (event, isExpanded) => {
+      setExpanded(isExpanded ? panel : false);
+    };
 
     useEffect(() => {
         store.LoadPlaylists();
@@ -52,40 +64,43 @@ const HomeScreen = () => {
             
         
     
-
-    //// Home Screen Loading 
+//    {/* <WorkspaceScreen id={List._id}/> */}
+// //    expandIcon={<KeyboardDoubleArrowDownIcon/>}
+// {/* <ListCard
+// key={list._id}
+// List={list}
+// selected={false}
+// /> */}
+// style={{ width:'100%',backgroundColor:'transparent', boxShadow:'none'}}>
+    //// List Area 
     let Lists = "";
     if (store.playlists) {
+        let id=0;
         Lists = 
-            <List sx={{ width: '90%', left: '5%'}}>
-            {
-                store.playlists.map((list) => (
-                    <ListCard
-                        key={list._id}
-                        List={list}
-                        selected={false}
-                    />
-                ))
-            }
-            </List>;
-    }
-    if(store.search){
-       let filtered=  store.playlists.filter((list) => list.name.includes(store.search))
-        Lists = 
-            <List sx={{ width: '90%', left: '5%'}}>
-            {
-              filtered.map((list) => (
-                <ListCard
+        <List sx={{ width: '90%', left: '5%'}}>
+        {
+            store.playlists.map((list,id=0) => (
+            <Accordion expanded={expanded === 'panel'+id+1} onChange={handleChange('panel'+id+1)}>
+                <AccordionSummary
+                expandIcon={<KeyboardDoubleArrowDownIcon/>}
+                aria-controls="panel1bh-content"
+                id="panel1bh-header"
+                >
+                  <ListCard
                     key={list._id}
                     List={list}
                     selected={false}
-                />
+                /> 
+                </AccordionSummary>
+                <AccordionDetails>
+                <WorkspaceScreen id={List._id}/> 
+                </AccordionDetails>
+            </Accordion>
             ))
-            }
-            </List>;
+       }
+    </List>
     }
-    //// Home Screen Loading END
-    
+   
     return (
         <div id="home-screen">
             <AppTools/>
@@ -117,5 +132,7 @@ const HomeScreen = () => {
             </div>
         </div>)
 }
+
+
 
 export default HomeScreen;

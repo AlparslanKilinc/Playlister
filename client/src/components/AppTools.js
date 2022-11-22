@@ -57,7 +57,6 @@ export default function AppTools() {
                             id="search"
                             label="Search"
                             name="search"
-                            autoFocus
                             onChange={handleSearch}
                         />
           </Search>

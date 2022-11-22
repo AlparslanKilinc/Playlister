@@ -4,18 +4,13 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import ListItem from '@mui/material/ListItem';
 import TextField from '@mui/material/TextField';
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
-import { WorkspaceScreen } from '.';
+
 
 function ListCard(props) {
     const { store } = useContext(GlobalStoreContext);
     const [editActive, setEditActive] = useState(false);
     const [text, setText] = useState("");
     const {List} = props;
-    const [expand, setExpand] = useState(false);
 
 
     function handleLoadList(event, id) {
@@ -48,16 +43,7 @@ function ListCard(props) {
     function handleUpdateText(event) {
         setText(event.target.value);
     }
-    function closeAccordion(event){
-        setExpand(!expand);
-        // store.closeCurrentList();
-        console.log("clear transaction");
-    }
-
-    function prevent(event){
-        event.preventDefault();
-        event.stopPropagation();
-    }
+  
 
     let cardElement =
         <ListItem
@@ -72,22 +58,6 @@ function ListCard(props) {
         <Box style={{alignSelf:'flex-start', flex:'1'}} >{List.name}
             <Box style={{fontSize:'12pt'}} >By: {List.owner} </Box>
         </Box>
-
-           <Accordion onClick={prevent} expanded={expand}  onChange={closeAccordion} style={{ width:'100%',backgroundColor:'transparent', boxShadow:'none'}}>
-                <AccordionSummary 
-                expandIcon={<KeyboardDoubleArrowDownIcon/>}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-                style={{display:'flex', alignItems:'flex-end'}}
-                >
-
-                </AccordionSummary>
-
-                <AccordionDetails style={{display:'flex'}}>
-                    <WorkspaceScreen id={List._id}/>
-                </AccordionDetails>
-
-            </Accordion>
         </ListItem>
 
     if (editActive) {
