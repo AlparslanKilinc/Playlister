@@ -1,19 +1,17 @@
 import { useContext } from 'react'
 import { GlobalStoreContext } from '../store'
 import Button from '@mui/material/Button';
-import AddIcon from '@mui/icons-material/Add';
 import RedoIcon from '@mui/icons-material/Redo';
 import UndoIcon from '@mui/icons-material/Undo';
-import CloseIcon from '@mui/icons-material/HighlightOff';
+import DeleteIcon from '@mui/icons-material/Delete';
+import PublishIcon from '@mui/icons-material/Publish';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 
-function EditToolbar() {
+
+function EditToolbar(props) {
     const { store } = useContext(GlobalStoreContext);
-
-    function handleAddNewSong(event) {
-        event.stopPropagation();
-        store.addNewSong();
-    }
+    const {id} = props;
     function handleUndo(event) {
         event.stopPropagation();
         store.undo();
@@ -22,40 +20,68 @@ function EditToolbar() {
         event.stopPropagation();
         store.redo();
     }
-    function handleClose(event) {
+    async function handleDeleteList(event, id) {
         event.stopPropagation();
-        store.closeCurrentList();
+        store.markListForDeletion(id);
     }
+    async function handlePublish(event, id) {
+        event.stopPropagation();
+        console.log("publish");
+    }
+    async function handleDuplicate(event, id) {
+        event.stopPropagation();
+        console.log("duplicate");
+    }
+
     return (
         <div id="edit-toolbar">
-            <Button
-                disabled={!store.canAddNewSong()}
-                id='add-song-button'
-                onClick={handleAddNewSong}
-                variant="contained">
-                <AddIcon />
-            </Button>
-            <Button 
-                disabled={!store.canUndo()}
-                id='undo-button'
-                onClick={handleUndo}
-                variant="contained">
-                    <UndoIcon />
-            </Button>
-            <Button 
-                disabled={!store.canRedo()}
-                id='redo-button'
-                onClick={handleRedo}
-                variant="contained">
-                    <RedoIcon />
-            </Button>
-            <Button 
-                disabled={!store.canClose()}
-                id='close-button'
-                onClick={handleClose}
-                variant="contained">
-                    <CloseIcon />
-            </Button>
+            <div> 
+                <Button 
+                    disabled={!store.canUndo()}
+                    id='undo-button'
+                    onClick={handleUndo}
+                    variant="contained">
+                        <UndoIcon  />
+                </Button>
+
+                <Button 
+                    disabled={!store.canRedo()}
+                    id='redo-button'
+                    onClick={handleRedo}
+                    variant="contained">
+                        <RedoIcon />
+                </Button>
+            </div>
+            
+            <div> 
+                <Button 
+                variant="contained"
+                onClick={(event) => {
+                            handlePublish(event,id)
+                        }} 
+                aria-label='publish'>
+                    <PublishIcon style={{fontSize:'22pt'}} />
+                </Button>
+            
+                <Button 
+                variant="contained"
+                onClick={(event) => {
+                            handleDeleteList(event,id)
+                        }} 
+                aria-label='delete'>
+                    <DeleteIcon style={{fontSize:'22pt'}} />
+                </Button>
+
+                <Button 
+                variant="contained"
+                onClick={(event) => {
+                            handleDuplicate(event,id)
+                        }} 
+                aria-label='duplicate'>
+                    <ContentCopyIcon style={{fontSize:'22pt'}} />
+                </Button>
+            </div>
+                
         </div>
     )
 }

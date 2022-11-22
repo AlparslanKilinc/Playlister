@@ -2,7 +2,7 @@
   --swatch-foundation: #eeeedd;
   --swatch-primary: #e6e6e6;
   --swatch-complement: #e1e4cb;
-  --swatch-contrast: #111111;
+  --swatch-contrast: #184d70;
   --swatch-accent: #669966;
   --swatch-status: #123456;
   --my-font-family: "Robaaaoto";
@@ -95,7 +95,7 @@ body{
   background-color:#e4f0ee;
   border-radius:5px;
   border: #071935 solid 2px;
-  gap: 1rem;
+  gap: 2rem;
 }
 
 /* workspace */ 
@@ -107,9 +107,18 @@ body{
   width: 100%;
 }
 #list-selector-list {
+  flex: 1;
+  max-height: 330px;
   display: flex;
   flex-direction: column;
   overflow: scroll;
+  overflow-x: hidden;
+}
+
+#edit-toolbar {
+  background-color: transparent;
+  display: flex;
+  justify-content: space-between;
 }
 
 
@@ -241,10 +250,7 @@ body{
   border-radius: 10px;
 }
 
-#edit-toolbar {
-  background-color: transparent;
-  float: right;
-}
+
 
 .top5-button,
 .top5-button-disabled {

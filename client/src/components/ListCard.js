@@ -1,16 +1,12 @@
 import { useContext, useState } from 'react'
 import { GlobalStoreContext } from '../store'
+import React from 'react';
 import Box from '@mui/material/Box';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import IconButton from '@mui/material/IconButton';
 import ListItem from '@mui/material/ListItem';
 import TextField from '@mui/material/TextField';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
-import Typography from '@mui/material/Typography';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
 import { WorkspaceScreen } from '.';
 
@@ -19,6 +15,7 @@ function ListCard(props) {
     const [editActive, setEditActive] = useState(false);
     const [text, setText] = useState("");
     const {List} = props;
+    const [expand, setExpand] = useState(false);
 
 
     function handleLoadList(event, id) {
@@ -40,10 +37,6 @@ function ListCard(props) {
         setEditActive(newActive);
     }
 
-    async function handleDeleteList(event, id) {
-        event.stopPropagation();
-        store.markListForDeletion(id);
-    }
 
     function handleKeyPress(event) {
         if (event.code === "Enter") {
@@ -55,6 +48,16 @@ function ListCard(props) {
     function handleUpdateText(event) {
         setText(event.target.value);
     }
+    function closeAccordion(event){
+        setExpand(!expand);
+        // store.closeCurrentList();
+        console.log("clear transaction");
+    }
+
+    function prevent(event){
+        event.preventDefault();
+        event.stopPropagation();
+    }
 
     let cardElement =
         <ListItem
@@ -62,25 +65,28 @@ function ListCard(props) {
             id='user-list'
             button
             onClick={(event) => {
-                handleLoadList(event, List._id)
+                handleLoadList(event, List._id);
             }}
             onDoubleClick={handleToggleEdit}
-        > 
-           <Accordion style={{ width:'100%', flex:'1', backgroundColor:'transparent', boxShadow:'none'}}>
-                <AccordionSummary
+        >  
+        <Box style={{alignSelf:'flex-start', flex:'1'}} >{List.name}
+            <Box style={{fontSize:'12pt'}} >By: {List.owner} </Box>
+        </Box>
+
+           <Accordion onClick={prevent} expanded={expand}  onChange={closeAccordion} style={{ width:'100%',backgroundColor:'transparent', boxShadow:'none'}}>
+                <AccordionSummary 
                 expandIcon={<KeyboardDoubleArrowDownIcon/>}
                 aria-controls="panel1a-content"
                 id="panel1a-header"
                 style={{display:'flex', alignItems:'flex-end'}}
                 >
-                <Box >{List.name}
-                <Box style={{fontSize:'12pt'}} >By: {List.owner} </Box>
-                </Box>
+
                 </AccordionSummary>
+
                 <AccordionDetails style={{display:'flex'}}>
-                <WorkspaceScreen 
-                id={List._id}/>
+                    <WorkspaceScreen id={List._id}/>
                 </AccordionDetails>
+
             </Accordion>
         </ListItem>
 
@@ -109,18 +115,3 @@ function ListCard(props) {
 }
 
 export default ListCard;
-
-
-////  Delete and Edit Buttton
-/* <Box sx={{ p: 1 }}>
-                <IconButton onClick={handleToggleEdit} aria-label='edit'>
-                    <EditIcon style={{fontSize:'48pt'}} />
-                </IconButton>
-            </Box>
-            <Box sx={{ p: 1 }}>
-                <IconButton onClick={(event) => {
-                        handleDeleteList(event, idNamePair._id)
-                    }} aria-label='delete'>
-                    <DeleteIcon style={{fontSize:'48pt'}} />
-                </IconButton>
-            </Box> */
