@@ -36,14 +36,19 @@ function SongCard(props) {
     }
     function handleRemoveSong(event) {
         event.preventDefault();
+        event.stopPropagation();
         store.showRemoveSongModal(index, song);
     }
     function handleClick(event) {
-        // DOUBLE CLICK IS FOR SONG EDITING
-        if (event.detail === 2) {
+            event.preventDefault();
+            event.stopPropagation();
             store.showEditSongModal(index, song);
-        }
     }
+    function prevent(event){
+        event.preventDefault();
+        event.stopPropagation();
+    }
+    
 
     let cardClass = "list-card unselected-list-card";
     return (
@@ -57,15 +62,13 @@ function SongCard(props) {
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
             draggable="true"
-            onClick={handleClick}
+            onClick={prevent}
+            onDoubleClick={handleClick}
         >
-            {index + 1}.
-            <a
-                id={'song-' + index + '-link'}
-                className="song-link"
-                href={"https://www.youtube.com/watch?v=" + song.youTubeId}>
+            {index + 1}
+            <p>
                 {song.title} by {song.artist}
-            </a>
+            </p>
             <input
                 type="button"
                 id={"remove-song-" + index}

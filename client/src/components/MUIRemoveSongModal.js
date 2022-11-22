@@ -16,7 +16,10 @@ export default function MUIRemoveSongModal() {
     function handleCancelRemoveSong () {
         store.hideModals();
     }
-    
+    function prevent(event){
+        event.preventDefault();
+        event.stopPropagation();
+    }
     let modalClass = "modal";
     if (store.isRemoveSongModalOpen()) {
         modalClass += " is-visible";
@@ -29,6 +32,7 @@ export default function MUIRemoveSongModal() {
     return (
         <Modal
             open={store.isRemoveSongModalOpen()}
+            onClick={prevent}
         >
             <Box>
             <div

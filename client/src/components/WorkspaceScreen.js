@@ -31,7 +31,7 @@ function WorkspaceScreen(props) {
     if (store.isEditSongModalOpen()) {
         modalJSX = <MUIEditSongModal />;
     }
-    else if (store.isRemoveSongModalOpen()) {
+    if (store.isRemoveSongModalOpen()) {
         modalJSX = <MUIRemoveSongModal />;
     }
    
