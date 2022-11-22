@@ -48,7 +48,6 @@ function ListCard(props) {
     let cardElement =
         <ListItem
             key={List._id}
-            id='user-list'
             button
             onClick={(event) => {
                 handleLoadList(event, List._id);

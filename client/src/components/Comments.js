@@ -5,7 +5,6 @@ export const Comments = () => {
     const { store } = useContext(GlobalStoreContext);
 
 
-
   return (
     <div className='comments'>
         <div className='comments-area'>

@@ -88,6 +88,7 @@ body{
 #user-list{
   display: flex;
   flex-direction: column;
+  flex: 1;
   margin-top: 15px;
   padding: 1;
   width: 100%;

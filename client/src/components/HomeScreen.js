@@ -34,15 +34,20 @@ const HomeScreen = () => {
     const [selection, setSelection] = useState(<VideoPlayer/>);
     const [playerVariant, setPlayerVariant] = useState("outlined");
     const [commentsVariant, setCommentsVariant] = useState("contained");
+    const [id, setId] = useState(store.currentList);
 
     /// Accordion 
     const [expanded, setExpanded] = React.useState(false);
-    const handleChange = (panel) => (event, isExpanded) => {
+    const handleChange = (panel,id) => (event, isExpanded) => {
       setExpanded(isExpanded ? panel : false);
+      store.clearTransaction();
+      store.setCurrentList(id);
+      setId(id);
     };
 
     useEffect(() => {
         store.LoadPlaylists();
+        store.setCurrentList(id);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -53,36 +58,27 @@ const HomeScreen = () => {
     let togglePlayer = ()=>{
             setPlayerVariant("contained");
             setCommentsVariant("outlined");
-            setSelection(<Comments/>);
+            setSelection(<Comments onClick={store.setCurrentList(id)}/>);
     }
     let toggleComments =()=>{
         setPlayerVariant("outlined");
             setCommentsVariant("contained");
-            setSelection(<VideoPlayer/>);
+            setSelection(<VideoPlayer onClick={store.setCurrentList(id)}/>);
 
     }
             
         
     
-//    {/* <WorkspaceScreen id={List._id}/> */}
-// //    expandIcon={<KeyboardDoubleArrowDownIcon/>}
-// {/* <ListCard
-// key={list._id}
-// List={list}
-// selected={false}
-// /> */}
-// style={{ width:'100%',backgroundColor:'transparent', boxShadow:'none'}}>
-    //// List Area 
+
     let Lists = "";
     if (store.playlists) {
-        let id=0;
         Lists = 
-        <List sx={{ width: '90%', left: '5%'}}>
+        <List sx={{width: '90%', left: '5%'}}>
         {
             store.playlists.map((list,id=0) => (
-            <Accordion expanded={expanded === 'panel'+id+1} onChange={handleChange('panel'+id+1)}>
+            <Accordion id='user-list' expanded={expanded === 'panel'+id+1} onChange={handleChange('panel'+id+1,list._id)}>
                 <AccordionSummary
-                expandIcon={<KeyboardDoubleArrowDownIcon/>}
+                expandIcon={<KeyboardDoubleArrowDownIcon />}
                 aria-controls="panel1bh-content"
                 id="panel1bh-header"
                 >
@@ -92,8 +88,9 @@ const HomeScreen = () => {
                     selected={false}
                 /> 
                 </AccordionSummary>
+
                 <AccordionDetails>
-                <WorkspaceScreen id={List._id}/> 
+                    <WorkspaceScreen id={list._id}/> 
                 </AccordionDetails>
             </Accordion>
             ))
@@ -117,7 +114,7 @@ const HomeScreen = () => {
                 </ButtonGroup>
                 {selection}
                 </div>
-                <MUIDeleteModal />
+                
             </div>
 
             <div className="home-footer">

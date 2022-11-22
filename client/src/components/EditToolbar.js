@@ -21,6 +21,7 @@ function EditToolbar(props) {
         store.redo();
     }
     async function handleDeleteList(event, id) {
+        event.preventDefault();
         event.stopPropagation();
         store.markListForDeletion(id);
     }
