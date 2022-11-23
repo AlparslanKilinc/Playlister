@@ -47,8 +47,8 @@ function incSong() {
 }
 
 function onPlayerReady(event) {
-  loadAndPlayCurrentSong(event.target);
-  event.target.playVideo();
+  // loadAndPlayCurrentSong(event.target);
+  // event.target.playVideo();
 }
 
 // THIS IS OUR EVENT HANDLER FOR WHEN THE YOUTUBE PLAYER'S STATE

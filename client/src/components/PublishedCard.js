@@ -16,8 +16,6 @@ function PublishedCard(props) {
         }
     }
   
-
-  
     return (
         <ListItem
             key={List._id}

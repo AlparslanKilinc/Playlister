@@ -4,7 +4,6 @@ import AuthContext from '../auth';
 import { GlobalStoreContext } from '../store'
 
 import YouTubeIcon from '@mui/icons-material/YouTube';
-import EditToolbar from './EditToolbar'
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -77,8 +76,6 @@ export default function AppBanner() {
         >
             <MenuItem onClick={handleLogout}>Logout</MenuItem>
         </Menu>        
-
-    let editToolbar = "";
     let menu = loggedOutMenu;
     if (auth.loggedIn) {
         menu = loggedInMenu;

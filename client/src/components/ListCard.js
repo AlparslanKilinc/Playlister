@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useState,useEffect } from 'react'
 import { GlobalStoreContext } from '../store'
 import React from 'react';
 import Box from '@mui/material/Box';
@@ -11,7 +11,6 @@ function ListCard(props) {
     const [editActive, setEditActive] = useState(false);
     const [text, setText] = useState("");
     const {List} = props;
-
 
     function handleLoadList(event, id) {
         if (!event.target.disabled) {

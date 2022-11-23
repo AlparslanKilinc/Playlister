@@ -6,6 +6,11 @@ function SongCard(props) {
     const [ draggedTo, setDraggedTo ] = useState(0);
     const { song, index } = props;
 
+    function prevent(event){
+        event.preventDefault();
+        event.stopPropagation();
+    }
+
     function handleDragStart(event) {
         event.dataTransfer.setData("song", index);
     }
@@ -35,19 +40,12 @@ function SongCard(props) {
         store.addMoveSongTransaction(sourceIndex, targetIndex);
     }
     function handleRemoveSong(event) {
-        event.preventDefault();
-        event.stopPropagation();
         store.showRemoveSongModal(index, song);
     }
-    function handleClick(event) {
-            event.preventDefault();
-            event.stopPropagation();
+    function handleDoubleClick(event) {
             store.showEditSongModal(index, song);
     }
-    function prevent(event){
-        event.preventDefault();
-        event.stopPropagation();
-    }
+
     
 
     let cardClass = "list-card unselected-list-card";
@@ -63,11 +61,11 @@ function SongCard(props) {
             onDrop={handleDrop}
             draggable="true"
             onClick={prevent}
-            onDoubleClick={handleClick}
+            onDoubleClick={handleDoubleClick}
         >
-            {index + 1}
+            
             <p>
-                {song.title} by {song.artist}
+            {index + 1}. {song.title} by {song.artist}
             </p>
             <input
                 type="button"

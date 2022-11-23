@@ -19,6 +19,12 @@ import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrow
 import { WorkspaceScreen } from '.';
 import PublishedCard from './PublishedCard';
 import { useHistory } from 'react-router-dom'
+import PublishedArea from './PublishedArea';
+import RedoIcon from '@mui/icons-material/Redo';
+import UndoIcon from '@mui/icons-material/Undo';
+import DeleteIcon from '@mui/icons-material/Delete';
+import PublishIcon from '@mui/icons-material/Publish';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 
 const HomeScreen = () => {
@@ -31,11 +37,11 @@ const HomeScreen = () => {
           },
         },
       });
+      
     const { store } = useContext(GlobalStoreContext);
     const [selection, setSelection] = useState(<VideoPlayer/>);
-    const [playerVariant, setPlayerVariant] = useState("outlined");
-    const [commentsVariant, setCommentsVariant] = useState("contained");
-    const [id, setId] = useState(store.currentList);
+    const [playerVariant, setPlayerVariant] = useState("contained");
+    const [commentsVariant, setCommentsVariant] = useState("outlined");
     store.history = useHistory();
     /// Accordion 
     const [expanded, setExpanded] = React.useState(false);
@@ -43,33 +49,53 @@ const HomeScreen = () => {
       setExpanded(isExpanded ? panel : false);
       store.clearTransaction();
       store.setCurrentList(id);
-      setId(id);
     };
 
-    useEffect(() => {
-        store.LoadPlaylists();
-        store.setCurrentList(id);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+ 
 
-    function handleCreateNewList() {
+    function handleCreateNewList(event) {
+        setExpanded(false);
         store.createNewList();
     }
 
     let togglePlayer = ()=>{
             setPlayerVariant("contained");
             setCommentsVariant("outlined");
-            setSelection(<Comments onClick={store.setCurrentList(id)}/>);
+            setSelection(<VideoPlayer/>);
+           
     }
     let toggleComments =()=>{
-        setPlayerVariant("outlined");
+            setPlayerVariant("outlined");
             setCommentsVariant("contained");
-            setSelection(<VideoPlayer onClick={store.setCurrentList(id)}/>);
+            setSelection(<Comments/>);
+    }
 
+    //// Editing Functions 
+    function handleUndo(event) {
+        event.stopPropagation();
+        store.undo();
+    }
+    function handleRedo(event) {
+        event.stopPropagation();
+        store.redo();
+    }
+    async function handleDeleteList(event, id) {
+        event.preventDefault();
+        event.stopPropagation();
+        store.markListForDeletion(id);
+    }
+    function handlePublishList(event,id) {
+        event.preventDefault();
+        event.stopPropagation();
+        store.publishList(id);
+    }
+
+    async function handleDuplicate(event, id) {
+        event.stopPropagation();
+        console.log("duplicate");
     }
             
         
-    
 
     let Lists = "";
     if (store.playlists) {
@@ -83,17 +109,11 @@ const HomeScreen = () => {
                 aria-controls="panel1bh-content"
                 id="panel1bh-header"
                 >
-                {   
-                    list.published ? <PublishedCard key={list._id} List={list} selected={false}/>
-                    : <ListCard key={list._id} List={list} selected={false}/> 
-                }
+                {list.published ? <PublishedCard key={list._id} List={list} selected={false}/>: <ListCard key={list._id} List={list} selected={false}/>}
                 </AccordionSummary>
 
                 <AccordionDetails>
-                {   
-                    list.published ? "published area"
-                    :<WorkspaceScreen key={list._id} id={list._id}/> 
-                }
+                    {list.published ? <PublishedArea key={list._id} id={list._id}/>: <WorkspaceScreen key={list._id} id={list._id}/>}
                 </AccordionDetails>
 
             </Accordion>

@@ -9,17 +9,18 @@ import Modal from '@mui/material/Modal';
 export default function MUIRemoveSongModal() {
     const { store } = useContext(GlobalStoreContext);
 
-    function handleConfirmRemoveSong () {
-        store.addRemoveSongTransaction();
-    }
-
-    function handleCancelRemoveSong () {
-        store.hideModals();
-    }
     function prevent(event){
         event.preventDefault();
         event.stopPropagation();
     }
+
+    function handleConfirmRemoveSong () {
+        store.addRemoveSongTransaction();
+    }
+    function handleCancelRemoveSong () {
+        store.hideModals();
+    }
+   
     let modalClass = "modal";
     if (store.isRemoveSongModalOpen()) {
         modalClass += " is-visible";

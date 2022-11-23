@@ -387,15 +387,11 @@ function GlobalStoreContextProvider(props) {
         asyncLoadPlaylists();
     }
 
-    store.publishCurrentList = function(){
+    store.publishList = function(id){
         let list =store.currentList;
         list.published=true;
-        store.updateCurrentList();
-    }
-
-    store.updateCurrentList = function() {
-        async function asyncUpdateCurrentList() {
-            const response = await api.updatePlaylistById(store.currentList._id, store.currentList);
+        async function asyncPublishPlaylist(id,list) {
+            const response = await api.updatePlaylistById(id,list);
             if (response.data.success) {
                 store.LoadPlaylists();
                 storeReducer({
@@ -403,10 +399,26 @@ function GlobalStoreContextProvider(props) {
                     payload: store.currentList
                 });
             }
+            else {
+                console.log("API FAILED TO UPDATE Playlist");
+            }
+        }
+        asyncPublishPlaylist(id,list);
+    }
+
+    store.updateCurrentList = function() {
+        async function asyncUpdateCurrentList() {
+            const response = await api.updatePlaylistById(store.currentList._id, store.currentList);
+            if (response.data.success) {
+                storeReducer({
+                    type: GlobalStoreActionType.SET_CURRENT_LIST,
+                    payload: store.currentList
+                });
+            }
         }
         asyncUpdateCurrentList();
-        history.push('/');
     }
+
     store.setCurrentList = function (id) {
         async function asyncSetCurrentList(id) {
          try{

@@ -9,64 +9,23 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 
 
-function EditToolbar(props) {
+function PublishedToolbar(props) {
     const { store } = useContext(GlobalStoreContext);
     const {id} = props;
     
-    function handleUndo(event) {
-        event.stopPropagation();
-        store.undo();
-    }
-    function handleRedo(event) {
-        event.stopPropagation();
-        store.redo();
-    }
     async function handleDeleteList(event, id) {
         event.preventDefault();
         event.stopPropagation();
         store.markListForDeletion(id);
     }
-    function handlePublishList(event,id) {
-        event.preventDefault();
-        event.stopPropagation();
-        store.publishList(id);
-    }
-
+    
     async function handleDuplicate(event, id) {
         event.stopPropagation();
         console.log("duplicate");
     }
 
     return (
-        <div id="edit-toolbar">
-            <div> 
-                <Button 
-                    disabled={!store.canUndo()}
-                    id='undo-button'
-                    onClick={handleUndo}
-                    variant="contained">
-                        <UndoIcon  />
-                </Button>
-
-                <Button 
-                    disabled={!store.canRedo()}
-                    id='redo-button'
-                    onClick={handleRedo}
-                    variant="contained">
-                        <RedoIcon />
-                </Button>
-            </div>
-            
-            <div> 
-                <Button 
-                variant="contained"
-                onClick={(event) => {
-                    handlePublishList(event,id)
-                }} 
-                aria-label='publish'>
-                    <PublishIcon style={{fontSize:'22pt'}} />
-                </Button>
-            
+        <div style={{alignSelf:'flex-end'}}>
                 <Button 
                 variant="contained"
                 onClick={(event) => {
@@ -84,9 +43,8 @@ function EditToolbar(props) {
                 aria-label='duplicate'>
                     <ContentCopyIcon style={{fontSize:'22pt'}} />
                 </Button>
-            </div>   
         </div>
     )
 }
 
-export default EditToolbar;
+export default PublishedToolbar;
