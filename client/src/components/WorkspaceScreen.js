@@ -53,11 +53,12 @@ function WorkspaceScreen(props) {
             }
          </List> 
          <Button
+                style={{backgroundColor:'#071935'}}
                 disabled={!store.canAddNewSong()}
                 id='add-song-button'
                 onClick={handleAddNewSong}
                 variant="contained">
-                <AddIcon />
+                <AddIcon  />
          </Button>
          <EditToolbar id={id}></EditToolbar>
          <MUIDeleteModal/>

@@ -1,5 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { GlobalStoreContext } from '../store'
+import ClearIcon from '@mui/icons-material/Clear';
+import Button from '@mui/material/Button';
 
 function SongCard(props) {
     const { store } = useContext(GlobalStoreContext);
@@ -48,12 +50,11 @@ function SongCard(props) {
 
     
 
-    let cardClass = "list-card unselected-list-card";
     return (
         <div
             key={index}
             id={'song-' + index + '-card'}
-            className={cardClass}
+            className={'song-card'}
             onDragStart={handleDragStart}
             onDragOver={handleDragOver}
             onDragEnter={handleDragEnter}
@@ -63,17 +64,15 @@ function SongCard(props) {
             onClick={prevent}
             onDoubleClick={handleDoubleClick}
         >
-            
-            <p>
+            <h5>
             {index + 1}. {song.title} by {song.artist}
-            </p>
-            <input
-                type="button"
-                id={"remove-song-" + index}
-                className="list-card-button"
-                value={"\u2715"}
+            </h5>
+              <Button
+                id='delete-song-button'
                 onClick={handleRemoveSong}
-            />
+                variant="none">
+                <ClearIcon />
+              </Button>
         </div>
     );
 }

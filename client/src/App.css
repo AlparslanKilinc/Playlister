@@ -108,22 +108,64 @@ body{
 }
 #list-selector-list {
   flex: 1;
-  max-height: 330px;
+  max-height: 430px;
   display: flex;
   flex-direction: column;
   overflow: scroll;
   overflow-x: hidden;
+  padding: 1rem;
+  gap: 2rem;
 }
+
+/*published area */ 
+#published-list{
+  flex: 1;
+  max-height: 430px;
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+  overflow-x: hidden;
+  padding: 1rem;
+  border-radius: 5px;
+  background-color: #071935;
+  border: #071935 2px solid;
+}
+.song-card{
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  margin-right: 2rem;
+  border-radius: 5px;
+  border: #071935 2px solid;
+  box-shadow: 15px 15px 0 -4px transparent,
+  5px 6px rgb(73, 93, 99);
+  background-color: #071935;
+  color: white;
+}
+.published-card{
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  margin-right: 2rem;
+  border-radius: 5px;
+  color: #e4f0ee;
+}
+.published-card:hover{
+  cursor: pointer;
+  color: red;
+}
+.song-card:hover{
+  cursor: pointer;
+  background-color: #e4f0ee;
+  color: #071935;
+}
+
 
 #edit-toolbar {
   background-color: transparent;
   display: flex;
   justify-content: space-between;
 }
-
-
-
-
 
 
 /* Video Player & Comments */
@@ -187,12 +229,6 @@ body{
   border-radius: 10px;
 }
 
-
-
-
-
-
-
 /* AppTools */
 #AppTools{
   display: flex;
@@ -204,11 +240,12 @@ body{
  display: flex;
  gap: 2rem;
 }
-
-
-
-
-
+#add-list-button {
+  float: left;
+}
+input {
+  font-size: 20pt;
+}
 #error-style{
   display: flex;
   flex-direction: column;
@@ -232,180 +269,6 @@ body{
   height: 100%;
   top: 0%;
   left: 0%;
-}
-
-#top5-banner {
-  position: absolute;
-  left: 0%;
-  top: 0%;
-  width: 100%;
-  height: 10%;
-  float: left;
-  background-image: linear-gradient(to bottom, #b8b808, #636723);
-  color: white;
-  font-size: 48pt;
-  border-color: black;
-  border-width: 2px;
-  border-style: solid;
-  border-radius: 10px;
-}
-
-
-
-.top5-button,
-.top5-button-disabled {
-  font-size: 36pt;
-  border-width: 0px;
-  float: left;
-  color: black;
-  cursor: pointer;
-  opacity: 100%;
-}
-
-.top5-button:hover {
-  cursor: pointer;
-  color: black;
-}
-
-.top5-button-disabled {
-  opacity: 0.25;
-  cursor: not-allowed;
-}
-
-#top5-workspace {
-  position: absolute;
-  left: 0%;
-  top: 10%;
-  width: 100%;
-  height: 80%;
-  background-color: var(--swatch-accent);
-}
-
-#top5-statusbar {
-  position: absolute;
-  left: 0%;
-  top: 90%;
-  width: 100%;
-  height: 10%;
-  background-color: lightsalmon;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 36pt;
-}
-
-#add-list-button {
-  float: left;
-}
-
-
-
-
-.list-card,
-.selected-list-card,
-.unselected-list-card {
-  font-size: 18pt;
-  margin: 10px;
-  padding: 20px;
-  border-radius: 25px;
-}
-
-.list-card:aria-disabled,
-.list-card[aria-disabled] {
-  border: 1px solid #999999;
-  background-color: #cccccc;
-  color: #666666;
-  pointer-events: none;
-}
-
-.unselected-list-card:hover {
-  cursor: pointer;
-  background-color: var(--swatch-contrast);
-  color: white;
-}
-
-.selected-list-card {
-  background-color: var(--swatch-accent);
-  color: white;
-}
-
-.unselected-list-card {
-  background-color: var(--swatch-complement);
-}
-
-.list-card-button {
-  float: right;
-  transform: scale(1);
-}
-
-#workspace-home,
-#workspace-edit {
-  position: absolute;
-  left: 0%;
-  top: 0%;
-  width: 100%;
-  height: 100%;
-}
-
-#edit-numbering {
-  position: absolute;
-  left: 0%;
-  top: 0%;
-  width: 20%;
-  height: 100%;
-  background-color: var(--swatch-status);
-}
-
-#edit-items {
-  position: absolute;
-  left: 20%;
-  top: 0%;
-  width: 80%;
-  height: 100%;
-  background-color: var(--swatch-primary);
-}
-
-.item-number,
-.top5-item,
-.top5-item-dragged-to {
-  display: flex;
-  align-items: center;
-  font-size: 48pt;
-  height: 20%;
-}
-
-.item-number {
-  justify-content: center;
-  width: 100%;
-  border: 1px 0px 1px 1px;
-  border-color: black;
-  background-color: linen;
-  color: black;
-}
-
-input {
-  font-size: 20pt;
-}
-
-.top5-item,
-.top5-item-dragged-to {
-  text-align: left;
-  width: 95%;
-  padding-left: 5%;
-}
-.top5-item {
-  background-color: var(--swatch-complement);
-}
-.top5-item-dragged-to {
-  background-color: var(--swatch-accent);
-}
-
-.disabled {
-  background-color: lightgray;
-}
-
-.disabled:hover {
-  color: var(--swatch-neutral);
 }
 
 /* THIS STYLE SHEET MANAGES STYLE FOR OUR MODAL, i.e. DIALOG BOX */

@@ -19,12 +19,12 @@ function PublishedArea(props) {
     return (
         <div className='workspace'>
             <List 
-                id="list-selector-list" 
+                id="published-list" 
                 sx={{  width:'100%' , backgroundColor: 'transparent' }}
             >
                 {
                 store.currentList? store.currentList.songs.map((song, index) => (
-                    <div key={index+1}>
+                    <div className='published-card' key={index+1}>
                         <p>
                         {index + 1}. {song.title} by {song.artist}
                         </p>

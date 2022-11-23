@@ -27,6 +27,7 @@ function PublishedToolbar(props) {
     return (
         <div style={{alignSelf:'flex-end'}}>
                 <Button 
+                style={{backgroundColor:'#071935'}}
                 variant="contained"
                 onClick={(event) => {
                             handleDeleteList(event,id)
@@ -36,6 +37,7 @@ function PublishedToolbar(props) {
                 </Button>
 
                 <Button
+                style={{backgroundColor:'#071935'}}
                 variant="contained"
                 onClick={(event) => {
                             handleDuplicate(event,id)

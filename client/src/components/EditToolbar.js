@@ -41,6 +41,7 @@ function EditToolbar(props) {
         <div id="edit-toolbar">
             <div> 
                 <Button 
+                    
                     disabled={!store.canUndo()}
                     id='undo-button'
                     onClick={handleUndo}
@@ -59,6 +60,7 @@ function EditToolbar(props) {
             
             <div> 
                 <Button 
+                style={{backgroundColor:'#071935'}}
                 variant="contained"
                 onClick={(event) => {
                     handlePublishList(event,id)
@@ -68,6 +70,7 @@ function EditToolbar(props) {
                 </Button>
             
                 <Button 
+                style={{backgroundColor:'#071935'}}
                 variant="contained"
                 onClick={(event) => {
                             handleDeleteList(event,id)
@@ -77,6 +80,7 @@ function EditToolbar(props) {
                 </Button>
 
                 <Button
+                style={{backgroundColor:'#071935'}}
                 variant="contained"
                 onClick={(event) => {
                             handleDuplicate(event,id)
