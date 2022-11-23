@@ -124,7 +124,7 @@ getPlaylistById = async (req, res) => {
     }).catch(err => console.log(err))
 }
 
-getPlaylistPairs = async (req, res) => {
+getPlaylists = async (req, res) => {
     if(auth.verifyUser(req) === null){
         return res.status(400).json({
             errorMessage: 'UNAUTHORIZED'
@@ -142,17 +142,22 @@ getPlaylistPairs = async (req, res) => {
                         .json({ success: false, error: 'Playlists not found' })
                 }
                 else {
-                    let pairs = [];
+                    let fields = [];
                     for (let key in playlists) {
                         let list = playlists[key];
-                        let pair = {
+                        let field = {
                             _id: list._id,
                             name: list.name,
-                            comments:list.comments,
+                            owner:list.owner,
+                            date:list.date,
+                            published:list.published,
+                            listens:list.listens,
+                            likes:list.likes,
+                            dislikes:list.dislikes,
                         };
-                        pairs.push(pair);
+                        fields.push(field);
                     }
-                    return res.status(200).json({ success: true, idNamePairs: pairs })
+                    return res.status(200).json({ success: true, playlists: fields })
                 }
             }).catch(err => console.log(err))
         }
@@ -160,7 +165,7 @@ getPlaylistPairs = async (req, res) => {
     }).catch(err => console.log(err))
 }
 
-getPlaylists = async (req, res) => {
+getPlaylistPairs = async (req, res) => {
     if(auth.verifyUser(req) === null){
         return res.status(400).json({
             errorMessage: 'UNAUTHORIZED'
@@ -185,9 +190,8 @@ getPlaylists = async (req, res) => {
         }
         asyncFindList(user.email);
     }).catch(err => console.log(err))
-    
- 
 }
+
 updatePlaylist = async (req, res) => {
     if(auth.verifyUser(req) === null){
         return res.status(400).json({

@@ -8,7 +8,6 @@ import { GlobalStoreContext } from '../store/index.js'
 import EditToolbar from './EditToolbar'
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
-import MUIDeleteModal from './MUIDeleteModal.js'
 
 function WorkspaceScreen(props) {
     const { store } = useContext(GlobalStoreContext);
