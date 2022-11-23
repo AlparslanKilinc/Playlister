@@ -64,12 +64,9 @@ function GlobalStoreContextProvider(props) {
         search:"",
     });
     const history = useHistory();
-
-    console.log("inside useGlobalStore");
-
     // SINCE WE'VE WRAPPED THE STORE IN THE AUTH CONTEXT WE CAN ACCESS THE USER HERE
     const { auth } = useContext(AuthContext);
-    console.log("auth: " + auth);
+
 
     // HERE'S THE DATA STORE'S REDUCER, IT MUST
     // HANDLE EVERY TYPE OF STATE CHANGE
@@ -352,8 +349,8 @@ function GlobalStoreContextProvider(props) {
     // THIS FUNCTION CREATES A NEW LIST
     store.createNewList = async function () {
         let newListName = "Untitled";
-        let name=auth.user.firstName+' '+auth.user.lastName;
-        const response = await api.createPlaylist(newListName, [], auth.user.email,[],name);
+      
+        const response = await api.createPlaylist(newListName, [], auth.user.email,[],auth.user.userName);
         console.log("createNewList response: " + response);
         if (response.status === 201) {
             tps.clearAllTransactions();
