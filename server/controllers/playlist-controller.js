@@ -1,6 +1,7 @@
 const Playlist = require('../models/playlist-model')
 const User = require('../models/user-model');
 const auth = require('../auth');
+let Counter=0;
 
 createPlaylist = (req, res) => {
     if(auth.verifyUser(req) === null){
@@ -8,25 +9,28 @@ createPlaylist = (req, res) => {
             errorMessage: 'UNAUTHORIZED'
         })
     }
-    const body = req.body;
-    console.log("createPlaylist body: " + JSON.stringify(body));
-
+    let body = req.body;
     if (!body) {
         return res.status(400).json({
             success: false,
             error: 'You must provide a Playlist',
         })
     }
+    console.log(Playlist.find({name:body.name}));
+    console.log("above this");
+    /// Checking if Same name exists
+    if(Playlist.find({name:body.name})){
+        body.name=body.name+Counter++;
+    } 
 
     const playlist = new Playlist(body);
-    console.log("playlist: " + playlist.toString());
     if (!playlist) {
         return res.status(400).json({ success: false, error: err })
     }
 
+ 
+        
     User.findOne({ _id: req.userId }, (err, user) => {
-        console.log("user found: " + JSON.stringify(user));
-        console.log(playlist);
         if (playlist.ownerEmail === user.email) {
         user.playlists.push(playlist._id);
         user
@@ -53,16 +57,14 @@ createPlaylist = (req, res) => {
         }
     })
 }
+
 deletePlaylist = async (req, res) => {
     if(auth.verifyUser(req) === null){
         return res.status(400).json({
             errorMessage: 'UNAUTHORIZED'
         })
     }
-    console.log("delete Playlist with id: " + JSON.stringify(req.params.id));
-    console.log("delete " + req.params.id);
     Playlist.findById({ _id: req.params.id }, (err, playlist) => {
-        console.log("playlist found: " + JSON.stringify(playlist));
         list= JSON.stringify(playlist);
         if (err) {
             return res.status(404).json({
@@ -73,10 +75,7 @@ deletePlaylist = async (req, res) => {
         // DOES THIS LIST BELONG TO THIS USER?
         async function asyncFindUser(list) {
             User.findOne({ email: list.ownerEmail }, (err, user) => {
-                console.log("user._id: " + user._id);
-                console.log("req.userId: " + req.userId);
                 if (user._id == req.userId) {
-                    console.log("correct user!");
                     user.playlists=user.playlists.filter(list=>JSON.stringify(list)!==JSON.stringify(playlist._id));
                     user
                         .save()
@@ -104,19 +103,13 @@ getPlaylistById = async (req, res) => {
             errorMessage: 'UNAUTHORIZED'
         })
     }
-    console.log("Find Playlist with id: " + JSON.stringify(req.params.id));
-
     await Playlist.findById({ _id: req.params.id }, (err, list) => {
         if (err) {
             return res.status(400).json({ success: false, error: err , errorMessage:"Playlist Does Not Exists"});
         }
-        console.log("Found list: " + JSON.stringify(list));
-
         // DOES THIS LIST BELONG TO THIS USER?
         async function asyncFindUser(list) {
             await User.findOne({ email: list.ownerEmail }, (err, user) => {
-                console.log("user._id: " + user._id);
-                console.log("req.userId: " + req.userId);
                 if (user._id == req.userId) {
                     console.log("correct user!");
                     return res.status(200).json({ success: true, playlist: list })
@@ -137,25 +130,18 @@ getPlaylistPairs = async (req, res) => {
             errorMessage: 'UNAUTHORIZED'
         })
     }
-    console.log("getPlaylistPairs");
     await User.findOne({ _id: req.userId }, (err, user) => {
-        console.log("find user with id " + req.userId);
         async function asyncFindList(email) {
-            console.log("find all Playlists owned by " + email);
             await Playlist.find({ ownerEmail: email }, (err, playlists) => {
-                console.log("found Playlists: " + JSON.stringify(playlists));
                 if (err) {
                     return res.status(400).json({ success: false, error: err })
                 }
                 if (!playlists) {
-                    console.log("!playlists.length");
                     return res
                         .status(404)
                         .json({ success: false, error: 'Playlists not found' })
                 }
                 else {
-                    console.log("Send the Playlist pairs");
-                    // PUT ALL THE LISTS INTO ID, NAME PAIRS
                     let pairs = [];
                     for (let key in playlists) {
                         let list = playlists[key];
@@ -180,18 +166,13 @@ getPlaylists = async (req, res) => {
             errorMessage: 'UNAUTHORIZED'
         })
     }
-    console.log("getPlaylists");
     await User.findOne({ _id: req.userId }, (err, user) => {
-        console.log("find user with id " + req.userId);
         async function asyncFindList(email) {
-            console.log("find all Playlists owned by " + email);
             await Playlist.find({ ownerEmail: email }, (err, playlists) => {
-                console.log("found Playlists: " + JSON.stringify(playlists));
                 if (err) {
                     return res.status(400).json({ success: false, error: err })
                 }
                 if (!playlists) {
-                    console.log("!playlists.length");
                     return res
                         .status(404)
                         .json({ success: false, error: 'Playlists not found' })
@@ -214,9 +195,6 @@ updatePlaylist = async (req, res) => {
         })
     }
     const body = req.body
-    console.log("updatePlaylist: " + JSON.stringify(body));
-    console.log("req.body.name: " + req.body);
-
     if (!body) {
         return res.status(400).json({
             success: false,
@@ -225,7 +203,6 @@ updatePlaylist = async (req, res) => {
     }
 
     Playlist.findOne({ _id: req.params.id }, (err, playlist) => {
-        console.log("playlist found: " + JSON.stringify(playlist));
         if (err) {
             return res.status(404).json({
                 err,
@@ -236,12 +213,7 @@ updatePlaylist = async (req, res) => {
         // DOES THIS LIST BELONG TO THIS USER?
         async function asyncFindUser(list) {
             await User.findOne({ email: list.ownerEmail }, (err, user) => {
-                console.log("user._id: " + user._id);
-                console.log("req.userId: " + req.userId);
                 if (user._id == req.userId) {
-                    console.log("correct user!");
-                    console.log("req.body.name: " + req.body.name);
-
                     list.name = body.playlist.name;
                     list.songs = body.playlist.songs;
                     list.ownerEmail=body.playlist.ownerEmail;

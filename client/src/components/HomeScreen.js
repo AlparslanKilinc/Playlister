@@ -47,7 +47,6 @@ const HomeScreen = () => {
     /// Accordion 
     const [expanded, setExpanded] = React.useState(false);
     const handleChange = (panel,id) => (event, isExpanded) => {
-        console.log(id);
       setExpanded(isExpanded ? panel : false);
       store.clearTransaction();
       store.setCurrentList(id);
@@ -55,7 +54,7 @@ const HomeScreen = () => {
 
    
 
-    function handleCreateNewList(event) {
+    function handleCreateNewList() {
         setExpanded(false);
         store.createNewList();
     }

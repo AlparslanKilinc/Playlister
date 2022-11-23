@@ -14,8 +14,6 @@ getLoggedIn = async (req, res) => {
         }
 
         const loggedInUser = await User.findOne({ _id: userId });
-        console.log("loggedInUser: " + loggedInUser);
-
         return res.status(200).json({
             loggedIn: true,
             user: {
@@ -25,13 +23,11 @@ getLoggedIn = async (req, res) => {
             }
         })
     } catch (err) {
-        console.log("err: " + err);
         res.json(false);
     }
 }
 
 loginUser = async (req, res) => {
-    console.log("loginUser");
     try {
         const { email, password } = req.body;
 
@@ -42,7 +38,6 @@ loginUser = async (req, res) => {
         }
 
         const existingUser = await User.findOne({ email: email });
-        console.log("existingUser: " + existingUser);
         if (!existingUser) {
             return res
                 .status(401)
@@ -54,7 +49,6 @@ loginUser = async (req, res) => {
         console.log("provided password: " + password);
         const passwordCorrect = await bcrypt.compare(password, existingUser.passwordHash);
         if (!passwordCorrect) {
-            console.log("Incorrect password");
             return res
                 .status(401)
                 .json({
@@ -65,7 +59,6 @@ loginUser = async (req, res) => {
         // LOGIN THE USER
         const token = auth.signToken(existingUser._id);
         console.log(token);
-
         res.cookie("token", token, {
             httpOnly: true,
             secure: true,
