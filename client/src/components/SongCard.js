@@ -48,8 +48,6 @@ function SongCard(props) {
             store.showEditSongModal(index, song);
     }
 
-    
-
     return (
         <div
             key={index}
