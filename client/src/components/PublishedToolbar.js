@@ -1,15 +1,23 @@
-import { useContext,useState } from 'react'
+import { useContext,useState,useEffect } from 'react'
 import { GlobalStoreContext } from '../store'
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-
+import AuthContext from '../auth'
 
 
 function PublishedToolbar(props) {
     const { store } = useContext(GlobalStoreContext);
+    const { auth } = useContext(AuthContext);
     const {id} = props;
-    
+   
+    useEffect(() => {
+        store.LoadPublishedPlaylists();
+        store.setPublishedList(id);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+ 
     function handleDeleteList(event, id) {
         event.stopPropagation();
         store.markListForDeletion(id);
@@ -19,10 +27,11 @@ function PublishedToolbar(props) {
         event.stopPropagation();
         console.log("duplicate");
     }
+      
 
     return (
         <div style={{alignSelf:'flex-end'}}>
-                <Button 
+                <Button
                 style={{backgroundColor:'#071935'}}
                 variant="contained"
                 onClick={(event) => {
@@ -33,6 +42,7 @@ function PublishedToolbar(props) {
                 </Button>
 
                 <Button
+                disabled={!auth.loggedIn}
                 style={{backgroundColor:'#071935'}}
                 variant="contained"
                 onClick={(event) => {

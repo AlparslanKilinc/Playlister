@@ -1,17 +1,16 @@
 import { useContext,useEffect,useState } from 'react'
 import List from '@mui/material/List';
 import { GlobalStoreContext } from '../store/index.js'
-import MUIDeleteModal from './MUIDeleteModal.js'
 import PublishedToolbar from './PublishedToolbar.js';
 
 
 function PublishedArea(props) {
     const { store } = useContext(GlobalStoreContext);
     const {id} = props;
-    
+   
     useEffect(() => {
-          store.LoadPlaylists();
-          store.setCurrentList(id);
+          store.LoadPublishedPlaylists();
+          store.setPublishedList(id);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     

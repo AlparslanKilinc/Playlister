@@ -2,17 +2,14 @@
 import { useContext } from 'react'
 import * as React from 'react';
 import { AlertTitle ,Typography, Button,Modal,Alert,Box } from '@mui/material';
-import { useHistory } from 'react-router-dom'
 import { GlobalStoreContext } from '../store/index.js'
 
 
 export default function MUIAccessErrorModal() {
-  const history = useHistory();
   const { store } = useContext(GlobalStoreContext);
 
-
   let handleClose = ()=>{
-    history.push("/");
+    store.hideModals();
   }
 
 return(

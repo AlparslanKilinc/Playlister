@@ -31,7 +31,7 @@ export default function SplashScreen() {
                 as well as share playlists 
                 so that others may then play and comment on them
             </Typography>
-            <Button href="/" style={{width:'190px', height:'70px', color:'white' , backgroundColor:"black"}}variant="contained">Continue as Guest</Button>
+            <Button href="/AllLists" style={{width:'190px', height:'70px', color:'white' , backgroundColor:"black"}}variant="contained">Continue as Guest</Button>
             </div>
          <Copyright style={{position: "fixed" , bottom: 0}}/>
         </div>

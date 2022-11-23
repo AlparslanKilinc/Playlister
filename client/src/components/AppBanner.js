@@ -30,12 +30,9 @@ export default function AppBanner() {
     const handleLogout = () => {
         handleMenuClose();
         auth.logoutUser();
-        store.closeCurrentList();
+        store.clearTransaction();
     }
 
-    const handleCloseList = () => {
-        store.closeCurrentList();
-    }
 
     const menuId = 'primary-search-account-menu';
     const loggedOutMenu = (
@@ -83,7 +80,6 @@ export default function AppBanner() {
     
     function getAccountMenu(loggedIn) {
         let userInitials = auth.getUserInitials();
-        console.log("userInitials: " + userInitials);
         if (loggedIn) 
             return <div>{userInitials}</div>;
         else
@@ -95,7 +91,7 @@ export default function AppBanner() {
             <AppBar style={{backgroundColor:"#071935"}} position="static">
                 <Toolbar>
                  
-                        <Link style={{  display:'flex' , alignItems:'center', textDecoration: 'none', color: 'white' }} to='/' onClick={handleCloseList}>
+                        <Box style={{  display:'flex' , alignItems:'center', textDecoration: 'none', color: 'white' }}>
                             <YouTubeIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
                             <Typography                        
                         variant="h6"
@@ -105,7 +101,7 @@ export default function AppBanner() {
                     >
                        Playlister
                     </Typography>
-                        </Link>
+                        </Box>
                  
                     <Box sx={{ flexGrow: 1 }}></Box>
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>

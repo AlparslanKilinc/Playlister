@@ -1,8 +1,5 @@
 import React, { useContext, useEffect,useState } from 'react'
 import { GlobalStoreContext } from '../store'
-import ListCard from './ListCard.js'
-import AddIcon from '@mui/icons-material/Add';
-import Fab from '@mui/material/Fab'
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography'
 import AppTools from './AppTools';
@@ -16,7 +13,6 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
-import { WorkspaceScreen } from '.';
 import PublishedCard from './PublishedCard';
 import { useHistory } from 'react-router-dom'
 import PublishedArea from './PublishedArea';
@@ -24,7 +20,7 @@ import MUIDeleteModal from './MUIDeleteModal';
 
 
 
-const HomeScreen = () => {
+const AllListScreen = () => {
     const theme = createTheme({
         palette: {
           primary: {
@@ -41,7 +37,7 @@ const HomeScreen = () => {
     store.history = useHistory();
 
     useEffect(() => {
-        store.LoadPlaylists();
+        store.LoadPublishedPlaylists();
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     /// Accordion 
@@ -49,15 +45,8 @@ const HomeScreen = () => {
     const handleChange = (panel,id) => (event, isExpanded) => {
       setExpanded(isExpanded ? panel : false);
       store.clearTransaction();
-      store.setCurrentList(id);
+      store.setPublishedList(id);
     };
-
-   
-
-    function handleCreateNewList() {
-        setExpanded(false);
-        store.createNewList();
-    }
 
     let togglePlayer = ()=>{
             setPlayerVariant("contained");
@@ -74,22 +63,23 @@ const HomeScreen = () => {
     //// Editing Functions 
         
     let Lists = "";
-    if (store.playlists) {
+    if (store.PublishedPlaylists) {
         Lists = 
         <List sx={{width: '90%', left: '5%'}}>
         {
-            store.playlists.map((list,id=0) => (
-            <Accordion key={list._id} id='user-list' expanded={expanded === 'panel'+(id+1).toString() } onChange={handleChange('panel'+(id+1).toString(),list._id)}>
+            store.PublishedPlaylists.map((list,id=0) => (
+              
+            <Accordion key={list._id} id='user-list' expanded={expanded == 'panel'+(id+1).toString()} onChange={handleChange('panel'+(id+1).toString(),list._id)}>
                 <AccordionSummary
                 expandIcon={<KeyboardDoubleArrowDownIcon />}
                 aria-controls="panel1bh-content"
                 id="panel1bh-header"
                 >
-                {list.published ? <PublishedCard key={list._id} List={list} selected={false}/>: <ListCard key={list._id} List={list} selected={false}/>}
+                {list.published ? <PublishedCard key={list._id} List={list} selected={false}/>:""}
                 </AccordionSummary>
 
                 <AccordionDetails>
-                    {list.published ? <PublishedArea key={list._id} id={list._id}/>: <WorkspaceScreen key={list._id} id={list._id}/>}
+                    {list.published ? <PublishedArea key={list._id} id={list._id}/>:""}
                 </AccordionDetails>
 
             </Accordion>
@@ -118,14 +108,7 @@ const HomeScreen = () => {
             </div>
 
             <div className="home-footer">
-            <Fab 
-                aria-label="add"
-                id="add-list-button"
-                onClick={handleCreateNewList}
-            >
-                <AddIcon />
-            </Fab>
-                <Typography variant="h2">Your Lists</Typography>
+                <Typography variant="h2">Search Playlists</Typography>
             </div>
             <MUIDeleteModal/>
         </div>)
@@ -133,4 +116,4 @@ const HomeScreen = () => {
 
 
 
-export default HomeScreen;
+export default AllListScreen;

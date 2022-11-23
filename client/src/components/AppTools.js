@@ -10,6 +10,7 @@ import StyledMenu from './StyledMenu'
 import TextField from '@mui/material/TextField';
 import { IconButton } from '@mui/material';
 import { GlobalStoreContext } from '../store'
+import AuthContext from '../auth'
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -28,6 +29,7 @@ const Search = styled('div')(({ theme }) => ({
 
 export default function AppTools() {
   const { store } = useContext(GlobalStoreContext);
+  const { auth } = useContext(AuthContext);
 
   const handleSearch = (event) => {
     event.preventDefault();
@@ -39,11 +41,11 @@ export default function AppTools() {
       <AppBar  position="static">
         <Toolbar id='AppTools' >
         <div className='tool-icons'>
-        <IconButton aria-label="home">
+        <IconButton href="/" disabled={!auth.loggedIn} aria-label="home">
           <HomeIcon/>
         </IconButton>
 
-        <IconButton aria-label="all-list">
+        <IconButton href="/AllLists" aria-label="all-list">
           <Groups3Icon/>
         </IconButton>
 
