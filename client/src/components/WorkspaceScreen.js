@@ -61,7 +61,7 @@ function WorkspaceScreen(props) {
                 <AddIcon  />
          </Button>
          <EditToolbar id={id}></EditToolbar>
-         <MUIDeleteModal/>
+         
          </div>
     )
 }

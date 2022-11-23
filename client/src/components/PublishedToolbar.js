@@ -11,7 +11,6 @@ function PublishedToolbar(props) {
     const {id} = props;
     
     function handleDeleteList(event, id) {
-        event.preventDefault();
         event.stopPropagation();
         store.markListForDeletion(id);
     }

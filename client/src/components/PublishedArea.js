@@ -33,7 +33,7 @@ function PublishedArea(props) {
                 }
             </List>
             <PublishedToolbar id={id}></PublishedToolbar>
-            <MUIDeleteModal />
+           
          </div>
     )
 }

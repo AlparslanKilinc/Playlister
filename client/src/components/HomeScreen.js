@@ -20,6 +20,7 @@ import { WorkspaceScreen } from '.';
 import PublishedCard from './PublishedCard';
 import { useHistory } from 'react-router-dom'
 import PublishedArea from './PublishedArea';
+import MUIDeleteModal from './MUIDeleteModal';
 
 
 
@@ -46,12 +47,13 @@ const HomeScreen = () => {
     /// Accordion 
     const [expanded, setExpanded] = React.useState(false);
     const handleChange = (panel,id) => (event, isExpanded) => {
+        console.log(id);
       setExpanded(isExpanded ? panel : false);
       store.clearTransaction();
       store.setCurrentList(id);
     };
 
- 
+   
 
     function handleCreateNewList(event) {
         setExpanded(false);
@@ -78,7 +80,7 @@ const HomeScreen = () => {
         <List sx={{width: '90%', left: '5%'}}>
         {
             store.playlists.map((list,id=0) => (
-            <Accordion key={list._id} id='user-list' expanded={expanded === 'panel'+id+1} onChange={handleChange('panel'+id+1,list._id)}>
+            <Accordion key={list._id} id='user-list' expanded={expanded === 'panel'+id+1 && store.currentList} onChange={handleChange('panel'+id+1,list._id)}>
                 <AccordionSummary
                 expandIcon={<KeyboardDoubleArrowDownIcon />}
                 aria-controls="panel1bh-content"
@@ -126,6 +128,7 @@ const HomeScreen = () => {
             </Fab>
                 <Typography variant="h2">Your Lists</Typography>
             </div>
+            <MUIDeleteModal/>
         </div>)
 }
 
