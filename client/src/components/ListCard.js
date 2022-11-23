@@ -12,6 +12,13 @@ function ListCard(props) {
     const [text, setText] = useState("");
     const {List} = props;
 
+
+    useEffect(() => {
+        store.LoadPlaylists();
+        store.setCurrentList(List._id);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
     function handleLoadList(event, id) {
         if (!event.target.disabled) {
             store.setCurrentList(id);
@@ -19,6 +26,7 @@ function ListCard(props) {
     }
 
     function handleToggleEdit(event) {
+        event.preventDefault();
         event.stopPropagation();
         toggleEdit();
     }
@@ -38,6 +46,7 @@ function ListCard(props) {
             store.changeListName(id, text);
             toggleEdit();
         }
+        
     }
     function handleUpdateText(event) {
         setText(event.target.value);

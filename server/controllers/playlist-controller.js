@@ -259,6 +259,7 @@ updatePlaylist = async (req, res) => {
                             return res.status(200).json({
                                 success: true,
                                 id: list._id,
+                                list:list,
                                 message: 'Playlist updated!',
                             })
                         })

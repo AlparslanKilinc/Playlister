@@ -81,7 +81,7 @@ function GlobalStoreContextProvider(props) {
                 return setStore({
                     currentModal : CurrentModal.NONE,
                     playlists: payload.playlists,
-                    currentList: store.currentList,
+                    currentList: payload.playlist,
                     currentSongIndex: -1,
                     currentSong: null,
                     newListCounter: store.newListCounter,
@@ -302,20 +302,22 @@ function GlobalStoreContextProvider(props) {
                 async function updateList(playlist) {
                     response = await api.updatePlaylistById(playlist._id, playlist);
                     if (response.data.success) {
-                        async function getPlaylists(playlist) {
+                        let newCurrentList=response.data.list;
+                        async function getPlaylists() {
                             response = await api.getPlaylists();
                             if (response.data.success) {
-                                let pairsArray = response.data.playlists;
+                                let NewPlaylists = response.data.playlists;
                                 storeReducer({
                                     type: GlobalStoreActionType.CHANGE_LIST_NAME,
                                     payload: {
-                                        playlists: pairsArray,
-                                        playlist: playlist
+                                        playlists: NewPlaylists,
+                                        playlist: newCurrentList
                                     }
                                 });
+                                
                             }
                         }
-                        getPlaylists(playlist);
+                        getPlaylists();
                     }
                 }
                 updateList(playlist);

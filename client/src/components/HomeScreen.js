@@ -20,15 +20,10 @@ import { WorkspaceScreen } from '.';
 import PublishedCard from './PublishedCard';
 import { useHistory } from 'react-router-dom'
 import PublishedArea from './PublishedArea';
-import RedoIcon from '@mui/icons-material/Redo';
-import UndoIcon from '@mui/icons-material/Undo';
-import DeleteIcon from '@mui/icons-material/Delete';
-import PublishIcon from '@mui/icons-material/Publish';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+
 
 
 const HomeScreen = () => {
-    
     const theme = createTheme({
         palette: {
           primary: {
@@ -43,6 +38,11 @@ const HomeScreen = () => {
     const [playerVariant, setPlayerVariant] = useState("contained");
     const [commentsVariant, setCommentsVariant] = useState("outlined");
     store.history = useHistory();
+
+    useEffect(() => {
+        store.LoadPlaylists();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
     /// Accordion 
     const [expanded, setExpanded] = React.useState(false);
     const handleChange = (panel,id) => (event, isExpanded) => {
@@ -71,32 +71,7 @@ const HomeScreen = () => {
     }
 
     //// Editing Functions 
-    function handleUndo(event) {
-        event.stopPropagation();
-        store.undo();
-    }
-    function handleRedo(event) {
-        event.stopPropagation();
-        store.redo();
-    }
-    async function handleDeleteList(event, id) {
-        event.preventDefault();
-        event.stopPropagation();
-        store.markListForDeletion(id);
-    }
-    function handlePublishList(event,id) {
-        event.preventDefault();
-        event.stopPropagation();
-        store.publishList(id);
-    }
-
-    async function handleDuplicate(event, id) {
-        event.stopPropagation();
-        console.log("duplicate");
-    }
-            
         
-
     let Lists = "";
     if (store.playlists) {
         Lists = 

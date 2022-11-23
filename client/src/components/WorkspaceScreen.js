@@ -59,7 +59,7 @@ function WorkspaceScreen(props) {
                 variant="contained">
                 <AddIcon />
          </Button>
-         <EditToolbar></EditToolbar>
+         <EditToolbar id={id}></EditToolbar>
          <MUIDeleteModal/>
          </div>
     )

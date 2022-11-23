@@ -13,14 +13,12 @@ import SkipNextIcon from '@mui/icons-material/SkipNext';
 
 export const VideoPlayer = () => {
 
-  const { store } = useContext(GlobalStoreContext);
-  const [currentSong, updateCurrentSong] = useState(0);
-  const theme = useTheme();
+const { store } = useContext(GlobalStoreContext);
+const [currentSong, updateCurrentSong] = useState(0);
+const theme = useTheme();
   
-  useEffect(() => {
-    store.LoadPlaylists();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+
+
 
 const playerOptions = {
   height:'100%',

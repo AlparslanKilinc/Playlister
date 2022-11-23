@@ -1,7 +1,6 @@
 import { useContext,useEffect,useState } from 'react'
 import List from '@mui/material/List';
 import { GlobalStoreContext } from '../store/index.js'
-import EditToolbar from './EditToolbar'
 import MUIDeleteModal from './MUIDeleteModal.js'
 import PublishedToolbar from './PublishedToolbar.js';
 
@@ -33,7 +32,7 @@ function PublishedArea(props) {
                     )):""
                 }
             </List>
-            <PublishedToolbar></PublishedToolbar>
+            <PublishedToolbar id={id}></PublishedToolbar>
             <MUIDeleteModal />
          </div>
     )
