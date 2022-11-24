@@ -20,7 +20,7 @@ import MUIDeleteModal from './MUIDeleteModal';
 import AuthContext from '../auth'
 
 
-const AllListScreen = () => {
+const UserScreen = () => {
     const theme = createTheme({
         palette: {
           primary: {
@@ -65,9 +65,9 @@ const AllListScreen = () => {
     let Lists = "";
     if (store.PublishedPlaylists) {
       let playlists=store.PublishedPlaylists;
-      /// Search by PlaylistName
+      /// Search by UserName
       if(store.search!==""){
-        playlists= playlists.filter( list => list.name.startsWith(store.search));
+        playlists= playlists.filter( list => list.owner.startsWith(store.search));
       }
         Lists = 
         <List sx={{width: '90%', left: '5%'}}>
@@ -113,7 +113,7 @@ const AllListScreen = () => {
             </div>
 
             <div className="home-footer">
-                <Typography variant="h2"> {store.search}  Playlists</Typography>
+                <Typography variant="h2"> {store.search} Lists</Typography>
             </div>
             <MUIDeleteModal/>
         </div>)
@@ -121,4 +121,4 @@ const AllListScreen = () => {
 
 
 
-export default AllListScreen;
+export default UserScreen;
