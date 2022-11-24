@@ -89,7 +89,7 @@ const HomeScreen = () => {
                 </AccordionSummary>
 
                 <AccordionDetails>
-                    {list.published ? <PublishedArea key={list._id} id={list._id}/>: <WorkspaceScreen key={list._id} id={list._id}/>}
+                    {list.published ? <PublishedArea userName={list.owner} key={list._id} id={list._id}/>: <WorkspaceScreen key={list._id} id={list._id}/>}
                 </AccordionDetails>
 
             </Accordion>

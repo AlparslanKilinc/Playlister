@@ -17,7 +17,7 @@ import PublishedCard from './PublishedCard';
 import { useHistory } from 'react-router-dom'
 import PublishedArea from './PublishedArea';
 import MUIDeleteModal from './MUIDeleteModal';
-
+import AuthContext from '../auth'
 
 
 const AllListScreen = () => {
@@ -29,7 +29,7 @@ const AllListScreen = () => {
           },
         },
       });
-      
+    const { auth } = useContext(AuthContext);
     const { store } = useContext(GlobalStoreContext);
     const [selection, setSelection] = useState(<VideoPlayer/>);
     const [playerVariant, setPlayerVariant] = useState("contained");
@@ -63,7 +63,7 @@ const AllListScreen = () => {
     //// Editing Functions 
         
     let Lists = "";
-    if (store.PublishedPlaylists) {
+    if (store.PublishedPlaylists && auth.user) {
         Lists = 
         <List sx={{width: '90%', left: '5%'}}>
         {

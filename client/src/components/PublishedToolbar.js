@@ -14,10 +14,10 @@ function PublishedToolbar(props) {
     useEffect(() => {
         store.LoadPublishedPlaylists();
         store.setPublishedList(id);
+        auth.getLoggedIn();
       // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
- 
     function handleDeleteList(event, id) {
         event.stopPropagation();
         store.markListForDeletion(id);
@@ -27,16 +27,11 @@ function PublishedToolbar(props) {
         event.stopPropagation();
         console.log("duplicate");
     }
-    let status=false;
-    if(auth.user){
-        status = auth.user.userName !==userName;
-    }
-      
 
     return (
         <div style={{alignSelf:'flex-end'}}>
                 <Button
-                disabled={status}
+                disabled={userName !== auth.user.userName}
                 style={{backgroundColor:'#071935'}}
                 variant="contained"
                 onClick={(event) => {
