@@ -35,6 +35,7 @@ export default function AppTools(props) {
   const handleSearch = (event) => {
     if (event.key === 'Enter') {
       store.searchHome(event.target.value);
+      store.clearTransaction();
     }
 }
 

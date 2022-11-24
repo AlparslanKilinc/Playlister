@@ -78,7 +78,7 @@ const HomeScreen = () => {
     if (store.playlists) {
 
         let playlists=store.playlists;
-        if(store.searchedList.length){
+        if(store.search){
             playlists=store.searchedList;
         }
         Lists = 

@@ -408,9 +408,10 @@ function GlobalStoreContextProvider(props) {
             const response = await api.updatePlaylistById(id,list);
             if (response.data.success) {
                 store.LoadPlaylists();
+                store.searchHome(store.search);
                 storeReducer({
                     type: GlobalStoreActionType.SET_CURRENT_LIST,
-                    payload: store.currentList
+                    payload: response.data.list
                 });
             }
             else {
@@ -497,7 +498,7 @@ function GlobalStoreContextProvider(props) {
             store.LoadPlaylists();
             store.LoadPublishedPlaylists();
             if (response.data.success) {
-                // history.push("/");
+                store.searchHome(store.search);
             }  
         }
         processDelete(id);

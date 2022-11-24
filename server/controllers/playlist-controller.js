@@ -355,7 +355,7 @@ SearchPlaylists = async (req, res) => {
             await Playlist.find(
                 { 
                     ownerEmail: { $eq:email},
-                    name: search
+                    name: {$regex: search}
                 }
                 , (err, playlists) => {
                 if (err) {
