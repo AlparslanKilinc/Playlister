@@ -258,7 +258,7 @@ function GlobalStoreContextProvider(props) {
                     listIdMarkedForDeletion: store.listIdMarkedForDeletion,
                     listMarkedForDeletion: store.markListForDeletion,
                     message:store.message,
-                    search:payload,
+                    search:store.search,
                 });
             }
             default:
@@ -299,6 +299,7 @@ function GlobalStoreContextProvider(props) {
             });
 
         }
+        
        
     }
 

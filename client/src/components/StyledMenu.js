@@ -67,8 +67,42 @@ export default function CustomizedMenus(props) {
   let SortLastEditDate = ()=>{
     
   }
+
   let SortName = ()=>{
-    
+    let list= [];
+    if(published && store.PublishedPlaylists){
+     list= store.PublishedPlaylists.sort(function(a, b) {
+      const nameA=a.name.toUpperCase();
+      const nameB=b.name.toUpperCase();
+      if (nameA > nameB) {
+        return 1;
+      }
+      if (nameA < nameB) {
+        return -1;
+      }
+      // names must be equal
+      return 0;
+      });
+      store.setSort(true,list);
+    }else{
+
+      if(store.playlists){
+        list= store.playlists.sort(function(a, b) {
+          const nameA=a.name.toUpperCase();
+          const nameB=b.name.toUpperCase();
+          if (nameA > nameB) {
+            return 1;
+          }
+          if (nameA < nameB) {
+            return -1;
+          }
+          // names must be equal
+          return 0;
+          });
+          store.setSort(false,list);
+      }
+
+    }
   }
 
   let SortPublishedDate = ()=>{
@@ -85,7 +119,7 @@ export default function CustomizedMenus(props) {
   }
 
   let Items = 
-  <>
+    <div>
     <MenuItem onClick={SortCreationDate} disableRipple>
     Creation Date (Old-New)
     </MenuItem>
@@ -96,10 +130,10 @@ export default function CustomizedMenus(props) {
     <MenuItem onClick={SortName} disableRipple>
       Name (A-Z)
     </MenuItem>
-  </>
+    </div>;
   if(published){
     Items=
-     <>
+     <div>
       <MenuItem onClick={SortName} disableRipple>
           Name (A-Z)
         </MenuItem>
@@ -117,7 +151,7 @@ export default function CustomizedMenus(props) {
         <MenuItem onClick={SortDislikes} disableRipple>
           Dislikes(High-Low)
         </MenuItem>
-      </>
+      </div>
   }
   return (
     <div>
