@@ -27,14 +27,17 @@ const Search = styled('div')(({ theme }) => ({
   },
 }));
 
-export default function AppTools() {
+export default function AppTools(props) {
   const { store } = useContext(GlobalStoreContext);
   const { auth } = useContext(AuthContext);
 
+
   const handleSearch = (event) => {
-    event.preventDefault();
-    store.setSearch(event.target.value);
-};
+    if (event.key === 'Enter') {
+      store.searchHome(event.target.value);
+    }
+}
+
 
   return (
     <Box>
@@ -49,7 +52,7 @@ export default function AppTools() {
           <Groups3Icon/>
         </IconButton>
 
-        <IconButton aria-label="users">
+        <IconButton href="/Users" aria-label="users">
           <PersonIcon/>
         </IconButton>
         </div>
@@ -59,7 +62,7 @@ export default function AppTools() {
                             id="search"
                             label="Search"
                             name="search"
-                            onChange={handleSearch}
+                            onKeyPress= {handleSearch}
                         />
           </Search>
           <StyledMenu/>

@@ -342,6 +342,57 @@ updatePublishedPlaylistById = async (req, res) => {
             }).catch(err => console.log(err))
         }
 
+//// Search 
+SearchPlaylists = async (req, res) => {
+    if(auth.verifyUser(req) === null){
+        return res.status(400).json({
+            errorMessage: 'UNAUTHORIZED'
+        })
+    }
+    await User.findOne({ _id: req.userId }, (err, user) => {
+        async function asyncFindList(email) {
+            let search=req.params.search;
+            await Playlist.find(
+                { 
+                    ownerEmail: { $eq:email},
+                    name: search
+                }
+                , (err, playlists) => {
+                if (err) {
+                    return res.status(400).json({ success: false, error: err })
+                }
+                if (!playlists) {
+                    return res
+                        .status(404)
+                        .json({ success: false, error: 'Playlists not found' })
+                }
+                else {
+                    let fields = [];
+                    for (let key in playlists) {
+                        let list = playlists[key];
+                        let field = {
+                            _id: list._id,
+                            name: list.name,
+                            owner:list.owner,
+                            date:list.date,
+                            published:list.published,
+                            listens:list.listens,
+                            likes:list.likes,
+                            dislikes:list.dislikes,
+                        };
+                        fields.push(field);
+                        console.log(fields);
+                    }
+                    
+                    return res.status(200).json({ success: true, playlists: fields })
+                }
+            }).catch(err => console.log(err))
+        }
+        asyncFindList(user.email);
+    }).catch(err => console.log(err))
+}
+
+
 
 module.exports = {
     createPlaylist,
@@ -352,4 +403,5 @@ module.exports = {
     updatePlaylist,
     getPublishedPlaylistById,
     updatePublishedPlaylistById,
+    SearchPlaylists
 }

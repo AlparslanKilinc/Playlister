@@ -54,6 +54,7 @@ function GlobalStoreContextProvider(props) {
         listMarkedForDeletion: null,
         message:"",
         search:"",
+        searchedList:[],
     });
     const history = useHistory();
     // SINCE WE'VE WRAPPED THE STORE IN THE AUTH CONTEXT WE CAN ACCESS THE USER HERE
@@ -77,7 +78,8 @@ function GlobalStoreContextProvider(props) {
                     listIdMarkedForDeletion: null,
                     listMarkedForDeletion: null,
                     message:store.message,
-                    search:"",
+                    search:store.search,
+                    searchedList:store.searchedList,
                     
                 });
             }
@@ -93,7 +95,8 @@ function GlobalStoreContextProvider(props) {
                     listIdMarkedForDeletion: null,
                     listMarkedForDeletion: null,
                     message:store.message,
-                    search:"",
+                    search:store.search,
+                    searchedList:store.searchedList,
                 })
             }
             case GlobalStoreActionType.LOAD_PLAYLISTS: {
@@ -108,7 +111,8 @@ function GlobalStoreContextProvider(props) {
                     listIdMarkedForDeletion: null,
                     listMarkedForDeletion: null,
                     message:store.message,
-                    search:"",
+                    search:store.search,
+                    searchedList:store.searchedList,
                 });
             }
             case GlobalStoreActionType.LOAD_PUBLISHED_PLAYLISTS: {
@@ -123,7 +127,8 @@ function GlobalStoreContextProvider(props) {
                     listIdMarkedForDeletion: null,
                     listMarkedForDeletion: null,
                     message:store.message,
-                    search:"",
+                    search:store.search,
+                    searchedList:store.searchedList,
                 });
             }
             case GlobalStoreActionType.MARK_LIST_FOR_DELETION: {
@@ -138,7 +143,8 @@ function GlobalStoreContextProvider(props) {
                     listIdMarkedForDeletion: payload.id,
                     listMarkedForDeletion: payload.playlist,
                     message:store.message,
-                    search:"",
+                    search:store.search,
+                    searchedList:store.searchedList,
                 });
             }
             case GlobalStoreActionType.SET_CURRENT_LIST: {
@@ -153,7 +159,8 @@ function GlobalStoreContextProvider(props) {
                     listIdMarkedForDeletion: null,
                     listMarkedForDeletion: null,
                     message:store.message,
-                    search:"",
+                    search:store.search,
+                    searchedList:store.searchedList,
                 });
             }
             case GlobalStoreActionType.SET_LIST_NAME_EDIT_ACTIVE: {
@@ -168,7 +175,8 @@ function GlobalStoreContextProvider(props) {
                     listIdMarkedForDeletion: null,
                     listMarkedForDeletion: null,
                     message:store.message,
-                    search:"",
+                    search:store.search,
+                    searchedList:store.searchedList,
                 });
             }
             case GlobalStoreActionType.EDIT_SONG: {
@@ -183,7 +191,8 @@ function GlobalStoreContextProvider(props) {
                     listIdMarkedForDeletion: null,
                     listMarkedForDeletion: null,
                     message:store.message,
-                    search:"",
+                    search:store.search,
+                    searchedList:store.searchedList,
                 });
             }
             case GlobalStoreActionType.REMOVE_SONG: {
@@ -198,7 +207,8 @@ function GlobalStoreContextProvider(props) {
                     listIdMarkedForDeletion: null,
                     listMarkedForDeletion: null,
                     message:store.message,
-                    search:"",
+                    search:store.search,
+                    searchedList:store.searchedList,
                 });
             }
             case GlobalStoreActionType.HIDE_MODALS: {
@@ -213,7 +223,8 @@ function GlobalStoreContextProvider(props) {
                     listIdMarkedForDeletion: null,
                     listMarkedForDeletion: null,
                     message:store.message,
-                    search:"",
+                    search:store.search,
+                    searchedList:store.searchedList,
                 });
             }
             case GlobalStoreActionType.ACCESS_ERROR: {
@@ -228,22 +239,24 @@ function GlobalStoreContextProvider(props) {
                     listIdMarkedForDeletion: store.listIdMarkedForDeletion,
                     listMarkedForDeletion: store.listIdMarkedForDeletion,
                     message:payload,
-                    search:"",
+                    search:store.search,
+                    searchedList:store.searchedList,
                 });
             }
               case GlobalStoreActionType.SET_SEARCH: {
                 return setStore({
                     currentModal : CurrentModal.NONE,
-                    playlists: store.playlists,
+                    playlists:store.playlists ,
                     PublishedPlaylists:store.PublishedPlaylists,
                     currentList: store.currentList,
                     currentSongIndex: store.currentSongIndex,
                     currentSong: store.currentSong,
                     listNameActive: store.listNameActive,
                     listIdMarkedForDeletion: store.listIdMarkedForDeletion,
-                    listMarkedForDeletion: store.listIdMarkedForDeletion,
+                    listMarkedForDeletion: store.markListForDeletion,
                     message:store.message,
-                    search:payload,
+                    search:payload.search,
+                    searchedList:payload.playlists,
                 });
             }
             default:
@@ -254,6 +267,40 @@ function GlobalStoreContextProvider(props) {
     // THESE ARE THE FUNCTIONS THAT WILL UPDATE OUR STORE AND
     // DRIVE THE STATE OF THE APPLICATION. WE'LL CALL THESE IN 
     // RESPONSE TO EVENTS INSIDE OUR COMPONENTS.
+
+
+    /// Searching  
+
+    /// Searching Home 
+    store.setSearch = (search)=>{
+        storeReducer({
+            type:GlobalStoreActionType.SET_SEARCH,
+            payload:search
+        });
+    }
+
+    store.searchHome = (search)=>{
+        async function asyncLoadPlaylists() {
+            const response = await api.SearchPlaylists(search);
+            if (response.data.success) {
+                let playlists = response.data.playlists;
+                if(playlists){
+                    console.log("made it here");
+                storeReducer({
+                    type: GlobalStoreActionType.SET_SEARCH,
+                    payload:{
+                        playlists:playlists,
+                        search:search,
+                    }
+                });
+                } 
+            }
+            else {
+                console.log("API FAILED TO SEARCH PLAYLISTS");
+            }
+        }
+        asyncLoadPlaylists();
+    }
 
     store.changeListName = function (id, newName) {
         async function asyncChangeListName(id) {
@@ -461,12 +508,7 @@ function GlobalStoreContextProvider(props) {
     }
     
 
-    store.setSearch = (search)=>{
-        storeReducer({
-            type:GlobalStoreActionType.SET_SEARCH,
-            payload:search
-        });
-    }
+   
     store.showEditSongModal = (songIndex, songToEdit) => {
         storeReducer({
             type: GlobalStoreActionType.EDIT_SONG,

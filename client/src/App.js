@@ -24,6 +24,7 @@ const App = () => {
                         <Route path="/login/" exact component={LoginScreen} />
                         <Route path="/register/" exact component={RegisterScreen} />
                         <Route path="/AllLists/" exact component={AllListScreen} />
+                        <Route path="/Users/" exact component={AllListScreen} />
                     </Switch>
                 </GlobalStoreContextProvider>
             </AuthContextProvider>

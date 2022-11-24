@@ -74,12 +74,18 @@ const HomeScreen = () => {
     //// Editing Functions 
         
     let Lists = "";
+  
     if (store.playlists) {
+
+        let playlists=store.playlists;
+        if(store.searchedList.length){
+            playlists=store.searchedList;
+        }
         Lists = 
         <List sx={{width: '90%', left: '5%'}}>
         {
-            store.playlists.map((list,id=0) => (
-            <Accordion key={list._id} id='user-list' expanded={expanded === 'panel'+(id+1).toString() } onChange={handleChange('panel'+(id+1).toString(),list._id)}>
+                playlists.map((list,id=0) => (
+            <Accordion key={list._id} id='user-list' expanded={expanded === 'panel'+(id+1).toString() && store.currentList } onChange={handleChange('panel'+(id+1).toString(),list._id)}>
                 <AccordionSummary
                 expandIcon={<KeyboardDoubleArrowDownIcon />}
                 aria-controls="panel1bh-content"
@@ -100,7 +106,7 @@ const HomeScreen = () => {
    
     return (
         <div id="home-screen">
-            <AppTools/>
+            <AppTools page={'/'}/>
             <div className="home-main">
                 <div className='list-area'>
                     {Lists}
