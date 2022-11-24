@@ -1,10 +1,12 @@
-import * as React from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { GlobalStoreContext } from '../store'
+import React, { useContext, useEffect,useState } from 'react'
+
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -47,7 +49,9 @@ const StyledMenu = styled((props) => (
   },
 }));
 
-export default function CustomizedMenus() {
+export default function CustomizedMenus(props) {
+  const { store } = useContext(GlobalStoreContext);
+  const {published}= props;
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -57,6 +61,64 @@ export default function CustomizedMenus() {
     setAnchorEl(null);
   };
 
+  let SortCreationDate = ()=>{
+
+  }
+  let SortLastEditDate = ()=>{
+    
+  }
+  let SortName = ()=>{
+    
+  }
+
+  let SortPublishedDate = ()=>{
+    
+  }
+  let SortListens = ()=>{
+    
+  }
+  let SortLikes = ()=>{
+    
+  }
+  let SortDislikes = ()=>{
+    
+  }
+
+  let Items = 
+  <>
+    <MenuItem onClick={SortCreationDate} disableRipple>
+    Creation Date (Old-New)
+    </MenuItem>
+    <Divider sx={{ my: 0.5 }} />
+    <MenuItem onClick={SortLastEditDate} disableRipple>
+    Last Edit Date (New-Old)
+    </MenuItem>
+    <MenuItem onClick={SortName} disableRipple>
+      Name (A-Z)
+    </MenuItem>
+  </>
+  if(published){
+    Items=
+     <>
+      <MenuItem onClick={SortName} disableRipple>
+          Name (A-Z)
+        </MenuItem>
+        <Divider sx={{ my: 0.5 }} />
+        <MenuItem onClick={SortPublishedDate} disableRipple>
+          Published Data(Newest)
+        </MenuItem>
+        
+        <MenuItem onClick={SortListens} disableRipple>
+          Listens(High-Low)
+        </MenuItem>
+        <MenuItem onClick={SortLikes} disableRipple>
+          Likes(High-Low)
+        </MenuItem>
+        <MenuItem onClick={SortDislikes} disableRipple>
+          Dislikes(High-Low)
+        </MenuItem>
+      </>
+  }
   return (
     <div>
       <Button
@@ -81,23 +143,7 @@ export default function CustomizedMenus() {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose} disableRipple>
-          Name (A-Z)
-        </MenuItem>
-        <Divider sx={{ my: 0.5 }} />
-        <MenuItem onClick={handleClose} disableRipple>
-          Published Data(Newest)
-        </MenuItem>
-        
-        <MenuItem onClick={handleClose} disableRipple>
-          Listens(High-Low)
-        </MenuItem>
-        <MenuItem onClick={handleClose} disableRipple>
-          Likes(High-Low)
-        </MenuItem>
-        <MenuItem onClick={handleClose} disableRipple>
-          Dislikes(High-Low)
-        </MenuItem>
+        {Items}
       </StyledMenu>
     </div>
   );

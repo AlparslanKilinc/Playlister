@@ -107,7 +107,7 @@ const HomeScreen = () => {
    
     return (
         <div id="home-screen">
-            <AppTools page={'/'}/>
+            <AppTools published={false}/>
             <div className="home-main">
                 <div className='list-area'>
                     {Lists}

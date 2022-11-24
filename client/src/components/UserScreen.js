@@ -95,7 +95,7 @@ const UserScreen = () => {
    
     return (
         <div id="home-screen">
-            <AppTools page={'/AllLists'}/>
+            <AppTools published={true}/>
             <div className="home-main">
                 <div className='list-area'>
                     {Lists}

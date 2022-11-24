@@ -30,7 +30,7 @@ const Search = styled('div')(({ theme }) => ({
 export default function AppTools(props) {
   const { store } = useContext(GlobalStoreContext);
   const { auth } = useContext(AuthContext);
-  const {page}= props;
+  const {published}= props;
 
   const handleSearch = (event) => {
     if (event.key === 'Enter') {
@@ -72,7 +72,7 @@ export default function AppTools(props) {
                             onKeyPress= {handleSearch}
                         />
           </Search>
-          <StyledMenu/>
+          <StyledMenu published={published}/>
         </Toolbar>
       </AppBar>
     </Box>

@@ -246,6 +246,21 @@ function GlobalStoreContextProvider(props) {
                     search:payload,
                 });
             }
+            case GlobalStoreActionType.SET_SORT: {
+                return setStore({
+                    currentModal : CurrentModal.NONE,
+                    playlists:store.playlists ,
+                    PublishedPlaylists:store.PublishedPlaylists,
+                    currentList: null,
+                    currentSongIndex: store.currentSongIndex,
+                    currentSong: store.currentSong,
+                    listNameActive: store.listNameActive,
+                    listIdMarkedForDeletion: store.listIdMarkedForDeletion,
+                    listMarkedForDeletion: store.markListForDeletion,
+                    message:store.message,
+                    search:payload,
+                });
+            }
             default:
                 return store;
         }
@@ -262,7 +277,29 @@ function GlobalStoreContextProvider(props) {
             type:GlobalStoreActionType.SET_SEARCH,
             payload:search
         });
-        
+    }
+    /// Sorting 
+    store.setSort = (list,published)=>{
+        if(published){
+            storeReducer({
+                type:GlobalStoreActionType.SET_SORT,
+                payload:{
+                    playlist:store.playlists,
+                    PublishedPlaylists:list
+                }
+            });
+
+        }else{
+            storeReducer({
+                type:GlobalStoreActionType.SET_SORT,
+                payload:{
+                    playlist:list,
+                    PublishedPlaylists:store.PublishedPlaylists
+                }
+            });
+
+        }
+       
     }
 
 
