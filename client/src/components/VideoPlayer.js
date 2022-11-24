@@ -16,8 +16,6 @@ export const VideoPlayer = () => {
 const { store } = useContext(GlobalStoreContext);
 const [currentSong, updateCurrentSong] = useState(0);
 const theme = useTheme();
-  
-
 
 
 const playerOptions = {

@@ -76,16 +76,17 @@ const HomeScreen = () => {
     let Lists = "";
   
     if (store.playlists) {
-
+        /// Search by PlaylistName
         let playlists=store.playlists;
-        if(store.search){
-            playlists=store.searchedList;
+        if(store.search!==""){
+           playlists= playlists.filter( list => list.name.startsWith(store.search));
         }
+
         Lists = 
         <List sx={{width: '90%', left: '5%'}}>
         {
                 playlists.map((list,id=0) => (
-            <Accordion key={list._id} id='user-list' expanded={expanded === 'panel'+(id+1).toString() && store.currentList } onChange={handleChange('panel'+(id+1).toString(),list._id)}>
+            <Accordion key={list._id} id='user-list' expanded={expanded === 'panel'+(id+1).toString() && store.currentList} onChange={handleChange('panel'+(id+1).toString(),list._id)}>
                 <AccordionSummary
                 expandIcon={<KeyboardDoubleArrowDownIcon />}
                 aria-controls="panel1bh-content"

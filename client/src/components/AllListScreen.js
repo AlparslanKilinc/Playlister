@@ -63,11 +63,16 @@ const AllListScreen = () => {
     //// Editing Functions 
         
     let Lists = "";
-    if (store.PublishedPlaylists && auth.user) {
+    if (store.PublishedPlaylists) {
+      let playlists=store.PublishedPlaylists;
+      /// Search by PlaylistName
+      if(store.search!==""){
+        playlists= playlists.filter( list => list.name.startsWith(store.search));
+      }
         Lists = 
         <List sx={{width: '90%', left: '5%'}}>
         {
-            store.PublishedPlaylists.map((list,id=0) => (
+            playlists.map((list,id=0) => (
               
             <Accordion key={list._id} id='user-list' expanded={expanded == 'panel'+(id+1).toString() && store.currentList} onChange={handleChange('panel'+(id+1).toString(),list._id)}>
                 <AccordionSummary
@@ -90,7 +95,7 @@ const AllListScreen = () => {
    
     return (
         <div id="home-screen">
-            <AppTools/>
+            <AppTools page={'/AllLists'}/>
             <div className="home-main">
                 <div className='list-area'>
                     {Lists}

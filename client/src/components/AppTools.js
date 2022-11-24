@@ -30,14 +30,19 @@ const Search = styled('div')(({ theme }) => ({
 export default function AppTools(props) {
   const { store } = useContext(GlobalStoreContext);
   const { auth } = useContext(AuthContext);
-
+  const {page}= props;
 
   const handleSearch = (event) => {
     if (event.key === 'Enter') {
-      store.searchHome(event.target.value);
-      store.clearTransaction();
-    }
-}
+      store.setSearch(event.target.value);
+      }
+  }
+
+  
+  const clearSearch = ()=>{
+    store.setSearch("");
+  }
+
 
 
   return (
@@ -45,15 +50,15 @@ export default function AppTools(props) {
       <AppBar  position="static">
         <Toolbar id='AppTools' >
         <div className='tool-icons'>
-        <IconButton href="/" disabled={!auth.loggedIn} aria-label="home">
+        <IconButton href="/" onClick={clearSearch} disabled={!auth.loggedIn} aria-label="home">
           <HomeIcon/>
         </IconButton>
 
-        <IconButton href="/AllLists" aria-label="all-list">
+        <IconButton href="/AllLists" onClick={clearSearch} aria-label="all-list">
           <Groups3Icon/>
         </IconButton>
 
-        <IconButton href="/Users" aria-label="users">
+        <IconButton href="/Users" onClick={clearSearch} aria-label="users">
           <PersonIcon/>
         </IconButton>
         </div>
@@ -63,6 +68,7 @@ export default function AppTools(props) {
                             id="search"
                             label="Search"
                             name="search"
+                            defaultValue={""}
                             onKeyPress= {handleSearch}
                         />
           </Search>

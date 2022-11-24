@@ -27,11 +27,14 @@ function PublishedToolbar(props) {
         event.stopPropagation();
         console.log("duplicate");
     }
-
+    let u = ""
+    if(auth.user){
+        u=auth.user.userName;
+    }
     return (
         <div style={{alignSelf:'flex-end'}}>
                 <Button
-                disabled={userName !== auth.user.userName}
+                disabled={userName  !==  u}
                 style={{backgroundColor:'#071935'}}
                 variant="contained"
                 onClick={(event) => {
