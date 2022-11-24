@@ -79,7 +79,7 @@ const AllListScreen = () => {
                 </AccordionSummary>
 
                 <AccordionDetails>
-                    {list.published ? <PublishedArea key={list._id} id={list._id}/>:""}
+                    {list.published ? <PublishedArea key={list._id} userName={list.owner} id={list._id}/>:""}
                 </AccordionDetails>
 
             </Accordion>

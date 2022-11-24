@@ -9,7 +9,7 @@ import AuthContext from '../auth'
 function PublishedToolbar(props) {
     const { store } = useContext(GlobalStoreContext);
     const { auth } = useContext(AuthContext);
-    const {id} = props;
+    const {id,userName} = props;
    
     useEffect(() => {
         store.LoadPublishedPlaylists();
@@ -27,11 +27,16 @@ function PublishedToolbar(props) {
         event.stopPropagation();
         console.log("duplicate");
     }
+    let status=false;
+    if(auth.user){
+        status = auth.user.userName !==userName;
+    }
       
 
     return (
         <div style={{alignSelf:'flex-end'}}>
                 <Button
+                disabled={status}
                 style={{backgroundColor:'#071935'}}
                 variant="contained"
                 onClick={(event) => {

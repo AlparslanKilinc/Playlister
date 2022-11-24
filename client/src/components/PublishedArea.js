@@ -1,12 +1,12 @@
 import { useContext,useEffect,useState } from 'react'
-import List from '@mui/material/List';
+import List, { listClasses } from '@mui/material/List';
 import { GlobalStoreContext } from '../store/index.js'
 import PublishedToolbar from './PublishedToolbar.js';
 
 
 function PublishedArea(props) {
     const { store } = useContext(GlobalStoreContext);
-    const {id} = props;
+    const {id,userName} = props;
    
     useEffect(() => {
           store.LoadPublishedPlaylists();
@@ -31,7 +31,7 @@ function PublishedArea(props) {
                     )):""
                 }
             </List>
-            <PublishedToolbar id={id}></PublishedToolbar>
+            <PublishedToolbar userName={userName} id={id}></PublishedToolbar>
            
          </div>
     )
