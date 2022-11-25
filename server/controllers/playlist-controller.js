@@ -33,7 +33,6 @@ createPlaylist = async (req, res) => {
         
     User.findOne({ _id: req.userId }, (err, user) => {
         if (playlist.ownerEmail === user.email) {
-        user.playlists.push(playlist._id);
         user
             .save()
             .then(() => {
@@ -77,7 +76,6 @@ deletePlaylist = async (req, res) => {
         async function asyncFindUser(list) {
             User.findOne({ email: list.ownerEmail }, (err, user) => {
                 if (user._id == req.userId) {
-                    user.playlists=user.playlists.filter(list=>JSON.stringify(list)!==JSON.stringify(playlist._id));
                     user
                         .save()
                         .then(() => {
@@ -297,7 +295,73 @@ getPublishedPlaylistById = async (req, res) => {
     }).catch(err => console.log(err))
 }
 
-updatePublishedPlaylistById = async (req, res) => {
+updatePublishedPlaylistComments = async (req, res) => {
+    if(auth.verifyUser(req) === null){
+        return res.status(400).json({
+            errorMessage: 'UNAUTHORIZED'
+        })
+    }
+    const body = req.body;
+    if (!body) {
+        return res.status(400).json({
+            success: false,
+            error: 'You must provide a body to update',
+        })
+    }
+       
+         await Playlist.findOne({ _id: req.params.id }, (err,list) => {
+                if (err) {
+                    return res.status(404).json({
+                        err,
+                        message: 'Playlist not found!',
+                    })
+                }
+                if(list.published){
+                            /// Cannot be changed by not logged in user
+                            list.name = list.name;
+                            list.songs = list.songs;
+                            list.ownerEmail=list.ownerEmail;
+                            list.owner=list.owner;
+                            list.date=list.date;
+                            list.published=list.published;
+                            list.publishedDate=list.publishedDate;
+                            list.lastEdit= list.lastEdit;
+                            /// Allowed to Change
+                            list.listens=body.playlist.listens;
+                            list.comments=body.playlist.comments;
+                            list
+                                .save()
+                                .then(() => {
+                                    console.log("SUCCESS!!!");
+                                    return res.status(200).json({
+                                        success: true,
+                                        id: list._id,
+                                        list:list,
+                                        message: 'Playlist updated!',
+                                    })
+                                })
+                                .catch(error => {
+                                    console.log("FAILURE: " + JSON.stringify(error));
+                                    return res.status(404).json({
+                                        error,
+                                        message: 'Playlist not updated!',
+                                    })
+                                })
+                }else{
+                    return res
+                    .status(404)
+                    .json({ success: false, error: 'Playlist Is Not Published' })
+                }
+                    }).catch(err => console.log(err))
+}
+
+updatePublishedPlaylistByLike = async (req, res) => {
+    console.log("this method is called");
+    if(auth.verifyUser(req) === null){
+        return res.status(400).json({
+            errorMessage: 'UNAUTHORIZED'
+        })
+    }
     const body = req.body
     if (!body) {
         return res.status(400).json({
@@ -305,55 +369,189 @@ updatePublishedPlaylistById = async (req, res) => {
             error: 'You must provide a body to update',
         })
     }
-    Playlist.findOne({ _id: req.params.id }, (err,list) => {
-        if (err) {
-            return res.status(404).json({
-                err,
-                message: 'Playlist not found!',
-            })
-        }
-        if(list.published){
-                    /// Cannot be changed
-                    list.name = list.name;
-                    list.songs = list.songs;
-                    list.ownerEmail=list.ownerEmail;
-                    list.owner=list.owner;
-                    list.date=list.date;
-                    list.published=list.published;
-                    list.publishedDate=list.publishedDate;
-                    //// Automatic Update
-                    list.lastEdit= new Date();
-                    /// Allowed to Change
-                    list.listens=body.playlist.listens;
-                    list.likes=body.playlist.likes;
-                    list.dislikes=body.playlist.dislikes;
-                    list.comments=body.playlist.comments;
+   await User.findOne({ _id: req.userId }, (err, user) => {
+            Playlist.findOne({ _id: req.params.id }, (err,list) => {
+                if (err) {
+                    return res.status(404).json({
+                        err,
+                        message: 'Playlist not found!',
+                    })
+                }
+                if(list.published){
+                            /// Cannot be changed by not logged in user
+                            list.name = list.name;
+                            list.songs = list.songs;
+                            list.ownerEmail=list.ownerEmail;
+                            list.owner=list.owner;
+                            list.date=list.date;
+                            list.published=list.published;
+                            list.publishedDate=list.publishedDate;
+                            list.lastEdit= list.lastEdit;
+                            list.comments=list.comments;
+                            list.dislikes=list.dislikes;
+                            list.listens=list.listens;
+                            /// Allowed to Change
+                            /// Check if user Liked/Disliked this playlist before
+                           
+                            const i = user.interactions.findIndex(e => JSON.stringify(e.playlist) === JSON.stringify(list._id));
+                            if (i > -1) {
+                                console.log("heree");
+                                let interaction = user.interactions[i].interaction;
+                                /// Liked before
+                                if(interaction===1){
+                                    /// Liking Again undoes the action , remove the interaction from user.
+                                    list.likes--;
+                                    user.interactions.splice(i,1);
+                                }
+                                /// Disliked Before
+                                if(interaction==-1){
+                                    list.likes=body.playlist.likes;
+                                    list.dislikes--;
+                                    /// Update the interaction to a Like.
+                                    user.interactions[i].interaction=1;
+                                }
+                            
+                            }
+                            /// No interaction taken by this user to like or dislike
+                            else{
+                                list.likes=body.playlist.likes;
+                                /// Add that this playlist has been liked by this user.
+                                user.interactions.push({
+                                    playlist:list._id,
+                                    interaction:1});
+                                }
 
-                    list
-                        .save()
-                        .then(() => {
-                            console.log("SUCCESS!!!");
-                            return res.status(200).json({
-                                success: true,
-                                id: list._id,
-                                list:list,
-                                message: 'Playlist updated!',
-                            })
-                        })
-                        .catch(error => {
-                            console.log("FAILURE: " + JSON.stringify(error));
-                            return res.status(404).json({
-                                error,
-                                message: 'Playlist not updated!',
-                            })
-                        })
-        }else{
-            return res
-            .status(404)
-            .json({ success: false, error: 'Playlist Is Not Published' })
+                            user
+                            .save()
+                            .then(() => {
+                                console.log(" user interaction saved");
+                            });
+                            list
+                                .save()
+                                .then(() => {
+                                    console.log("Added Like");
+                                    return res.status(200).json({
+                                        success: true,
+                                        id: list._id,
+                                        list:list,
+                                        message: 'Playlist updated!',
+                                    })
+                                })
+                                .catch(error => {
+                                    console.log("FAILURE: " + JSON.stringify(error));
+                                    return res.status(404).json({
+                                        error,
+                                        message: 'Playlist not updated!',
+                                    })
+                                })
+                    }else{
+                    return res
+                    .status(404)
+                    .json({ success: false, error: 'Playlist Is Not Published' })
+        }}).catch(err => console.log(err))
+    }).catch(err => console.log(err))
+}
+
+updatePublishedPlaylistByDislike = async (req, res) => {
+    if(auth.verifyUser(req) === null){
+        return res.status(400).json({
+            errorMessage: 'UNAUTHORIZED'
+        })
+    }
+    const body = req.body
+    if (!body) {
+        return res.status(400).json({
+            success: false,
+            error: 'You must provide a body to update',
+        })
+    }
+    await User.findOne({ _id: req.userId }, (err, user) => {
+        async function asyncFindList(user) {
+            await Playlist.findOne({ _id: req.params.id }, (err,list) => {
+                if (err) {
+                    return res.status(404).json({
+                        err,
+                        message: 'Playlist not found!',
+                    })
+                }
+                if(list.published){
+                            /// Cannot be changed by not logged in user
+                            list.name = list.name;
+                            list.songs = list.songs;
+                            list.ownerEmail=list.ownerEmail;
+                            list.owner=list.owner;
+                            list.date=list.date;
+                            list.published=list.published;
+                            list.publishedDate=list.publishedDate;
+                            list.lastEdit= list.lastEdit;
+                            list.comments=list.comments;
+                            list.likes=list.likes;
+                            list.listens=list.listens;
+                            /// Allowed to Change
+    
+                            /// Check if user Liked/Disliked this playlist before
+                            const i = user.interactions.findIndex(e => JSON.stringify(e.playlist) === JSON.stringify(list._id));
+                            if (i > -1) {
+                                let interaction = user.interactions[i].interaction;
+                                /// Liked before
+                                if(interaction===1){
+                                    list.likes--;
+                                    list.dislikes=body.playlist.dislikes;
+                                    /// Update the interaction to a Dislike.
+                                    user.interactions[i].interaction=-1;
+                                }
+                                /// Disliked Before
+                                if(interaction===-1){
+                                /// Disliking Again undoes the action , remove the interaction from user.
+                                    list.dislikes--;
+                                    user.interactions.splice(i,1);
+                                }
+                            
+                            }
+                            /// No interaction taken by this user to like or dislike
+                            else{
+                                list.dislikes=body.playlist.dislikes;
+                                /// Add that this playlist has been liked by this user.
+                                user.interactions.push({
+                                    playlist:list._id,
+                                    interaction:-1});
+                                }
+                            
+                            user
+                            .save()
+                            .then(() => {
+                             console.log(" user interaction saved");
+                            });
+
+                            list
+                                .save()
+                                .then(() => {
+                                    console.log("Added Like");
+                                    return res.status(200).json({
+                                        success: true,
+                                        id: list._id,
+                                        list:list,
+                                        message: 'Playlist updated!',
+                                    })
+                                })
+                                .catch(error => {
+                                    console.log("FAILURE: " + JSON.stringify(error));
+                                    return res.status(404).json({
+                                        error,
+                                        message: 'Playlist not updated!',
+                                    })
+                                })
+                }else{
+                    return res
+                    .status(404)
+                    .json({ success: false, error: 'Playlist Is Not Published' })
+                }
+                    }).catch(err => console.log(err))
+        
         }
-            }).catch(err => console.log(err))
-        }
+        asyncFindList(user);
+    }).catch(err => console.log(err))
+}
 
 
 module.exports = {
@@ -364,5 +562,8 @@ module.exports = {
     getPlaylists,
     updatePlaylist,
     getPublishedPlaylistById,
-    updatePublishedPlaylistById,
+    updatePublishedPlaylistComments,
+    updatePublishedPlaylistByLike,
+    updatePublishedPlaylistByDislike,
+    
 }

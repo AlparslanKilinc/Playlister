@@ -51,8 +51,20 @@ export const updatePlaylistById = (id, playlist) => {
 /// Published
 export const getPublishedPlaylists = () => api.get(`/PublishedPlaylists/`)
 export const getPublishedPlaylistById = (id) => api.get(`/PublishedPlaylists/${id}`)
-export const updatePublishedPlaylistById = (id, playlist) => {
-    return api.put(`/PublishedPlaylists/${id}`, {
+export const updatePublishedPlaylistComments = (id, playlist) => {
+    return api.put(`/PublishedPlaylistsComments/${id}`, {
+        // SPECIFY THE PAYLOAD
+        playlist : playlist
+    })
+}
+export const updatePublishedPlaylistByLike = (id, playlist) => {
+    return api.put(`/PublishedPlaylistsLikes/${id}`, {
+        // SPECIFY THE PAYLOAD
+        playlist : playlist
+    })
+}
+export const updatePublishedPlaylistByDislike = (id, playlist) => {
+    return api.put(`/PublishedPlaylistsDislikes/${id}`, {
         // SPECIFY THE PAYLOAD
         playlist : playlist
     })
@@ -66,7 +78,9 @@ const apis = {
     updatePlaylistById,
     getPublishedPlaylists,
     getPublishedPlaylistById,
-    updatePublishedPlaylistById,
+    updatePublishedPlaylistComments,
+    updatePublishedPlaylistByLike,
+    updatePublishedPlaylistByDislike,
 }
 
 export default apis

@@ -21,6 +21,7 @@ getLoggedIn = async (req, res) => {
                 lastName: loggedInUser.lastName,
                 email: loggedInUser.email,
                 userName: loggedInUser.userName,
+                interactions:loggedInUser.interactions,
             }
         })
     } catch (err) {
@@ -70,7 +71,8 @@ loginUser = async (req, res) => {
                 firstName: existingUser.firstName,
                 lastName: existingUser.lastName,  
                 email: existingUser.email,
-                userName: existingUser.userName,             
+                userName: existingUser.userName,
+                interactions:existingUser.interactions,           
             }
         })
 
@@ -91,7 +93,7 @@ logoutUser = async (req, res) => {
 
 registerUser = async (req, res) => {
     try {
-        const { userName, firstName, lastName, email, password, passwordVerify } = req.body;
+        const { userName, firstName, lastName, email, password, passwordVerify,interactions } = req.body;
         console.log("create user: " + userName+" "+ firstName + " " + lastName + " " + email + " " + password + " " + passwordVerify);
         if (!userName || !firstName || !lastName || !email || !password || !passwordVerify) {
             return res
@@ -142,7 +144,7 @@ registerUser = async (req, res) => {
         console.log("passwordHash: " + passwordHash);
 
         const newUser = new User({
-            userName,firstName, lastName, email, passwordHash,
+            userName,firstName, lastName, email, passwordHash,interactions
         });
         const savedUser = await newUser.save();
         console.log("new user saved: " + savedUser._id);
@@ -161,7 +163,8 @@ registerUser = async (req, res) => {
                 userName:savedUser.userName,
                 firstName: savedUser.firstName,
                 lastName: savedUser.lastName,  
-                email: savedUser.email              
+                email: savedUser.email,
+                interactions:savedUser.interactions,             
             }
         })
 

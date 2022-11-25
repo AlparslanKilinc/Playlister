@@ -12,7 +12,9 @@ router.put('/playlist/:id', auth.verify, PlaylistController.updatePlaylist)
 /// Published
 router.get('/PublishedPlaylists/', PlaylistController.getPublishedPlaylists)
 router.get('/PublishedPlaylists/:id', PlaylistController.getPublishedPlaylistById)
-router.put('/PublishedPlaylists/:id', PlaylistController.updatePublishedPlaylistById)
+router.put('/PublishedPlaylistsComments/:id',auth.verify, PlaylistController.updatePublishedPlaylistComments)
+router.put('/PublishedPlaylistsLikes/:id', auth.verify,PlaylistController.updatePublishedPlaylistByLike)
+router.put('/PublishedPlaylistsDislikes/:id',auth.verify, PlaylistController.updatePublishedPlaylistByDislike)
 
 
 module.exports = router

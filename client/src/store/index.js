@@ -400,6 +400,35 @@ function GlobalStoreContextProvider(props) {
         asyncLoadPublishedPlaylists();
     }
 
+    store.AddLike = function(id) {
+        async function asyncUpdatePublishedList(id) {
+            let response = await api.getPublishedPlaylistById(id);
+            if (response.data.success) {
+                let playlist = response.data.playlist;
+                playlist.likes=playlist.likes+1;
+                response = await api.updatePublishedPlaylistByLike(playlist._id,playlist);
+                if (response.data.success) {
+                    store.LoadPlaylists();
+                }
+            }
+        }
+        asyncUpdatePublishedList(id);
+    }
+    store.AddDislike = function(id) {
+        async function asyncUpdatePublishedList(id) {
+            let response = await api.getPublishedPlaylistById(id);
+            if (response.data.success) {
+                let playlist = response.data.playlist;
+                playlist.dislikes++;
+                response = await api.updatePublishedPlaylistByDislike(playlist._id,playlist);
+                if (response.data.success) {
+                    store.LoadPlaylists();
+                }
+            }
+        }
+        asyncUpdatePublishedList(id);
+    }
+
     store.publishList = function(id){
         let list =store.currentList;
         list.published=true;
@@ -423,8 +452,7 @@ function GlobalStoreContextProvider(props) {
         async function asyncSetPublishedList(id) {
             let response = await api.getPublishedPlaylistById(id);
             if (response.data.success) {
-                let playlist = response.data.playlist;
-                response = await api.updatePublishedPlaylistById(playlist._id, playlist);
+                let playlist = response.data.playlist
                 if (response.data.success) {
                     storeReducer({
                         type: GlobalStoreActionType.SET_CURRENT_LIST,
@@ -456,7 +484,6 @@ function GlobalStoreContextProvider(props) {
             let response = await api.getPlaylistById(id);
             if (response.data.success) {
                 let playlist = response.data.playlist;
-                response = await api.updatePlaylistById(playlist._id, playlist);
                 if (response.data.success) {
                     storeReducer({
                         type: GlobalStoreActionType.SET_CURRENT_LIST,

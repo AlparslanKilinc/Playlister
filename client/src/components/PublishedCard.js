@@ -21,11 +21,13 @@ function PublishedCard(props) {
         event.stopPropagation();
         event.preventDefault();
         console.log("like");
+        store.AddLike(List._id);
     }
 
     function handleDislike(event){
         event.stopPropagation();
         event.preventDefault();
+        store.AddDislike(List._id);
         console.log("dislike");
 
     }
@@ -57,7 +59,7 @@ function PublishedCard(props) {
                     onClick={handleDislike}
                     variant="none">
                     <ThumbDownIcon />
-                    <Box style={{fontSize:'12pt', margin:'1rem',marginTop:'1rem'}} >{List.likes} </Box>
+                    <Box style={{fontSize:'12pt', margin:'1rem',marginTop:'1rem'}} >{List.dislikes} </Box>
                 </Button>
                 </div>
                 <Box style={{ display:'flex', gap:'.5rem',fontSize:'12pt',marginBottom:'2rem', color:'red'}} > <p style={{color:'black'}}>Listens:</p> {List.listens} </Box>

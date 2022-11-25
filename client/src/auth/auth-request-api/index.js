@@ -38,7 +38,8 @@ export const registerUser = (userName,firstName, lastName, email, password, pass
         lastName : lastName,
         email : email,
         password : password,
-        passwordVerify : passwordVerify
+        passwordVerify : passwordVerify,
+        interactions:[]
     })
 }
 const apis = {
