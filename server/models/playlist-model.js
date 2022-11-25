@@ -7,8 +7,10 @@ const playlistSchema = new Schema(
         ownerEmail: { type: String, required: true },
         owner:{type:String,required:true},
         date: {type:String , required:true},
+        lastEdit: {type:String , required:true},
         listens:{type:Number , required:true},
         published:{type:Boolean , required:true},
+        publishedDate:{type:String , required:true},
         likes:{type:Number,required:true},
         dislikes:{type:Number,required:true},
         comments:{ type:[{

@@ -69,6 +69,29 @@ const UserScreen = () => {
       if(store.search!==""){
         playlists= playlists.filter( list => list.owner.startsWith(store.search));
       }
+      /// Sorting 
+      switch (store.sortMethod) {
+          case 'Name':
+            console.log('Sort By Name');
+            playlists=store.SortName(playlists);
+            break;
+          case 'PublishedDate':
+            playlists=store.SortPublishedDate(playlists);
+          console.log('Sort By Published');
+          break;
+          case 'Listens':
+              console.log('Sort By Listens');
+          break;
+          case 'Likes':
+            console.log('Sort by Likes');
+            break;
+          case 'Dislikes':
+              console.log('Sort by Dislikes');
+              break;
+          default:
+            console.log("Sort Method null");
+      }
+
         Lists = 
         <List sx={{width: '90%', left: '5%'}}>
         {

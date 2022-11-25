@@ -81,6 +81,24 @@ const HomeScreen = () => {
         if(store.search!==""){
            playlists= playlists.filter( list => list.name.startsWith(store.search));
         }
+        // Sorting
+        switch (store.sortMethod) {
+            case 'Name':
+              console.log('Sort By Name');
+              playlists=store.SortName(playlists);
+              break;
+            case 'CreationDate':
+                playlists=store.SortCreationDate(playlists);
+                console.log('Sort By Creation Date');
+                break;
+            case 'LastEditDate':
+              playlists=store.SortLastEdit(playlists);
+              console.log('Sort By Last Edit');
+              break;
+              
+            default:
+              console.log("Sort Method null");
+        }
 
         Lists = 
         <List sx={{width: '90%', left: '5%'}}>

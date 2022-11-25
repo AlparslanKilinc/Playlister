@@ -54,6 +54,7 @@ function GlobalStoreContextProvider(props) {
         listMarkedForDeletion: null,
         message:"",
         search:"",
+        sortMethod:null,
     });
     const history = useHistory();
     // SINCE WE'VE WRAPPED THE STORE IN THE AUTH CONTEXT WE CAN ACCESS THE USER HERE
@@ -78,6 +79,7 @@ function GlobalStoreContextProvider(props) {
                     listMarkedForDeletion: null,
                     message:store.message,
                     search:store.search,
+                    sortMethod:store.sortMethod
                 });
             }
             case GlobalStoreActionType.CREATE_NEW_LIST: {                
@@ -93,6 +95,7 @@ function GlobalStoreContextProvider(props) {
                     listMarkedForDeletion: null,
                     message:store.message,
                     search:store.search,
+                    sortMethod:store.sortMethod
                 })
             }
             case GlobalStoreActionType.LOAD_PLAYLISTS: {
@@ -108,6 +111,7 @@ function GlobalStoreContextProvider(props) {
                     listMarkedForDeletion: null,
                     message:store.message,
                     search:store.search,
+                    sortMethod:store.sortMethod
                 });
             }
             case GlobalStoreActionType.LOAD_PUBLISHED_PLAYLISTS: {
@@ -123,6 +127,7 @@ function GlobalStoreContextProvider(props) {
                     listMarkedForDeletion: null,
                     message:store.message,
                     search:store.search,
+                    sortMethod:store.sortMethod
                   
                 });
             }
@@ -139,6 +144,7 @@ function GlobalStoreContextProvider(props) {
                     listMarkedForDeletion: payload.playlist,
                     message:store.message,
                     search:store.search,
+                    sortMethod:store.sortMethod
                 });
             }
             case GlobalStoreActionType.SET_CURRENT_LIST: {
@@ -154,6 +160,7 @@ function GlobalStoreContextProvider(props) {
                     listMarkedForDeletion: null,
                     message:store.message,
                     search:store.search,
+                    sortMethod:store.sortMethod
                 });
             }
             case GlobalStoreActionType.SET_LIST_NAME_EDIT_ACTIVE: {
@@ -169,6 +176,7 @@ function GlobalStoreContextProvider(props) {
                     listMarkedForDeletion: null,
                     message:store.message,
                     search:store.search,
+                    sortMethod:store.sortMethod
                 });
             }
             case GlobalStoreActionType.EDIT_SONG: {
@@ -184,6 +192,7 @@ function GlobalStoreContextProvider(props) {
                     listMarkedForDeletion: null,
                     message:store.message,
                     search:store.search,
+                    sortMethod:store.sortMethod
                 });
             }
             case GlobalStoreActionType.REMOVE_SONG: {
@@ -199,6 +208,7 @@ function GlobalStoreContextProvider(props) {
                     listMarkedForDeletion: null,
                     message:store.message,
                     search:store.search,
+                    sortMethod:store.sortMethod
                 });
             }
             case GlobalStoreActionType.HIDE_MODALS: {
@@ -214,6 +224,7 @@ function GlobalStoreContextProvider(props) {
                     listMarkedForDeletion: null,
                     message:store.message,
                     search:store.search,
+                    sortMethod:store.sortMethod
                 });
             }
             case GlobalStoreActionType.ACCESS_ERROR: {
@@ -229,6 +240,7 @@ function GlobalStoreContextProvider(props) {
                     listMarkedForDeletion: store.listIdMarkedForDeletion,
                     message:payload,
                     search:store.search,
+                    sortMethod:store.sortMethod
                 });
             }
               case GlobalStoreActionType.SET_SEARCH: {
@@ -244,6 +256,7 @@ function GlobalStoreContextProvider(props) {
                     listMarkedForDeletion: store.markListForDeletion,
                     message:store.message,
                     search:payload,
+                    sortMethod:store.sortMethod
                 });
             }
             case GlobalStoreActionType.SET_SORT: {
@@ -259,6 +272,7 @@ function GlobalStoreContextProvider(props) {
                     listMarkedForDeletion: store.markListForDeletion,
                     message:store.message,
                     search:store.search,
+                    sortMethod:payload,
                 });
             }
             default:
@@ -279,28 +293,11 @@ function GlobalStoreContextProvider(props) {
         });
     }
     /// Sorting 
-    store.setSort = (list,published)=>{
-        if(published){
+    store.setSort = (sortMethod)=>{
             storeReducer({
                 type:GlobalStoreActionType.SET_SORT,
-                payload:{
-                    playlist:store.playlists,
-                    PublishedPlaylists:list
-                }
+                payload:sortMethod
             });
-
-        }else{
-            storeReducer({
-                type:GlobalStoreActionType.SET_SORT,
-                payload:{
-                    playlist:list,
-                    PublishedPlaylists:store.PublishedPlaylists
-                }
-            });
-
-        }
-        
-       
     }
 
 
@@ -471,7 +468,7 @@ function GlobalStoreContextProvider(props) {
         }catch(error){
             storeReducer({
                 type: GlobalStoreActionType.ACCESS_ERROR,
-                payload: error.response.data.errorMessage
+                payload: "Access Error"
             });
         }
         }
@@ -654,6 +651,60 @@ function GlobalStoreContextProvider(props) {
     store.canClose = function() {
         return (store.currentList !== null);
     }
+
+    //// All of the Sort Methods
+    store.SortName = (playlists)=>{
+       return playlists.sort(function(a, b) {
+          const nameA=a.name.toUpperCase();
+          const nameB=b.name.toUpperCase();
+          if (nameA > nameB) {
+            return 1;
+          }
+          if (nameA < nameB) {
+            return -1;
+          }
+          return 0;
+          });
+    }
+    store.SortCreationDate = (playlists)=>{
+        return playlists.sort(function(a, b) {
+           const nameA=a.date
+           const nameB=b.date
+           if (nameA > nameB) {
+             return 1;
+           }
+           if (nameA < nameB) {
+             return -1;
+           }
+           return 0;
+           });
+     }
+     store.SortLastEdit = (playlists)=>{
+        return playlists.sort(function(a, b) {
+           const nameA=a.lastEdit
+           const nameB=b.lastEdit
+           if (nameA > nameB) {
+             return -1;
+           }
+           if (nameA < nameB) {
+             return 1;
+           }
+           return 0;
+           });
+     }
+     store.SortPublishedDate = (playlists)=>{
+        return playlists.sort(function(a, b) {
+           const nameA=a.publishedDate
+           const nameB=b.publishedDate
+           if (nameA > nameB) {
+             return -1;
+           }
+           if (nameA < nameB) {
+             return 1;
+           }
+           return 0;
+           });
+     }
 
     return (
         <GlobalStoreContext.Provider value={{

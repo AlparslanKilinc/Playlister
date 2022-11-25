@@ -111,6 +111,9 @@ getPlaylistById = async (req, res) => {
         // DOES THIS LIST BELONG TO THIS USER?
         async function asyncFindUser(list) {
             await User.findOne({ email: list.ownerEmail }, (err, user) => {
+                if (err) {
+                    return res.status(400).json({ success: false, error: err , errorMessage:"Playlist Does Not Exists"});
+                }
                 if (user._id == req.userId) {
                     console.log("correct user!");
                     return res.status(200).json({ success: true, playlist: list })
@@ -152,9 +155,11 @@ getPlaylists = async (req, res) => {
                             owner:list.owner,
                             date:list.date,
                             published:list.published,
+                            publishedDate:list.publishedDate,
                             listens:list.listens,
                             likes:list.likes,
                             dislikes:list.dislikes,
+                            lastEdit:list.lastEdit,
                         };
                         fields.push(field);
                     }
@@ -192,11 +197,14 @@ updatePlaylist = async (req, res) => {
         async function asyncFindUser(list) {
             await User.findOne({ email: list.ownerEmail }, (err, user) => {
                 if (user._id == req.userId) {
+                    list.lastEdit= new Date();
                     list.name = body.playlist.name;
                     list.songs = body.playlist.songs;
                     list.ownerEmail=body.playlist.ownerEmail;
                     list.owner=body.playlist.owner;
                     list.date=body.playlist.date;
+                    if(!list.published&&body.playlist.published){list.publishedDate=new Date()}
+                    else{list.publishedDate=body.playlist.publishedDate}
                     list.published=body.playlist.published;
                     list.listens=body.playlist.listens;
                     list.likes=body.playlist.likes;
@@ -253,9 +261,11 @@ getPublishedPlaylists = async (req, res) => {
                         owner:list.owner,
                         date:list.date,
                         published:list.published,
+                        publishedDate:list.publishedDate,
                         listens:list.listens,
                         likes:list.likes,
                         dislikes:list.dislikes,
+                        lastEdit:list.lastEdit,
                     };
                     fields.push(field);
                 }
@@ -310,6 +320,9 @@ updatePublishedPlaylistById = async (req, res) => {
                     list.owner=list.owner;
                     list.date=list.date;
                     list.published=list.published;
+                    list.publishedDate=list.publishedDate;
+                    //// Automatic Update
+                    list.lastEdit= new Date();
                     /// Allowed to Change
                     list.listens=body.playlist.listens;
                     list.likes=body.playlist.likes;

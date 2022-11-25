@@ -61,62 +61,13 @@ export default function CustomizedMenus(props) {
     setAnchorEl(null);
   };
 
-  let SortCreationDate = ()=>{
-
-  }
-  let SortLastEditDate = ()=>{
-    
-  }
-
-  let SortName = ()=>{
-    let list= [];
-    if(published && store.PublishedPlaylists){
-     list= store.PublishedPlaylists.sort(function(a, b) {
-      const nameA=a.name.toUpperCase();
-      const nameB=b.name.toUpperCase();
-      if (nameA > nameB) {
-        return 1;
-      }
-      if (nameA < nameB) {
-        return -1;
-      }
-      // names must be equal
-      return 0;
-      });
-      store.setSort(true,list);
-    }else{
-
-      if(store.playlists){
-        list= store.playlists.sort(function(a, b) {
-          const nameA=a.name.toUpperCase();
-          const nameB=b.name.toUpperCase();
-          if (nameA > nameB) {
-            return 1;
-          }
-          if (nameA < nameB) {
-            return -1;
-          }
-          // names must be equal
-          return 0;
-          });
-          store.setSort(false,list);
-      }
-
-    }
-  }
-
-  let SortPublishedDate = ()=>{
-    
-  }
-  let SortListens = ()=>{
-    
-  }
-  let SortLikes = ()=>{
-    
-  }
-  let SortDislikes = ()=>{
-    
-  }
+  let SortCreationDate = ()=>{store.setSort("CreationDate");}
+  let SortLastEditDate = ()=>{store.setSort("LastEditDate");}
+  let SortName = ()=>{store.setSort("Name");}
+  let SortPublishedDate = ()=>{store.setSort("PublishedDate");}
+  let SortListens = ()=>{store.setSort("Listens");}
+  let SortLikes = ()=>{store.setSort("Likes");}
+  let SortDislikes = ()=>{store.setSort("Dislikes");}
 
   let Items = 
     <div>
