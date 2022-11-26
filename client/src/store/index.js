@@ -346,6 +346,8 @@ function GlobalStoreContextProvider(props) {
         tps.clearAllTransactions();
     }
 
+
+
    
     // THIS FUNCTION CREATES A NEW LIST
     store.createNewList = async function () {
@@ -399,6 +401,23 @@ function GlobalStoreContextProvider(props) {
         }
         asyncLoadPublishedPlaylists();
     }
+    store.AddComment = function(comment) {
+        async function asyncUpdateCurrentList() {
+            store.currentList.comments.push({
+                userName:auth.user.userName,
+                comment:comment,
+            })
+            const response = await api.updatePublishedPlaylistComments(store.currentList._id, store.currentList);
+            if (response.data.success) {
+                storeReducer({
+                    type: GlobalStoreActionType.SET_CURRENT_LIST,
+                    payload: store.currentList
+                });
+            }
+        }
+        asyncUpdateCurrentList();
+    }
+
 
     store.AddLike = function(id) {
         async function asyncUpdatePublishedList(id) {

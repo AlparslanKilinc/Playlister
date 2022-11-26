@@ -127,7 +127,7 @@ const UserScreen = () => {
                 <ButtonGroup className='buttonGroup'>
                 <ThemeProvider theme={theme}>
                     <Button onClick={togglePlayer} color="primary"  variant={playerVariant} >Player</Button>
-                    <Button onClick={toggleComments}  color="primary" variant={commentsVariant}>Comments</Button>
+                    <Button onClick={toggleComments} color="primary" variant={commentsVariant}>Comments</Button>
                     </ThemeProvider>
                 </ButtonGroup>
                 {selection}

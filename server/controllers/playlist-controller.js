@@ -332,7 +332,7 @@ updatePublishedPlaylistComments = async (req, res) => {
                             list
                                 .save()
                                 .then(() => {
-                                    console.log("SUCCESS!!!");
+                                    
                                     return res.status(200).json({
                                         success: true,
                                         id: list._id,

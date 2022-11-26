@@ -215,19 +215,34 @@ body{
 .comments{
   display: flex;
   flex: 1;
-  padding: 0.5rem;
+  padding: 1rem;
   flex-direction: column;
-  background-color:#e4f0ee ;
+  gap: 1rem;
+  
 }
 .comments-area{
   flex: 1;
-  max-height: 730px;
+  max-height: 400px;
   display: flex;
   flex-direction: column;
   overflow: scroll;
   overflow-x: hidden;
-  background-color:#e4f0ee ;
+  gap: 1rem;
   border-radius: 10px;
+}
+.comment{
+  display: flex;
+  background-color: #e4f0ee;
+  flex-direction: column;
+  margin-right: 1rem;
+  margin-top:0.3rem;
+  margin-bottom:0.3rem;
+  padding: 0.5rem;
+  border-radius: 4px;
+  gap: 0.4rem;
+  box-shadow: 15px 15px 0 -4px transparent,
+  5px 6px #071935;
+  border: #071935 1.5px solid;
 }
 
 /* AppTools */

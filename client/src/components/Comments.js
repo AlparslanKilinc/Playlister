@@ -1,16 +1,53 @@
-import React, { useContext, useEffect,useState } from 'react'
+import React, { useContext, useEffect,useRef,useState } from 'react'
 import TextField from '@mui/material/TextField';
 import { GlobalStoreContext } from '../store'
-export const Comments = () => {
-    const { store } = useContext(GlobalStoreContext);
+import AuthContext from '../auth'
+import Avatar from '@mui/material/Avatar';
+import { deepOrange, deepPurple } from '@mui/material/colors';
 
+export const Comments = () => {
+  const { store } = useContext(GlobalStoreContext);
+  const { auth } = useContext(AuthContext);
+
+  const divRef = useRef(null);
+
+
+  useEffect(() => {
+    divRef.current.scrollIntoView({ behavior: 'smooth' });
+  },[]);
+
+  const handleAddComment = (event) => {
+    if (event.key === 'Enter') {
+      if(event.target.value!=="") store.AddComment(event.target.value);
+      }
+    
+  }
+
+  
+  let comments = ""
+  if(store.currentList){
+     comments= store.currentList.comments.map((comment,index=0)=>(
+      <div ref={divRef} key={index++} className='comment'>
+        {/* <Avatar sx={{ bgcolor: deepOrange[500] }}>{comment.userName[0]}</Avatar> */}
+        <h4 style={{color:'blue'}}>{comment.userName}</h4>
+        <p>{comment.comment}</p>
+      </div>
+      ))
+  }
 
   return (
     <div className='comments'>
         <div className='comments-area'>
-               
+               {comments}
         </div>
-        <TextField id="outlined-basic" label="Add Comment" variant="outlined" />
+        { auth.loggedIn && store.currentList && store.currentList.published?
+        <TextField 
+        style={{backgroundColor:'white' , marginRight:'1rem',borderRadius:'5px',border:'2px solid black',}}
+        onKeyPress={handleAddComment} 
+        id="outlined-basic" 
+        label="Add Comment" 
+        variant="filled" /> : ""
+        }
     </div>
   )
 }
