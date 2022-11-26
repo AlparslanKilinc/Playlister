@@ -17,7 +17,7 @@ import PublishedCard from './PublishedCard';
 import { useHistory } from 'react-router-dom'
 import PublishedArea from './PublishedArea';
 import MUIDeleteModal from './MUIDeleteModal';
-import AuthContext from '../auth'
+// import AuthContext from '../auth'
 
 
 const UserScreen = () => {
@@ -29,7 +29,7 @@ const UserScreen = () => {
           },
         },
       });
-    const { auth } = useContext(AuthContext);
+    // const { auth } = useContext(AuthContext);
     const { store } = useContext(GlobalStoreContext);
     const [selection, setSelection] = useState(<VideoPlayer/>);
     const [playerVariant, setPlayerVariant] = useState("contained");
@@ -97,7 +97,7 @@ const UserScreen = () => {
         {
             playlists.map((list,id=0) => (
               
-            <Accordion key={list._id} id='user-list' expanded={expanded == 'panel'+(id+1).toString() && store.currentList} onChange={handleChange('panel'+(id+1).toString(),list._id)}>
+            <Accordion key={list._id} id='user-list' expanded={expanded === 'panel'+(id+1).toString() && store.currentList} onChange={handleChange('panel'+(id+1).toString(),list._id)}>
                 <AccordionSummary
                 expandIcon={<KeyboardDoubleArrowDownIcon />}
                 aria-controls="panel1bh-content"

@@ -16,6 +16,7 @@ const playlistSchema = new Schema(
         comments:{ type:[{
             comment:String,
             userName:String,
+            initials:String,
         }],required:true},
 
         songs: { type: [{

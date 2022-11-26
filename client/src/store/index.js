@@ -406,6 +406,7 @@ function GlobalStoreContextProvider(props) {
             store.currentList.comments.push({
                 userName:auth.user.userName,
                 comment:comment,
+                initials:auth.getUserInitials(),
             })
             const response = await api.updatePublishedPlaylistComments(store.currentList._id, store.currentList);
             if (response.data.success) {

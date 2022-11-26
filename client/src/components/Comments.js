@@ -9,12 +9,7 @@ export const Comments = () => {
   const { store } = useContext(GlobalStoreContext);
   const { auth } = useContext(AuthContext);
 
-  const divRef = useRef(null);
-
-
-  useEffect(() => {
-    divRef.current.scrollIntoView({ behavior: 'smooth' });
-  },[]);
+ 
 
   const handleAddComment = (event) => {
     if (event.key === 'Enter') {
@@ -27,10 +22,12 @@ export const Comments = () => {
   let comments = ""
   if(store.currentList){
      comments= store.currentList.comments.map((comment,index=0)=>(
-      <div ref={divRef} key={index++} className='comment'>
-        {/* <Avatar sx={{ bgcolor: deepOrange[500] }}>{comment.userName[0]}</Avatar> */}
+      <div key={index++} className='comment'>
+        <Avatar sx={{ bgcolor: deepOrange[500] }}>{comment.initials}</Avatar>
+        <div style={{display:'flex' ,flexDirection:'column'}}> 
         <h4 style={{color:'blue'}}>{comment.userName}</h4>
         <p>{comment.comment}</p>
+        </div>
       </div>
       ))
   }
