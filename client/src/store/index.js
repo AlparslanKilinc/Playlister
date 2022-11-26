@@ -405,11 +405,13 @@ function GlobalStoreContextProvider(props) {
             let response = await api.getPublishedPlaylistById(id);
             if (response.data.success) {
                 let playlist = response.data.playlist;
-                playlist.likes=playlist.likes+1;
+                playlist.likes++;
                 response = await api.updatePublishedPlaylistByLike(playlist._id,playlist);
-                store.LoadPublishedPlaylists();
-                store.LoadPlaylists();
                 if (response.data.success) {
+                    if(history.location.pathname==="/")store.LoadPlaylists();
+                    else{
+                        store.LoadPublishedPlaylists();
+                    }
                 }
             }
         }
@@ -422,10 +424,12 @@ function GlobalStoreContextProvider(props) {
                 let playlist = response.data.playlist;
                 playlist.dislikes++;
                 response = await api.updatePublishedPlaylistByDislike(playlist._id,playlist);
-                store.LoadPlaylists();
-                store.LoadPublishedPlaylists();
                 if (response.data.success) {
-                 
+                    if(history.location.pathname==="/")store.LoadPlaylists();
+                    else{
+                        store.LoadPublishedPlaylists();
+                    }
+                    
                 }
             }
         }
