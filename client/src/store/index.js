@@ -759,6 +759,45 @@ function GlobalStoreContextProvider(props) {
            return 0;
            });
      }
+     store.SortMostListens = (playlists)=>{
+        return playlists.sort(function(a, b) {
+           const nameA=a.Listens
+           const nameB=b.Listens
+           if (nameA > nameB) {
+             return -1;
+           }
+           if (nameA < nameB) {
+             return 1;
+           }
+           return 0;
+           });
+     }
+     store.SortMostLikes = (playlists)=>{
+        return playlists.sort(function(a, b) {
+           const nameA=a.likes
+           const nameB=b.likes
+           if (nameA > nameB) {
+             return -1;
+           }
+           if (nameA < nameB) {
+             return 1;
+           }
+           return 0;
+           });
+     }
+     store.SortMostDislikes = (playlists)=>{
+        return playlists.sort(function(a, b) {
+           const nameA=a.dislikes
+           const nameB=b.dislikes
+           if (nameA > nameB) {
+             return -1;
+           }
+           if (nameA < nameB) {
+             return 1;
+           }
+           return 0;
+           });
+     }
 
     return (
         <GlobalStoreContext.Provider value={{

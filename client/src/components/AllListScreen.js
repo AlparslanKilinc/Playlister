@@ -80,12 +80,15 @@ const AllListScreen = () => {
           console.log('Sort By Published');
           break;
           case 'Listens':
+            playlists=store.SortMostListens(playlists);
               console.log('Sort By Listens');
           break;
           case 'Likes':
+            playlists=store.SortMostLikes(playlists);
             console.log('Sort by Likes');
             break;
           case 'Dislikes':
+            playlists=store.SortMostDislikes(playlists);
               console.log('Sort by Dislikes');
               break;
           default:
