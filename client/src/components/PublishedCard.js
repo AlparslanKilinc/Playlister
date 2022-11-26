@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useState,useEffect } from 'react'
 import { GlobalStoreContext } from '../store'
 import React from 'react';
 import Box from '@mui/material/Box';
@@ -11,6 +11,8 @@ function PublishedCard(props) {
     
     const { store } = useContext(GlobalStoreContext);
     const {List} = props;
+
+ 
 
     function handleLoadList(event, id) {
         if (!event.target.disabled) {

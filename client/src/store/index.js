@@ -407,8 +407,9 @@ function GlobalStoreContextProvider(props) {
                 let playlist = response.data.playlist;
                 playlist.likes=playlist.likes+1;
                 response = await api.updatePublishedPlaylistByLike(playlist._id,playlist);
+                store.LoadPublishedPlaylists();
+                store.LoadPlaylists();
                 if (response.data.success) {
-                    store.LoadPlaylists();
                 }
             }
         }
@@ -421,8 +422,10 @@ function GlobalStoreContextProvider(props) {
                 let playlist = response.data.playlist;
                 playlist.dislikes++;
                 response = await api.updatePublishedPlaylistByDislike(playlist._id,playlist);
+                store.LoadPlaylists();
+                store.LoadPublishedPlaylists();
                 if (response.data.success) {
-                    store.LoadPlaylists();
+                 
                 }
             }
         }

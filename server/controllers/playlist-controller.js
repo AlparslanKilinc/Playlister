@@ -358,6 +358,7 @@ updatePublishedPlaylistComments = async (req, res) => {
 updatePublishedPlaylistByLike = async (req, res) => {
     console.log("this method is called");
     if(auth.verifyUser(req) === null){
+        console.log("nahh");
         return res.status(400).json({
             errorMessage: 'UNAUTHORIZED'
         })
