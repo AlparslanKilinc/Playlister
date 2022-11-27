@@ -13,6 +13,10 @@ function PublishedArea(props) {
           store.setPublishedList(id);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    let handleSongSelect = (index)=>{
+        store.setPlay(index);
+    }
     
 
     return (
@@ -23,7 +27,7 @@ function PublishedArea(props) {
             >
                 {
                 store.currentList? store.currentList.songs.map((song, index) => (
-                    <div className='published-card' key={index+1}>
+                    <div onClick={()=>{handleSongSelect(index) }} className='published-card' key={index+1}>
                         <p>
                         {index + 1}. {song.title} by {song.artist}
                         </p>

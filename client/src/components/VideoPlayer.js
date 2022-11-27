@@ -9,13 +9,21 @@ import Typography from '@mui/material/Typography';
 import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import SkipNextIcon from '@mui/icons-material/SkipNext';
+import PauseIcon from '@mui/icons-material/Pause';
 
 
 export const VideoPlayer = () => {
 
 const { store } = useContext(GlobalStoreContext);
-const [currentSong, updateCurrentSong] = useState(0);
 const theme = useTheme();
+
+const[player,setPlayer]=useState("");
+
+useEffect(() => {
+  store.getPlay();
+// eslint-disable-next-line react-hooks/exhaustive-deps
+}, []);
+
 
 
 const playerOptions = {
@@ -23,62 +31,70 @@ const playerOptions = {
   width:'100%',
   borderRadius:'10px',
   playerVars: {
-      autoplay: 0,
+      autoplay:1,
+      controls:0,
   },
 };
 
-// THIS FUNCTION LOADS THE CURRENT SONG INTO
-// THE PLAYER AND PLAYS IT
-function loadAndPlayCurrentSong(player) {
-  if(store.currentList.songs[currentSong]){
-  player.loadVideoById(store.currentList.songs[currentSong].youTubeId);
+
+function onPlayerReady(event) {
+  setPlayer(event.target);
+  loadCurrentSong(event.target);
+}
+
+function loadCurrentSong(player) {
+  player.loadVideoById(store.currentList.songs[store.playIndex].youTubeId);
   player.playVideo();
+}
+function play(){
+  if(player){
+    player.playVideo();
+  }
+}
+function pause(){
+  if(player){
+    player.pauseVideo();
+  }
+}
+function prev(){
+  if(store.playIndex==0) return;
+  store.setPlay(store.playIndex-1);
+  loadCurrentSong(player);
+ 
+}
+function next(){
+  if(store.playIndex<store.currentList.songs.length-1){
+    store.setPlay(store.playIndex+1);
+    loadCurrentSong(player);
   }
 }
 
-// THIS FUNCTION INCREMENTS THE PLAYLIST SONG TO THE NEXT ONE
-function incSong() {
-  updateCurrentSong(currentSong++);
-  updateCurrentSong(currentSong % store.currentList.songs.length);
-}
-
-function onPlayerReady(event) {
-  // loadAndPlayCurrentSong(event.target);
-  // event.target.playVideo();
-}
-
-// THIS IS OUR EVENT HANDLER FOR WHEN THE YOUTUBE PLAYER'S STATE
-// CHANGES. NOTE THAT playerStatus WILL HAVE A DIFFERENT INTEGER
-// VALUE TO REPRESENT THE TYPE OF STATE CHANGE. A playerStatus
-// VALUE OF 0 MEANS THE SONG PLAYING HAS ENDED.
 function onPlayerStateChange(event) {
   let playerStatus = event.data;
   let player = event.target;
   if (playerStatus === -1) {
-      // VIDEO UNSTARTED
       console.log("-1 Video unstarted");
   } else if (playerStatus === 0) {
-      // THE VIDEO HAS COMPLETED PLAYING
       console.log("0 Video ended");
-      incSong();
-      loadAndPlayCurrentSong(player);
+      loadCurrentSong(player);
   } else if (playerStatus === 1) {
-      // THE VIDEO IS PLAYED
       console.log("1 Video played");
   } else if (playerStatus === 2) {
-      // THE VIDEO IS PAUSED
       console.log("2 Video paused");
   } else if (playerStatus === 3) {
-      // THE VIDEO IS BUFFERING
       console.log("3 Video buffering");
   } else if (playerStatus === 5) {
-      // THE VIDEO HAS BEEN CUED
       console.log("5 Video cued");
   }
 }
 
-/// Null checks 
 
+
+
+
+
+
+/// Null checks 
   let videoInfo = 
   <CardContent className='video-info'>
   <Typography component="div" variant="h4">
@@ -87,7 +103,7 @@ function onPlayerStateChange(event) {
   </CardContent> ; 
 
   if(store.currentList){
-    if(store.currentList.songs[currentSong]){
+    if(store.currentList.songs){
     videoInfo = 
     <CardContent className='video-info'>
     <Typography component="div" style={{justifyContent:'center'}}variant="h4">
@@ -97,48 +113,55 @@ function onPlayerStateChange(event) {
       Playlist: {store.currentList.name}
     </Typography>
     <Typography component="div" variant="h6">
-      Song Number:{currentSong}
+      Song Number:{store.playIndex+1}
     </Typography>
     <Typography component="div" variant="h6">
-      Title: {store.currentList.songs[currentSong].title}
+      Title: {store.currentList.songs[store.playIndex] ? store.currentList.songs[store.playIndex].title : ''}
     </Typography>
     <Typography component="div" variant="h6">
-      Artist: {store.currentList.songs[currentSong].artist}
+      Artist: {store.currentList.songs[store.playIndex] ? store.currentList.songs[store.playIndex].artist: '' }
     </Typography>
     </CardContent> ; 
     }
   }
-
-
-
-
-
-
-
+  
   return (
     <div className='video-player'>
+
           { store.currentList? 
           <YouTube
           className='video-area'
-          videoId={store.currentList.songs[currentSong] ? store.currentList.songs[currentSong].youTubeId : 'empty'}
-          opts={playerOptions}
           onReady={onPlayerReady}
+          videoId={store.currentList.songs[store.playIndex]? store.currentList.songs[store.playIndex].youTubeId: ''}
+          opts={playerOptions}
           onStateChange={onPlayerStateChange} />
-          : <Box className='video-area' />}
+          : <Box className='video-area' />
+          }
+
+
+
         <div className='video-actions'>
               {videoInfo}
               <Box className='video-buttons'>
-                <IconButton aria-label="previous">
+
+                <IconButton  onClick={prev} aria-label="previous">
                   {theme.direction === 'rtl' ? <SkipNextIcon /> : <SkipPreviousIcon />}
                 </IconButton>
-                <IconButton aria-label="play/pause">
+
+                <IconButton onClick={pause} aria-label="play">
+                  <PauseIcon sx={{ height: 38, width: 38 }} />
+                </IconButton>
+
+                <IconButton onClick={play} aria-label="play">
                   <PlayArrowIcon sx={{ height: 38, width: 38 }} />
                 </IconButton>
-                <IconButton aria-label="next">
+
+                <IconButton onClick={next} aria-label="next">
                   {theme.direction === 'rtl' ? <SkipPreviousIcon /> : <SkipNextIcon />}
                 </IconButton>
               </Box>
           </div>
+
     </div>
   )
 }

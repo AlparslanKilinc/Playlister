@@ -9,6 +9,7 @@ function SongCard(props) {
     const { song, index } = props;
 
     function prevent(event){
+        store.setPlay(index);
         event.preventDefault();
         event.stopPropagation();
     }
