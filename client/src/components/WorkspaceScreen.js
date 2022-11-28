@@ -30,6 +30,8 @@ function WorkspaceScreen(props) {
     function handleAddNewSong(event) {
         store.addNewSong();
     }
+  
+    
 
     return (
         <div className='workspace'>
@@ -45,7 +47,7 @@ function WorkspaceScreen(props) {
                         key={'playlist-song-' + (index)}
                         index={index}
                         song={song}
-                         
+                       
                     />
                 )):""
             }

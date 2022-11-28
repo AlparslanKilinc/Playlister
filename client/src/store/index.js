@@ -168,7 +168,7 @@ function GlobalStoreContextProvider(props) {
                     message:store.message,
                     search:store.search,
                     sortMethod:store.sortMethod,
-                    playIndex:store.playIndex,
+                    playIndex:0,
                 });
             }
             case GlobalStoreActionType.SET_LIST_NAME_EDIT_ACTIVE: {
@@ -316,6 +316,9 @@ function GlobalStoreContextProvider(props) {
     /// Play 
     store.getPlay = ()=>{
         return store.playIndex;
+    }
+    store.getCurrentList = ()=>{
+        return store.currentList;
     }
     store.setPlay = (playIndex)=>{
         storeReducer({

@@ -12,20 +12,13 @@ import SkipNextIcon from '@mui/icons-material/SkipNext';
 import PauseIcon from '@mui/icons-material/Pause';
 
 
+
+
 export const VideoPlayer = () => {
 
 const { store } = useContext(GlobalStoreContext);
 const theme = useTheme();
-
 const[player,setPlayer]=useState("");
-
-useEffect(() => {
-  store.getPlay();
-// eslint-disable-next-line react-hooks/exhaustive-deps
-}, []);
-
-
-
 const playerOptions = {
   height:'100%',
   width:'100%',
@@ -33,50 +26,71 @@ const playerOptions = {
   playerVars: {
       autoplay:1,
       controls:0,
+      origin: 'http://localhost:3000' 
   },
+  
 };
 
+useEffect( ()=>{
+  if(player && player.loadVideoById){
+    loadCurrentSong(player);
+  } 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+},[store.getCurrentList(),store.getPlay()])
 
-function onPlayerReady(event) {
+
+
+
+let onPlayerReady=(event)=>{
   setPlayer(event.target);
   loadCurrentSong(event.target);
+  event.stopPropagation();
 }
 
-function loadCurrentSong(player) {
-  player.loadVideoById(store.currentList.songs[store.playIndex].youTubeId);
-  player.playVideo();
+let loadCurrentSong = (player)=>{
+  if(player && player.loadVideoById){
+      if(store.currentList && store.currentList.songs && store.currentList.songs[store.playIndex] 
+        && store.currentList.songs[store.playIndex].youTubeId && player.loadVideoById){
+              console.log(store.currentList.songs[store.playIndex].youTubeId);
+              console.log(player.i);
+              player.loadVideoById(store.currentList.songs[store.playIndex].youTubeId);
+              return false;
+            }  
+    }
+    return false;
 }
-function play(){
-  if(player){
-    player.playVideo();
-  }
-}
-function pause(){
-  if(player){
-    player.pauseVideo();
-  }
-}
-function prev(){
-  if(store.playIndex==0) return;
-  store.setPlay(store.playIndex-1);
-  loadCurrentSong(player);
  
+
+
+let play =()=>{
+  if(player)player.playVideo();
 }
-function next(){
+
+let pause=()=>{
+ if(player)player.pauseVideo();
+}
+
+let prev =()=>{
+  if(store.playIndex===0) return;
+      store.setPlay(store.playIndex-1);
+      loadCurrentSong(player);
+}
+
+let next =()=>{
   if(store.playIndex<store.currentList.songs.length-1){
     store.setPlay(store.playIndex+1);
     loadCurrentSong(player);
   }
 }
 
+
+
 function onPlayerStateChange(event) {
   let playerStatus = event.data;
-  let player = event.target;
   if (playerStatus === -1) {
       console.log("-1 Video unstarted");
   } else if (playerStatus === 0) {
       console.log("0 Video ended");
-      loadCurrentSong(player);
   } else if (playerStatus === 1) {
       console.log("1 Video played");
   } else if (playerStatus === 2) {
@@ -87,10 +101,6 @@ function onPlayerStateChange(event) {
       console.log("5 Video cued");
   }
 }
-
-
-
-
 
 
 
@@ -132,9 +142,10 @@ function onPlayerStateChange(event) {
           <YouTube
           className='video-area'
           onReady={onPlayerReady}
+          onStateChange={onPlayerStateChange}
           videoId={store.currentList.songs[store.playIndex]? store.currentList.songs[store.playIndex].youTubeId: ''}
           opts={playerOptions}
-          onStateChange={onPlayerStateChange} />
+           />
           : <Box className='video-area' />
           }
 

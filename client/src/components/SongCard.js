@@ -8,10 +8,13 @@ function SongCard(props) {
     const [ draggedTo, setDraggedTo ] = useState(0);
     const { song, index } = props;
 
-    function prevent(event){
-        store.setPlay(index);
-        event.preventDefault();
+    // function prevent(event){
+    //     event.preventDefault();
+    //     event.stopPropagation();
+    // }
+    function handlePlay(event){
         event.stopPropagation();
+        store.setPlay(index);
     }
 
     function handleDragStart(event) {
@@ -43,10 +46,12 @@ function SongCard(props) {
         store.addMoveSongTransaction(sourceIndex, targetIndex);
     }
     function handleRemoveSong(event) {
+        event.preventDefault();
+        event.stopPropagation();
         store.showRemoveSongModal(index, song);
     }
     function handleDoubleClick(event) {
-            store.showEditSongModal(index, song);
+        store.showEditSongModal(index, song);
     }
 
     return (
@@ -60,7 +65,7 @@ function SongCard(props) {
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
             draggable="true"
-            onClick={prevent}
+            onClick={handlePlay}
             onDoubleClick={handleDoubleClick}
         >
             <h5>
