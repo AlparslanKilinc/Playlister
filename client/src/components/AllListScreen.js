@@ -39,7 +39,7 @@ const AllListScreen = () => {
     useEffect(() => {
         store.LoadPublishedPlaylists();
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [store.search]);
     /// Accordion 
     const [expanded, setExpanded] = React.useState(false);
     const handleChange = (panel,id) => (event, isExpanded) => {
