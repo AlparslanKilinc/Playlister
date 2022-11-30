@@ -12,8 +12,6 @@ import SkipNextIcon from '@mui/icons-material/SkipNext';
 import PauseIcon from '@mui/icons-material/Pause';
 
 
-
-
 export const VideoPlayer = () => {
 
 const { store } = useContext(GlobalStoreContext);
@@ -36,14 +34,13 @@ useEffect( ()=>{
     loadCurrentSong(player);
   } 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-},[store.getCurrentList(),store.getPlay()])
+},[store.playIndex,store.currentList])
 
 
 
 
 let onPlayerReady=(event)=>{
   setPlayer(event.target);
-  loadCurrentSong(event.target);
   event.stopPropagation();
 }
 
@@ -80,25 +77,6 @@ let next =()=>{
   if(store.playIndex<store.currentList.songs.length-1){
     store.setPlay(store.playIndex+1);
     loadCurrentSong(player);
-  }
-}
-
-
-
-function onPlayerStateChange(event) {
-  let playerStatus = event.data;
-  if (playerStatus === -1) {
-      console.log("-1 Video unstarted");
-  } else if (playerStatus === 0) {
-      console.log("0 Video ended");
-  } else if (playerStatus === 1) {
-      console.log("1 Video played");
-  } else if (playerStatus === 2) {
-      console.log("2 Video paused");
-  } else if (playerStatus === 3) {
-      console.log("3 Video buffering");
-  } else if (playerStatus === 5) {
-      console.log("5 Video cued");
   }
 }
 
@@ -142,7 +120,6 @@ function onPlayerStateChange(event) {
           <YouTube
           className='video-area'
           onReady={onPlayerReady}
-          onStateChange={onPlayerStateChange}
           videoId={store.currentList.songs[store.playIndex]? store.currentList.songs[store.playIndex].youTubeId: ''}
           opts={playerOptions}
            />
