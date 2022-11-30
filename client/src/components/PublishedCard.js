@@ -16,7 +16,9 @@ function PublishedCard(props) {
 
     function handleLoadList(event, id) {
         if (!event.target.disabled) {
-            store.setPublishedList(id);
+            if(!store.currentList || store.currentList._id!== id){
+                store.setPublishedList(id);
+            }
         }
     }
     function handleLike(event){

@@ -14,7 +14,9 @@ function ListCard(props) {
 
     function handleLoadList(event, id) {
         if (!event.target.disabled) {
+            if(!store.currentList || store.currentList._id!== id){
             store.setCurrentList(id);
+            }
         }
     }
 

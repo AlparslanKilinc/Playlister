@@ -18,13 +18,13 @@ const { store } = useContext(GlobalStoreContext);
 const theme = useTheme();
 const[player,setPlayer]=useState("");
 const playerOptions = {
+  allow:'autoplay',
   height:'100%',
   width:'100%',
   borderRadius:'10px',
   playerVars: {
-      autoplay:1,
       controls:0,
-      origin: 'http://localhost:3000' 
+      origin: 'https://localhost:3000' 
   },
   
 };
@@ -34,13 +34,14 @@ useEffect( ()=>{
     loadCurrentSong(player);
   } 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-},[store.playIndex,store.currentList])
+},[store.currentList , store.playIndex])
 
 
 
 
 let onPlayerReady=(event)=>{
   setPlayer(event.target);
+  loadCurrentSong(event.target);
   event.stopPropagation();
 }
 
@@ -48,8 +49,6 @@ let loadCurrentSong = (player)=>{
   if(player && player.loadVideoById){
       if(store.currentList && store.currentList.songs && store.currentList.songs[store.playIndex] 
         && store.currentList.songs[store.playIndex].youTubeId && player.loadVideoById){
-              console.log(store.currentList.songs[store.playIndex].youTubeId);
-              console.log(player.i);
               player.loadVideoById(store.currentList.songs[store.playIndex].youTubeId);
               return false;
             }  
@@ -69,14 +68,32 @@ let pause=()=>{
 
 let prev =()=>{
   if(store.playIndex===0) return;
-      store.setPlay(store.playIndex-1);
-      loadCurrentSong(player);
+  store.setPlay(store.playIndex-1);
+  loadCurrentSong(player);
 }
 
 let next =()=>{
   if(store.playIndex<store.currentList.songs.length-1){
     store.setPlay(store.playIndex+1);
     loadCurrentSong(player);
+  }
+}
+
+function onPlayerStateChange(event) {
+  let playerStatus = event.data;
+  if (playerStatus === -1) {
+      console.log("-1 Video unstarted");
+  } else if (playerStatus === 0) {
+      next();
+      console.log("0 Video ended");
+  } else if (playerStatus === 1) {
+      console.log("1 Video played");
+  } else if (playerStatus === 2) {
+      console.log("2 Video paused");
+  } else if (playerStatus === 3) {
+      console.log("3 Video buffering");
+  } else if (playerStatus === 5) {
+      console.log("5 Video cued");
   }
 }
 
@@ -122,6 +139,7 @@ let next =()=>{
           onReady={onPlayerReady}
           videoId={store.currentList.songs[store.playIndex]? store.currentList.songs[store.playIndex].youTubeId: ''}
           opts={playerOptions}
+          onStateChange={onPlayerStateChange}
            />
           : <Box className='video-area' />
           }

@@ -18,7 +18,9 @@ store.history = useHistory();
 const handleChange = (panel,id) => (event, isExpanded) => {
   setExpanded(isExpanded ? panel : false);
   store.clearTransaction();
-  store.setPublishedList(id);
+  if(!store.currentList || store.currentList._id!== id){
+    store.setPublishedList(id);
+  }
 };
 
 useEffect(() => {

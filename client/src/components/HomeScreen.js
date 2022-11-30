@@ -49,7 +49,9 @@ const HomeScreen = () => {
     const handleChange = (panel,id) => (event, isExpanded) => {
       setExpanded(isExpanded ? panel : false);
       store.clearTransaction();
-      store.setCurrentList(id);
+      if(!store.currentList || store.currentList._id!== id){
+        store.setCurrentList(id);
+      }
     };
 
    
@@ -95,8 +97,9 @@ const HomeScreen = () => {
               playlists=store.SortLastEdit(playlists);
               console.log('Sort By Last Edit');
               break;
+              
             default:
-              console.log("Sort Method null");
+             
         }
 
         Lists = 
@@ -109,7 +112,7 @@ const HomeScreen = () => {
                 aria-controls="panel1bh-content"
                 id="panel1bh-header"
                 >
-                  {list.published ? <PublishedCard key={list._id} List={list} selected={false}/>: <ListCard key={list._id} List={list} selected={false}/>}
+                {list.published ? <PublishedCard key={list._id} List={list} selected={false}/>: <ListCard key={list._id} List={list} selected={false}/>}
                 </AccordionSummary>
 
                 <AccordionDetails>
