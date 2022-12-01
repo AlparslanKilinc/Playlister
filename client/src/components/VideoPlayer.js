@@ -24,7 +24,8 @@ const playerOptions = {
   borderRadius:'10px',
   playerVars: {
       controls:0,
-      origin: 'https://localhost:3000' 
+      host: 'https://www.youtube.com',
+      origin: 'https://localhost:3000',
   },
   
 };
