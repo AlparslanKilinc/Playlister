@@ -69,7 +69,7 @@ if (store.PublishedPlaylists) {
     {
 
      playlists.map((list,id=0) => (     
-    <Accordion key={list._id} id='user-list' expanded={expanded === 'panel'+(id+1).toString() && store.currentList} onChange={handleChange('panel'+(id+1).toString(),list._id)}>
+    <Accordion key={list._id} id='user-list' expanded={expanded === ('panel'+(id+1).toString())} onChange={handleChange('panel'+(id+1).toString(),list._id)}>
       <AccordionSummary
         expandIcon={<KeyboardDoubleArrowDownIcon />}
         aria-controls="panel1bh-content"

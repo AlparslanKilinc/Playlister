@@ -21,7 +21,7 @@ import PublishedCard from './PublishedCard';
 import { useHistory } from 'react-router-dom'
 import PublishedArea from './PublishedArea';
 import MUIDeleteModal from './MUIDeleteModal';
-
+import ErrorBoundary from './ErrorBoundary'
 
 
 const HomeScreen = () => {
@@ -45,7 +45,7 @@ const HomeScreen = () => {
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     /// Accordion 
-    const [expanded, setExpanded] = React.useState(false);
+    const [expanded, setExpanded] = useState(false);
     const handleChange = (panel,id) => (event, isExpanded) => {
       setExpanded(isExpanded ? panel : false);
       store.clearTransaction();
@@ -101,12 +101,13 @@ const HomeScreen = () => {
             default:
              
         }
+       
 
         Lists = 
         <List sx={{width: '90%', left: '5%'}}>
         {
                 playlists.map((list,id=0) => (
-            <Accordion key={list._id} id='user-list' expanded={expanded === 'panel'+(id+1).toString() && store.currentList} onChange={handleChange('panel'+(id+1).toString(),list._id)}>
+            <Accordion key={list._id} id='user-list' expanded={ (expanded === 'panel'+(id+1).toString()) } onChange={handleChange('panel'+(id+1).toString(),list._id)}>
                 <AccordionSummary
                 expandIcon={<KeyboardDoubleArrowDownIcon />}
                 aria-controls="panel1bh-content"
@@ -139,7 +140,9 @@ const HomeScreen = () => {
                     <Button onClick={toggleComments} disabled={!store.currentList || (store.currentList && !store.currentList.published)} color="primary" variant={commentsVariant}>Comments</Button>
                     </ThemeProvider>
                 </ButtonGroup>
+                <ErrorBoundary>
                 {selection}
+                </ErrorBoundary>
                 </div>
                 
             </div>

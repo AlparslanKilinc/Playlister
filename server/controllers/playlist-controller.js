@@ -106,9 +106,14 @@ getPlaylistById = async (req, res) => {
         if (err) {
             return res.status(400).json({ success: false, error: err , errorMessage:"Playlist Does Not Exists"});
         }
+        if (!list) {
+            return res
+                .status(404)
+                .json({ success: false, error: 'lists not found' })
+        }
         // DOES THIS LIST BELONG TO THIS USER?
-        async function asyncFindUser(list) {
-            await User.findOne({ email: list.ownerEmail }, (err, user) => {
+        else{
+            User.findOne({ email: list.ownerEmail }, (err, user) => {
                 if (err) {
                     return res.status(400).json({ success: false, error: err , errorMessage:"Playlist Does Not Exists"});
                 }
@@ -122,8 +127,8 @@ getPlaylistById = async (req, res) => {
                 }
             });
         }
-        asyncFindUser(list);
     }).catch(err => console.log(err))
+    
 }
 
 getPlaylists = async (req, res) => {

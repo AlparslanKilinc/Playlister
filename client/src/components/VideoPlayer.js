@@ -16,7 +16,7 @@ export const VideoPlayer = () => {
 
 const { store } = useContext(GlobalStoreContext);
 const theme = useTheme();
-const[player,setPlayer]=useState("");
+const[player,setPlayer]=useState(null);
 const playerOptions = {
   allow:'autoplay',
   height:'100%',
@@ -41,9 +41,11 @@ useEffect( ()=>{
 
 
 let onPlayerReady=(event)=>{
-  setPlayer(event.target);
-  loadCurrentSong(event.target);
-  event.stopPropagation();
+  try {
+    setPlayer(event.target);
+  } catch (error) {
+    setPlayer(null);
+  }
 }
 
 let loadCurrentSong = (player)=>{
@@ -51,10 +53,8 @@ let loadCurrentSong = (player)=>{
       if(store.currentList && store.currentList.songs && store.currentList.songs[store.playIndex] 
         && store.currentList.songs[store.playIndex].youTubeId && player.loadVideoById){
               player.loadVideoById(store.currentList.songs[store.playIndex].youTubeId);
-              return false;
             }  
     }
-    return false;
 }
  
 
