@@ -415,8 +415,13 @@ function GlobalStoreContextProvider(props) {
             console.log("API FAILED TO CREATE A NEW LIST");
         }
     }
-    store.duplicate = async function(id){
-        const response = await api.getPublishedPlaylistById(id);
+    store.duplicate = async function(id,published){
+        let response="";
+        if(published){
+             response = await api.getPublishedPlaylistById(id);
+        }else{
+             response = await api.getPlaylistById(id);
+        }
         if(response.status===200){
             let playlist=response.data.playlist;
             const response2 = await api.createPlaylist(playlist.name, playlist.songs, auth.user.email,[],auth.user.userName);

@@ -33,7 +33,7 @@ function EditToolbar(props) {
 
     async function handleDuplicate(event, id) {
         event.stopPropagation();
-        console.log("duplicate");
+        store.duplicate(id,false);
     }
 
     return (

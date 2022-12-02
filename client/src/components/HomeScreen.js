@@ -44,7 +44,7 @@ const HomeScreen = () => {
     useEffect(() => {
         store.LoadPlaylists();
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [store.search]);
     /// Accordion 
     const [expanded, setExpanded] = useState(false);
     const handleChange = (panel,id) => (event, isExpanded) => {
@@ -58,7 +58,7 @@ const HomeScreen = () => {
    
 
     function handleCreateNewList() {
-        setExpanded(false);
+        store.setSearch("");
         store.createNewList();
     }
 
