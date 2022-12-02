@@ -188,14 +188,6 @@ updatePlaylist = async (req, res) => {
         })
     }
 
-    /// Unique Renaming
-
-    const find= await Playlist.findOne({ownerEmail: body.playlist.ownerEmail, name:body.playlist.name});
-    if(find){
-        console.log("Rename Error");
-        return res.status(400).json({ success: false, description: "Renaming error", errorMessage:"Playlist Name Already Exists" });
-    }
-
     Playlist.findOne({ _id: req.params.id }, (err, playlist) => {
         if (err) {
             return res.status(404).json({
@@ -203,6 +195,20 @@ updatePlaylist = async (req, res) => {
                 message: 'Playlist not found!',
             })
         }
+        console.log(body.playlist.name+ " " +playlist.name);
+    let ret=false;
+    if(body.playlist.name!==playlist.name){
+      Playlist.findOne({ownerEmail: body.playlist.ownerEmail, name:body.playlist.name},(err,list)=>{
+        if(list){
+            ret=true;
+            return res.status(400).json({ success: false, description: "Renaming error", errorMessage:"Playlist Name Already Exists" });
+        }
+        if(err){
+        }
+      })
+    }
+    console.log(ret);
+    if(ret){
         // DOES THIS LIST BELONG TO THIS USER?
         async function asyncFindUser(list) {
             await User.findOne({ email: list.ownerEmail }, (err, user) => {
@@ -246,6 +252,7 @@ updatePlaylist = async (req, res) => {
             });
         }
         asyncFindUser(playlist);
+    }
     })
 }
 

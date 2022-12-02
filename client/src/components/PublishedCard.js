@@ -41,6 +41,8 @@ function PublishedCard(props) {
             key={List._id}
             button
             onClick={(event) => {
+                event.preventDefault();
+                event.stopPropagation();
                 handleLoadList(event, List._id);
             }}
         >  

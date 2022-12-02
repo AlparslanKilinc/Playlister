@@ -108,13 +108,13 @@ const HomeScreen = () => {
         <List sx={{width: '90%', left: '5%'}}>
         {
                 playlists.map((list,id=0) => (
-            <Accordion key={list._id} id='user-list' expanded={ store.currentList? (expanded === 'panel'+(id+1).toString()): false } onChange={handleChange('panel'+(id+1).toString(),list._id)}>
+            <Accordion key={list._id} id='user-list' expanded={ store.currentList&& store.currentList._id === list._id ? (expanded === 'panel'+(id+1).toString()): false } onChange={handleChange('panel'+(id+1).toString(),list._id)}>
                 <AccordionSummary
                 expandIcon={<KeyboardDoubleArrowDownIcon />}
                 aria-controls="panel1bh-content"
                 id="panel1bh-header"
                 >
-                {list.published ? <PublishedCard key={list._id} List={list} selected={false}/>: <ListCard key={list._id} List={list} selected={false}/>}
+                {list.published ? <PublishedCard key={list._id} List={list} />: <ListCard  key={list._id} List={list} />}
                 </AccordionSummary>
 
                 <AccordionDetails>

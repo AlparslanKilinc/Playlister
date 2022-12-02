@@ -25,7 +25,7 @@ function PublishedToolbar(props) {
     
     function handleDuplicate(event, id) {
         event.stopPropagation();
-        console.log("duplicate");
+        store.duplicate(id);
     }
     let u = ""
     if(auth.user){

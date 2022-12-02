@@ -415,6 +415,27 @@ function GlobalStoreContextProvider(props) {
             console.log("API FAILED TO CREATE A NEW LIST");
         }
     }
+    store.duplicate = async function(id){
+        const response = await api.getPublishedPlaylistById(id);
+        if(response.status===200){
+            let playlist=response.data.playlist;
+            const response2 = await api.createPlaylist(playlist.name, playlist.songs, auth.user.email,[],auth.user.userName);
+            if(response2.status===201){
+                tps.clearAllTransactions();
+                let newList = response2.data.playlist;
+                store.LoadPlaylists();
+            storeReducer({
+                type: GlobalStoreActionType.CREATE_NEW_LIST,
+                payload: newList
+            }
+            );
+            } else {
+                console.log("API FAILED TO CREATE A NEW LIST");
+            }
+        }else{
+            console.log("API FAILED TO DUPLICATE TRYING TO GET LIST ");
+        }
+    }
     
     store.LoadPlaylists = function () {
         async function asyncLoadPlaylists() {
