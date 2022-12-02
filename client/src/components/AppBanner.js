@@ -90,18 +90,19 @@ export default function AppBanner() {
         <Box>
             <AppBar style={{backgroundColor:"#071935"}} position="static">
                 <Toolbar>
-                 
-                        <Box style={{  display:'flex' , alignItems:'center', textDecoration: 'none', color: 'white' }}>
-                            <YouTubeIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+                <Link style={{ textDecoration: 'none'}} to='/'>
+                        <Box className='logo'>
+                            <YouTubeIcon   sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
                             <Typography                        
                         variant="h6"
                         noWrap
                         component="div"
                         sx={{ display: { xs: 'none', sm: 'block' } }}                        
                     >
-                       Playlister
-                    </Typography>
-                        </Box>
+                            Playlister
+                        </Typography>
+                    </Box>
+                </Link>
                  
                     <Box sx={{ flexGrow: 1 }}></Box>
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>

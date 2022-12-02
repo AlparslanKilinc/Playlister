@@ -17,6 +17,7 @@ export const VideoPlayer = () => {
 const { store } = useContext(GlobalStoreContext);
 const theme = useTheme();
 const [player,setPlayer]=useState(null);
+const [list,setList]=useState(null);
 
 const playerOptions = {
   allow:'autoplay',
@@ -38,6 +39,12 @@ useEffect( ()=>{
 },[store.currentList , store.playIndex])
 
 
+let addListen = ()=>{
+  if(store.currentList !==list && store.currentList.published){
+    store.AddListen(store.currentList._id);
+  }
+}
+
 let onPlayerReady=(event)=>{
   setPlayer(event.target);
   loadCurrentSong(event.target);
@@ -51,7 +58,9 @@ let loadCurrentSong = (player)=>{
 }
 
 let play =()=>{
-  if(player)player.playVideo();
+  if(player){
+    player.playVideo();
+  }
 }
 
 let pause=()=>{
@@ -77,6 +86,8 @@ function onPlayerStateChange(event) {
       next();
       console.log("0 Video ended");
   } else if (playerStatus === 1) {
+    addListen();
+    setList(store.currentList);
       console.log("1 Video played");
   } else if (playerStatus === 2) {
       console.log("2 Video paused");

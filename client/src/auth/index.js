@@ -114,7 +114,7 @@ function AuthContextProvider(props) {
                         user: response.data.user
                     }
                 })
-                history.push("/");
+                history.push('/login/');
             }
         }catch(error){
             authReducer({

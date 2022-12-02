@@ -33,6 +33,15 @@ body{
   align-items: center;
   background-image: linear-gradient(to bottom, #e4f0ee, #071935);
 }
+.logo{
+  display:flex; 
+  align-items:center;
+  text-decoration: none;
+  color: white;
+}
+.logo:hover{
+  color:red;
+}
 #main-splash{
   display: flex;
   gap: 2rem;

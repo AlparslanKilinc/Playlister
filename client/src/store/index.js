@@ -487,6 +487,24 @@ function GlobalStoreContextProvider(props) {
         asyncUpdateCurrentList();
     }
 
+    store.AddListen = function(id) {
+        async function asyncUpdatePublishedList(id) {
+            let response = await api.getPublishedPlaylistById(id);
+            if (response.data.success) {
+                let playlist = response.data.playlist;
+                playlist.listens++;
+                response = await api.updatePublishedPlaylistComments(playlist._id,playlist);
+                if (response.data.success) {
+                    if(history.location.pathname==="/")store.LoadPlaylists();
+                    else{
+                        store.LoadPublishedPlaylists();
+                    }
+                }
+            }
+        }
+        asyncUpdatePublishedList(id);
+    }
+
 
     store.AddLike = function(id) {
         async function asyncUpdatePublishedList(id) {
@@ -505,6 +523,7 @@ function GlobalStoreContextProvider(props) {
         }
         asyncUpdatePublishedList(id);
     }
+
     store.AddDislike = function(id) {
         async function asyncUpdatePublishedList(id) {
             let response = await api.getPublishedPlaylistById(id);

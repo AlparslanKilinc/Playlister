@@ -1,18 +1,11 @@
 import { useContext } from 'react';
 import AuthContext from '../auth'
 import MUILoginErrorModal from './MUILoginErrorModal'
-import Copyright from './Copyright'
-
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
-import CssBaseline from '@mui/material/CssBaseline';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
@@ -30,24 +23,25 @@ export default function LoginScreen() {
     };
 
     return (
-        <Grid container component="main" sx={{minHeight:'93.4vh' }}>
-            <MUILoginErrorModal/>
-            <CssBaseline />
-                <Box
-                    sx={{
-                        my: 12,
-                        mx: 100,
+        <>
+        <MUILoginErrorModal/>
+            <Box
+                sx={{
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
+                        justifyContent:'center',
+                        mt:'5rem'
                     }}
                 >
                     <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                         <LockOutlinedIcon />
                     </Avatar>
+
                     <Typography component="h1" variant="h5">
                         Sign in
                     </Typography>
+
                     <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
                         <TextField
                             margin="normal"
@@ -69,10 +63,6 @@ export default function LoginScreen() {
                             id="password"
                             autoComplete="current-password"
                         />
-                        <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />}
-                            label="Remember me"
-                        />
                         <Button
                             type="submit"
                             fullWidth
@@ -81,15 +71,12 @@ export default function LoginScreen() {
                         >
                             Sign In
                         </Button>
-                        <Grid container>
-                            <Grid item>
-                                <Link href="/register/" variant="body2">
-                                    {"Don't have an account? Sign Up"}
-                                </Link>
-                            </Grid>
-                        </Grid>
+                        
+                        <Link style={{alignSelf:'flex-end'}} href="/register/" variant="body2">
+                        {"Don't have an account? Sign Up"}
+                        </Link>
                     </Box>
-                </Box>
-        </Grid>
+            </Box>
+        </>
     );
 }

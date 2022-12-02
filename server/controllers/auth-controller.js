@@ -149,15 +149,7 @@ registerUser = async (req, res) => {
         const savedUser = await newUser.save();
         console.log("new user saved: " + savedUser._id);
 
-        // LOGIN THE USER
-        const token = auth.signToken(savedUser._id);
-        console.log("token:" + token);
-
-        await res.cookie("token", token, {
-            httpOnly: true,
-            secure: true,
-            sameSite: "none"
-        }).status(200).json({
+        res.status(200).json({
             success: true,
             user: {
                 userName:savedUser.userName,
@@ -167,8 +159,6 @@ registerUser = async (req, res) => {
                 interactions:savedUser.interactions,             
             }
         })
-
-        console.log("token sent");
 
     } catch (err) {
         console.error(err);
