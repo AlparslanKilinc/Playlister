@@ -437,6 +437,62 @@ updatePublishedPlaylistComments = async (req, res) => {
                 }
                     }).catch(err => console.log(err))
 }
+/// Update Listens 
+updatePublishedPlaylistListens = async (req, res) => {
+    const body = req.body;
+    if (!body) {
+        return res.status(400).json({
+            success: false,
+            error: 'You must provide a body to update',
+        })
+    }
+       
+         await Playlist.findOne({ _id: req.params.id }, (err,list) => {
+                if (err) {
+                    return res.status(404).json({
+                        err,
+                        message: 'Playlist not found!',
+                    })
+                }
+                if(list.published){
+                            /// Cannot be changed by not logged in user
+                            list.name = list.name;
+                            list.songs = list.songs;
+                            list.ownerEmail=list.ownerEmail;
+                            list.owner=list.owner;
+                            list.date=list.date;
+                            list.published=list.published;
+                            list.publishedDate=list.publishedDate;
+                            list.lastEdit= list.lastEdit;
+                            list.comments=list.comments;
+                            /// Allowed to Change
+                            list.listens=body.playlist.listens;
+                            
+                            list
+                                .save()
+                                .then(() => {
+                                    
+                                    return res.status(200).json({
+                                        success: true,
+                                        id: list._id,
+                                        list:list,
+                                        message: 'Playlist updated!',
+                                    })
+                                })
+                                .catch(error => {
+                                    console.log("FAILURE: " + JSON.stringify(error));
+                                    return res.status(404).json({
+                                        error,
+                                        message: 'Playlist not updated!',
+                                    })
+                                })
+                }else{
+                    return res
+                    .status(404)
+                    .json({ success: false, error: 'Playlist Is Not Published' })
+                }
+                    }).catch(err => console.log(err))
+}
 
 updatePublishedPlaylistByLike = async (req, res) => {
     console.log("this method is called");
@@ -650,5 +706,6 @@ module.exports = {
     updatePublishedPlaylistByLike,
     updatePublishedPlaylistByDislike,
     updatePlaylistNameById,
+    updatePublishedPlaylistListens,
     
 }

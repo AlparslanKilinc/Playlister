@@ -32,10 +32,12 @@ useEffect(() => {
 let ListArea = "";
 
 if (store.PublishedPlaylists) {
-  let playlists=store.PublishedPlaylists;
+  let playlists=[];
   /// Search by PlaylistName
   if(store.search!==""){
-    playlists= playlists.filter( list => list.name.startsWith(store.search));
+    playlists=store.PublishedPlaylists;
+    if(store.history.location.pathname==="/AllLists")playlists= playlists.filter( list => list.name.startsWith(store.search));
+    if(store.history.location.pathname==="/Users") playlists= playlists.filter( list => list.owner.startsWith(store.search));
   }
   //// Sorting
   switch (store.sortMethod) {

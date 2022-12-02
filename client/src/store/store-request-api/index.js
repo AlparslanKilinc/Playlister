@@ -63,6 +63,12 @@ export const updatePublishedPlaylistComments = (id, playlist) => {
         playlist : playlist
     })
 }
+export const updatePublishedPlaylistListens = (id, playlist) => {
+    return api.put(`/PublishedPlaylistsListens/${id}`, {
+        // SPECIFY THE PAYLOAD
+        playlist : playlist
+    })
+}
 export const updatePublishedPlaylistByLike = (id, playlist) => {
     return api.put(`/PublishedPlaylistsLikes/${id}`, {
         // SPECIFY THE PAYLOAD
@@ -88,6 +94,7 @@ const apis = {
     updatePublishedPlaylistByLike,
     updatePublishedPlaylistByDislike,
     updatePlaylistNameById,
+    updatePublishedPlaylistListens,
 }
 
 export default apis

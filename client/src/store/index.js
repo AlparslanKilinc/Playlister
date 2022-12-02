@@ -493,7 +493,7 @@ function GlobalStoreContextProvider(props) {
             if (response.data.success) {
                 let playlist = response.data.playlist;
                 playlist.listens++;
-                response = await api.updatePublishedPlaylistComments(playlist._id,playlist);
+                response = await api.updatePublishedPlaylistListens(playlist._id,playlist);
                 if (response.data.success) {
                     if(history.location.pathname==="/")store.LoadPlaylists();
                     else{
@@ -851,8 +851,8 @@ function GlobalStoreContextProvider(props) {
      }
      store.SortMostListens = (playlists)=>{
         return playlists.sort(function(a, b) {
-           const nameA=a.Listens
-           const nameB=b.Listens
+           const nameA=a.listens
+           const nameB=b.listens
            if (nameA > nameB) {
              return -1;
            }

@@ -14,6 +14,7 @@ router.put('/playlist/:id', auth.verify, PlaylistController.updatePlaylistById)
 router.get('/PublishedPlaylists/', PlaylistController.getPublishedPlaylists)
 router.get('/PublishedPlaylists/:id', PlaylistController.getPublishedPlaylistById)
 router.put('/PublishedPlaylistsComments/:id',auth.verify, PlaylistController.updatePublishedPlaylistComments)
+router.put('/PublishedPlaylistsListens/:id', PlaylistController.updatePublishedPlaylistListens)
 router.put('/PublishedPlaylistsLikes/:id', auth.verify,PlaylistController.updatePublishedPlaylistByLike)
 router.put('/PublishedPlaylistsDislikes/:id',auth.verify, PlaylistController.updatePublishedPlaylistByDislike)
 

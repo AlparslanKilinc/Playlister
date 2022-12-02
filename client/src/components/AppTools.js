@@ -11,6 +11,7 @@ import TextField from '@mui/material/TextField';
 import { IconButton } from '@mui/material';
 import { GlobalStoreContext } from '../store'
 import AuthContext from '../auth'
+import { useHistory } from 'react-router-dom'
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -31,6 +32,8 @@ export default function AppTools(props) {
   const { store } = useContext(GlobalStoreContext);
   const { auth } = useContext(AuthContext);
   const {published}= props;
+  store.history = useHistory();
+ 
 
   const handleSearch = (event) => {
     if (event.key === 'Enter') {
@@ -38,8 +41,7 @@ export default function AppTools(props) {
       }
   }
 
-  
-  const clearSearch = ()=>{
+  let clear = ()=>{
     store.setSearch("");
   }
 
@@ -50,15 +52,15 @@ export default function AppTools(props) {
       <AppBar  position="static">
         <Toolbar id='AppTools' >
         <div className='tool-icons'>
-        <IconButton href="/" onClick={clearSearch} disabled={!auth.loggedIn} aria-label="home">
+        <IconButton href="/" color={store.history.location.pathname==="/"? 'success' :'default'} onClick={clear} disabled={!auth.loggedIn} aria-label="home">
           <HomeIcon/>
         </IconButton>
 
-        <IconButton href="/AllLists" onClick={clearSearch} aria-label="all-list">
+        <IconButton href="/AllLists"  color={store.history.location.pathname==="/AllLists"? 'success' :'default'}  onClick={clear} aria-label="all-list">
           <Groups3Icon/>
         </IconButton>
 
-        <IconButton href="/Users" onClick={clearSearch} aria-label="users">
+        <IconButton href="/Users" color={store.history.location.pathname==="/Users"? 'success' :'default'}  onClick={clear} aria-label="users">
           <PersonIcon/>
         </IconButton>
         </div>
