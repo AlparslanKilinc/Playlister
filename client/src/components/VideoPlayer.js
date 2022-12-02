@@ -16,14 +16,16 @@ export const VideoPlayer = () => {
 
 const { store } = useContext(GlobalStoreContext);
 const theme = useTheme();
-const[player,setPlayer]=useState(null);
+const [player,setPlayer]=useState(null);
+
 const playerOptions = {
   allow:'autoplay',
   height:'100%',
   width:'100%',
   borderRadius:'10px',
   playerVars: {
-      controls:0,
+      mute:1,
+      controls:1,
       host: 'https://www.youtube.com',
       origin: 'https://localhost:3000',
   },
@@ -31,33 +33,22 @@ const playerOptions = {
 };
 
 useEffect( ()=>{
-  if(player && player.loadVideoById){
-    loadCurrentSong(player);
-  } 
+  if(player&& player.h)loadCurrentSong(player);
   // eslint-disable-next-line react-hooks/exhaustive-deps
 },[store.currentList , store.playIndex])
 
 
-
-
 let onPlayerReady=(event)=>{
-  try {
-    setPlayer(event.target);
-  } catch (error) {
-    setPlayer(null);
-  }
+  setPlayer(event.target);
+  loadCurrentSong(event.target);
 }
 
 let loadCurrentSong = (player)=>{
-  if(player && player.loadVideoById){
-      if(store.currentList && store.currentList.songs && store.currentList.songs[store.playIndex] 
-        && store.currentList.songs[store.playIndex].youTubeId && player.loadVideoById){
-              player.loadVideoById(store.currentList.songs[store.playIndex].youTubeId);
-            }  
-    }
+  if(store.currentList &&store.currentList.songs[store.playIndex]){
+    if(store.playIndex===0)player.cueVideoById(store.currentList.songs[store.playIndex]? store.currentList.songs[store.playIndex].youTubeId: '');
+    else player.loadVideoById(store.currentList.songs[store.playIndex]? store.currentList.songs[store.playIndex].youTubeId: '');
+  }  
 }
- 
-
 
 let play =()=>{
   if(player)player.playVideo();
@@ -70,13 +61,11 @@ let pause=()=>{
 let prev =()=>{
   if(store.playIndex===0) return;
   store.setPlay(store.playIndex-1);
-  loadCurrentSong(player);
 }
 
 let next =()=>{
   if(store.playIndex<store.currentList.songs.length-1){
     store.setPlay(store.playIndex+1);
-    loadCurrentSong(player);
   }
 }
 

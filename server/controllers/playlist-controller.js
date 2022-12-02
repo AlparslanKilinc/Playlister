@@ -80,7 +80,7 @@ deletePlaylist = async (req, res) => {
                         .save()
                         .then(() => {
                             Playlist.findOneAndDelete({ _id: req.params.id }, () => {
-                                return res.status(200).json({playlist:Playlist});
+                                return res.status(200).json({success:true, playlist:Playlist});
         
                             }).catch(err => console.log(err))
                         });

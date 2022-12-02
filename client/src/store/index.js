@@ -107,7 +107,7 @@ function GlobalStoreContextProvider(props) {
                     currentModal : CurrentModal.NONE,
                     playlists: payload,
                     PublishedPlaylists:store.PublishedPlaylists,
-                    currentList: null,
+                    currentList: store.currentList,
                     currentSongIndex: -1,
                     currentSong: null,
                     listNameActive: false,
@@ -124,7 +124,7 @@ function GlobalStoreContextProvider(props) {
                     currentModal : CurrentModal,
                     playlists: store.playlists,
                     PublishedPlaylists:payload,
-                    currentList: null,
+                    currentList: store.currentList,
                     currentSongIndex: -1,
                     currentSong: null,
                     listNameActive: false,
@@ -507,7 +507,7 @@ function GlobalStoreContextProvider(props) {
                 store.LoadPlaylists();
                 storeReducer({
                     type: GlobalStoreActionType.SET_CURRENT_LIST,
-                    payload: response.data.list
+                    payload: store.currentList
                 });
             }
             else {
@@ -540,7 +540,7 @@ function GlobalStoreContextProvider(props) {
             if (response.data.success) {
                 storeReducer({
                     type: GlobalStoreActionType.SET_CURRENT_LIST,
-                    payload: store.currentList
+                    payload: response.data.list
                 });
             }
         }
@@ -585,14 +585,17 @@ function GlobalStoreContextProvider(props) {
         getListToDelete(id);
     }
     store.deleteList = function (id) {
+       
         async function processDelete(id) {
             let response = await api.deletePlaylistById(id);
-            store.LoadPlaylists();
-            store.LoadPublishedPlaylists();
             if (response.data.success) {
+                store.currentList=null;
+                if(history.location.pathname==="/")store.LoadPlaylists();
+                else store.LoadPublishedPlaylists();
             }  
         }
         processDelete(id);
+        
     }
     store.deleteMarkedList = function() {
         store.deleteList(store.listIdMarkedForDeletion);

@@ -107,7 +107,7 @@ const HomeScreen = () => {
         <List sx={{width: '90%', left: '5%'}}>
         {
                 playlists.map((list,id=0) => (
-            <Accordion key={list._id} id='user-list' expanded={ (expanded === 'panel'+(id+1).toString()) } onChange={handleChange('panel'+(id+1).toString(),list._id)}>
+            <Accordion key={list._id} id='user-list' expanded={ store.currentList? (expanded === 'panel'+(id+1).toString()): false } onChange={handleChange('panel'+(id+1).toString(),list._id)}>
                 <AccordionSummary
                 expandIcon={<KeyboardDoubleArrowDownIcon />}
                 aria-controls="panel1bh-content"
