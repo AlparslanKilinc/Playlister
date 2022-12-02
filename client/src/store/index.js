@@ -830,28 +830,17 @@ function GlobalStoreContextProvider(props) {
      }
      store.SortLastEdit = (playlists)=>{
         return playlists.sort(function(a, b) {
-           const nameA=a.lastEdit
-           const nameB=b.lastEdit
-           if (nameA > nameB) {
-             return -1;
-           }
-           if (nameA < nameB) {
-             return 1;
-           }
-           return 0;
+           const nameA=new Date(a.lastEdit);
+           const nameB=new Date(b.lastEdit);
+           return nameB-nameA;
            });
      }
      store.SortPublishedDate = (playlists)=>{
         return playlists.sort(function(a, b) {
-           const nameA=a.publishedDate
-           const nameB=b.publishedDate
-           if (nameA > nameB) {
-             return -1;
-           }
-           if (nameA < nameB) {
-             return 1;
-           }
-           return 0;
+           const nameA=new Date(a.publishedDate);
+           const nameB=new Date(b.publishedDate);
+       
+           return nameA-nameB;
            });
      }
      store.SortMostListens = (playlists)=>{

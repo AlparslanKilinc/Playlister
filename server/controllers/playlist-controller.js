@@ -30,7 +30,6 @@ createPlaylist = async (req, res) => {
         if(list)playlist.name=name+counter++;
         else break;
      }
-
     User.findOne({ _id: req.userId }, (err, user) => {
         if (playlist.ownerEmail === user.email) {
         user
@@ -209,7 +208,7 @@ updatePlaylistNameById= async(req,res)=>{
                             list.ownerEmail=body.playlist.ownerEmail;
                             list.owner=body.playlist.owner;
                             list.date=body.playlist.date;
-                            if(!list.published&&body.playlist.published){list.publishedDate=new Date()}
+                            if(!list.published&&body.playlist.published){list.publishedDate= new Date()}
                             else{list.publishedDate=body.playlist.publishedDate}
                             list.published=body.playlist.published;
                             list.listens=body.playlist.listens;
@@ -284,7 +283,7 @@ updatePlaylistById = async (req, res) => {
                     list.ownerEmail=body.playlist.ownerEmail;
                     list.owner=body.playlist.owner;
                     list.date=body.playlist.date;
-                    if(!list.published&&body.playlist.published){list.publishedDate=new Date()}
+                    if(!list.published&&body.playlist.published){list.publishedDate= new Date()}
                     else{list.publishedDate=body.playlist.publishedDate}
                     list.published=body.playlist.published;
                     list.listens=body.playlist.listens;

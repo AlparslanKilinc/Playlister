@@ -48,7 +48,7 @@ function PublishedCard(props) {
         >  
             <Box style={{alignSelf:'flex-start', gap:'2rem', flex:'1'}} >{List.name}
                 <Box style={{fontSize:'12pt',color:'blue' ,display:'flex' ,gap:'.5rem'}} > <p style={{color:'black'}}>By:</p> {List.owner} </Box>
-                <Box style={{display:'flex', gap:'.5rem',fontSize:'12pt',marginTop:'1rem', color:'green'}} > <p style={{color:'black'}}>Published:</p>{List.date} </Box>
+                <Box style={{display:'flex', gap:'.5rem',fontSize:'12pt',marginTop:'1rem', color:'green'}} > <p style={{color:'black'}}>Published:</p>{new Date(List.date).toDateString()} </Box>
             </Box>
             
             <Box style={{display:'flex' , flexDirection:'column'}}>
