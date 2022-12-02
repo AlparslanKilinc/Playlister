@@ -80,7 +80,7 @@ function GlobalStoreContextProvider(props) {
                     listIdMarkedForDeletion: null,
                     listMarkedForDeletion: null,
                     message:store.message,
-                    search:store.search,
+                    search:"",
                     sortMethod:store.sortMethod,
                     playIndex:store.playIndex,
                 });
@@ -342,7 +342,6 @@ function GlobalStoreContextProvider(props) {
             });
     }
 
-
     store.changeListName = function (id, newName) {
         async function asyncChangeListName(id) {
             let response = await api.getPlaylistById(id);
@@ -350,6 +349,7 @@ function GlobalStoreContextProvider(props) {
                 let playlist = response.data.playlist;
                 playlist.name = newName;
                 async function updateList(playlist) {
+                    try{
                     response = await api.updatePlaylistById(playlist._id, playlist);
                     if (response.data.success) {
                         let newCurrentList=response.data.list;
@@ -368,13 +368,18 @@ function GlobalStoreContextProvider(props) {
                             }
                         }
                         getPlaylists();
+                    } 
+                }catch(error){
+                        storeReducer({
+                            type: GlobalStoreActionType.ACCESS_ERROR,
+                            payload: "Playlist With Same Name Already Exists"
+                        });
                     }
                 }
-                updateList(playlist);
+               updateList(playlist);
             }
         }
-        asyncChangeListName(id);
-       
+       asyncChangeListName(id);
     }
 
     store.setIsListNameEditActive = function () {

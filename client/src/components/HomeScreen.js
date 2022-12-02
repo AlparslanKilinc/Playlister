@@ -22,6 +22,7 @@ import { useHistory } from 'react-router-dom'
 import PublishedArea from './PublishedArea';
 import MUIDeleteModal from './MUIDeleteModal';
 import ErrorBoundary from './ErrorBoundary'
+import MUIAccessErrorModal from './MUIAccessErrorModal'
 
 
 const HomeScreen = () => {
@@ -158,6 +159,7 @@ const HomeScreen = () => {
                 <Typography variant="h2">Your Lists</Typography>
             </div>
             <MUIDeleteModal/>
+            <MUIAccessErrorModal/>
         </div>)
 }
 

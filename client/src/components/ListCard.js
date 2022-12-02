@@ -21,28 +21,35 @@ function ListCard(props) {
     }
 
     function handleToggleEdit(event) {
-        event.preventDefault();
-        event.stopPropagation();
         toggleEdit();
     }
 
     function toggleEdit() {
         let newActive = !editActive;
-        if (newActive) {
-            store.setIsListNameEditActive();
-        }
         setEditActive(newActive);
     }
 
 
     function handleKeyPress(event) {
         if (event.code === "Enter") {
+            if(store.currentList && store.currentList.name===text || text===""){
+                toggleEdit();
+                return;
+            }
             let id = event.target.id.substring("list-".length);
             store.changeListName(id, text);
-            toggleEdit();
+            if(store.playlists){
+               let check=store.playlists.filter(list=> list.name===text)
+               if(!check.length>0)toggleEdit();
+            }
         }
-        
     }
+
+    function blurAction (){
+        if(!store.isAccessErrorModalOpen())toggleEdit();
+    }
+    
+
     function handleUpdateText(event) {
         setText(event.target.value);
     }
@@ -53,6 +60,8 @@ function ListCard(props) {
             key={List._id}
             button
             onClick={(event) => {
+                event.preventDefault();
+                event.stopPropagation();
                 handleLoadList(event, List._id);
             }}
             onDoubleClick={handleToggleEdit}
@@ -75,6 +84,11 @@ function ListCard(props) {
                 className='list-card'
                 onKeyPress={handleKeyPress}
                 onChange={handleUpdateText}
+                onClick={(event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }}
+                onBlur={blurAction}
                 defaultValue={List.name}
                 inputProps={{style: {fontSize: 48}}}
                 InputLabelProps={{style: {fontSize: 17,} }}

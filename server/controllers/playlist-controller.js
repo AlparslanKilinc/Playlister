@@ -1,7 +1,7 @@
 const Playlist = require('../models/playlist-model')
 const User = require('../models/user-model');
 const auth = require('../auth');
-let Counter=0;
+
 
 createPlaylist = async (req, res) => {
     if(auth.verifyUser(req) === null){
@@ -16,21 +16,21 @@ createPlaylist = async (req, res) => {
             error: 'You must provide a Playlist',
         })
     }
-    /// Checking if Same name exists
-    while(true){
-    const list = await Playlist.findOne({name:body.name})
-    if(list)body.name="Untitled"+Counter++;
-    else break;
-    }
-    
 
-    const playlist = new Playlist(body);
+
+    let playlist = new Playlist(body);
     if (!playlist) {
         return res.status(400).json({ success: false, error: err })
     }
+    /// Checking if Same name exists
+    let name=playlist.name;
+    let counter=0;
+      while(true){
+        const list= await Playlist.findOne({ownerEmail: playlist.ownerEmail, name:playlist.name})
+        if(list)playlist.name=name+counter++;
+        else break;
+     }
 
- 
-        
     User.findOne({ _id: req.userId }, (err, user) => {
         if (playlist.ownerEmail === user.email) {
         user
@@ -188,6 +188,14 @@ updatePlaylist = async (req, res) => {
         })
     }
 
+    /// Unique Renaming
+
+    const find= await Playlist.findOne({ownerEmail: body.playlist.ownerEmail, name:body.playlist.name});
+    if(find){
+        console.log("Rename Error");
+        return res.status(400).json({ success: false, description: "Renaming error", errorMessage:"Playlist Name Already Exists" });
+    }
+
     Playlist.findOne({ _id: req.params.id }, (err, playlist) => {
         if (err) {
             return res.status(404).json({
@@ -195,7 +203,6 @@ updatePlaylist = async (req, res) => {
                 message: 'Playlist not found!',
             })
         }
-
         // DOES THIS LIST BELONG TO THIS USER?
         async function asyncFindUser(list) {
             await User.findOne({ email: list.ownerEmail }, (err, user) => {
