@@ -174,7 +174,86 @@ getPlaylists = async (req, res) => {
     }).catch(err => console.log(err))
 }
 
-updatePlaylist = async (req, res) => {
+updatePlaylistNameById= async(req,res)=>{
+    if(auth.verifyUser(req) === null){
+        return res.status(400).json({
+            errorMessage: 'UNAUTHORIZED'
+        })
+    }
+    const body = req.body
+    if (!body) {
+        return res.status(400).json({
+            success: false,
+            error: 'You must provide a body to update',
+        })
+    }
+    Playlist.findOne({ownerEmail: body.playlist.ownerEmail, name:body.playlist.name},(err,list)=>{
+        if(err){
+            return  res.status(400).json({ success: false, error:err ,  errorMessage:"omggg"});
+        }
+        if(!list){
+            Playlist.findOne({ _id: req.params.id }, (err, playlist) => {
+                if (err) {
+                    return res.status(404).json({
+                        err,
+                        message: 'Playlist not found!',
+                    })
+                }
+                // DOES THIS LIST BELONG TO THIS USER?
+                async function asyncFindUser(list) {
+                    await User.findOne({ email: list.ownerEmail }, (err, user) => {
+                        if (user._id == req.userId) {
+                            list.lastEdit= new Date();
+                            list.name = body.playlist.name;
+                            list.songs = body.playlist.songs;
+                            list.ownerEmail=body.playlist.ownerEmail;
+                            list.owner=body.playlist.owner;
+                            list.date=body.playlist.date;
+                            if(!list.published&&body.playlist.published){list.publishedDate=new Date()}
+                            else{list.publishedDate=body.playlist.publishedDate}
+                            list.published=body.playlist.published;
+                            list.listens=body.playlist.listens;
+                            list.likes=body.playlist.likes;
+                            list.dislikes=body.playlist.dislikes;
+                            list.comments=body.playlist.comments;
+                            list
+                                .save()
+                                .then(() => {
+                                    console.log("SUCCESS!!!");
+                                    return res.status(200).json({
+                                        success: true,
+                                        id: list._id,
+                                        list:list,
+                                        message: 'Playlist updated!',
+                                    })
+                                })
+                                .catch(error => {
+                                    console.log("FAILURE: " + JSON.stringify(error));
+                                    return res.status(404).json({
+                                        error,
+                                        message: 'Playlist not updated!',
+                                    })
+                                })
+                        }
+                        else {
+                            console.log("incorrect user!");
+                            return res.status(400).json({ success: false, description: "authentication error" });
+                        }
+                    });
+                }
+                asyncFindUser(playlist);
+            })  
+        }
+        if(list){
+        return res.status(400).json({ success: false, description: "Renaming error", errorMessage:"Playlist Name Already Exists" });
+        }
+    })
+
+   
+}
+
+
+updatePlaylistById = async (req, res) => {
     if(auth.verifyUser(req) === null){
         return res.status(400).json({
             errorMessage: 'UNAUTHORIZED'
@@ -195,20 +274,6 @@ updatePlaylist = async (req, res) => {
                 message: 'Playlist not found!',
             })
         }
-        console.log(body.playlist.name+ " " +playlist.name);
-    let ret=false;
-    if(body.playlist.name!==playlist.name){
-      Playlist.findOne({ownerEmail: body.playlist.ownerEmail, name:body.playlist.name},(err,list)=>{
-        if(list){
-            ret=true;
-            return res.status(400).json({ success: false, description: "Renaming error", errorMessage:"Playlist Name Already Exists" });
-        }
-        if(err){
-        }
-      })
-    }
-    console.log(ret);
-    if(ret){
         // DOES THIS LIST BELONG TO THIS USER?
         async function asyncFindUser(list) {
             await User.findOne({ email: list.ownerEmail }, (err, user) => {
@@ -252,7 +317,6 @@ updatePlaylist = async (req, res) => {
             });
         }
         asyncFindUser(playlist);
-    }
     })
 }
 
@@ -580,10 +644,11 @@ module.exports = {
     getPlaylistById,
     getPublishedPlaylists,
     getPlaylists,
-    updatePlaylist,
+    updatePlaylistById,
     getPublishedPlaylistById,
     updatePublishedPlaylistComments,
     updatePublishedPlaylistByLike,
     updatePublishedPlaylistByDislike,
+    updatePlaylistNameById,
     
 }

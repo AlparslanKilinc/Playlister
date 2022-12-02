@@ -350,7 +350,7 @@ function GlobalStoreContextProvider(props) {
                 playlist.name = newName;
                 async function updateList(playlist) {
                     try{
-                    response = await api.updatePlaylistById(playlist._id, playlist);
+                    response = await api.updatePlaylistNameById(playlist._id, playlist);
                     if (response.data.success) {
                         let newCurrentList=response.data.list;
                         async function getPlaylists() {
