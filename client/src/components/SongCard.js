@@ -68,7 +68,7 @@ function SongCard(props) {
             onClick={handlePlay}
             onDoubleClick={handleDoubleClick}
         >
-            <h5>
+            <h5 style={{color: store.playIndex===index? 'red':''}} >
             {index + 1}. {song.title} by {song.artist}
             </h5>
               <Button

@@ -153,11 +153,11 @@ body{
 }
 .published-card:hover{
   cursor: pointer;
-  color: red;
+  color: rgb(30, 255, 0);
 }
 .song-card:hover{
   cursor: pointer;
-  background-color: #e4f0ee;
+  background-color: rgb(231, 241, 92);
   color: #071935;
 }
 
