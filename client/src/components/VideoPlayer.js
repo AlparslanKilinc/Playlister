@@ -25,8 +25,8 @@ const playerOptions = {
   width:'100%',
   borderRadius:'10px',
   playerVars: {
-      mute:1,
-      controls:1,
+      mute:0,
+      controls:0,
       host: 'https://www.youtube.com',
       origin: 'https://localhost:3000',
   },

@@ -110,7 +110,7 @@ const HomeScreen = () => {
                 playlists.map((list,id=0) => (
             <Accordion 
             key={list._id} id='user-list' 
-            style={{backgroundColor: store.currentList && store.currentList._id===list._id? '#3524649f': list.published? '#2c4ebde5':'#184d70' , color:'white'}}
+            style={{backgroundColor: store.currentList && store.currentList._id===list._id? '#f8df7bd1': list.published? '#053b70':'#05498cd1' , color:'black'}}
             expanded={ store.currentList&& store.currentList._id === list._id ? (expanded === 'panel'+(id+1).toString()): false } 
             onChange={handleChange('panel'+(id+1).toString(),list._id)}>
                 <AccordionSummary
