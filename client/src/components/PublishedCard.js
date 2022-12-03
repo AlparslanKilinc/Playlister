@@ -47,8 +47,8 @@ function PublishedCard(props) {
             }}
         >  
             <Box style={{alignSelf:'flex-start', gap:'2rem', flex:'1'}} >{List.name}
-                <Box style={{fontSize:'12pt',color:'blue' ,display:'flex' ,gap:'.5rem'}} > <p style={{color:'black'}}>By:</p> {List.owner} </Box>
-                <Box style={{display:'flex', gap:'.5rem',fontSize:'12pt',marginTop:'1rem', color:'green'}} > <p style={{color:'black'}}>Published:</p>{new Date(List.date).toDateString()} </Box>
+                <Box style={{fontSize:'12pt',color:'blue' ,display:'flex' ,gap:'.5rem'}} > <p style={{color:'white'}}>By:</p> {List.owner} </Box>
+                <Box style={{display:'flex', gap:'.5rem',fontSize:'12pt',marginTop:'1rem', color:'green'}} > <p style={{color:'white'}}>Published:</p>{new Date(List.date).toDateString()} </Box>
             </Box>
             
             <Box style={{display:'flex' , flexDirection:'column'}}>
@@ -68,7 +68,7 @@ function PublishedCard(props) {
                     <Box style={{fontSize:'12pt', margin:'1rem',marginTop:'1rem'}} >{List.dislikes} </Box>
                 </Button>
                 </div>
-                <Box style={{ display:'flex', gap:'.5rem',fontSize:'12pt',marginBottom:'2rem', color:'red'}} > <p style={{color:'black'}}>Listens:</p> {List.listens} </Box>
+                <Box style={{ display:'flex', gap:'.5rem',fontSize:'12pt',marginBottom:'2rem', color:'red'}} > <p style={{color:'white'}}>Listens:</p> {List.listens} </Box>
               </Box>
         </ListItem>
     );

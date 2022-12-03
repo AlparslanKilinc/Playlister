@@ -71,7 +71,12 @@ if (store.PublishedPlaylists) {
     {
 
      playlists.map((list,id=0) => (     
-    <Accordion key={list._id} id='user-list' expanded={store.currentList && store.currentList._id === list._id ? (expanded === 'panel'+(id+1).toString()): false } onChange={handleChange('panel'+(id+1).toString(),list._id)}>
+    <Accordion 
+    style={{backgroundColor: store.currentList && store.currentList._id===list._id? '#f37474': list.published? '#2c4ebde5':'#184d70' , color:'white'}}
+    key={list._id} 
+    id='user-list' 
+    expanded={store.currentList && store.currentList._id === list._id ? (expanded === 'panel'+(id+1).toString()): false } 
+    onChange={handleChange('panel'+(id+1).toString(),list._id)}>
       <AccordionSummary
         expandIcon={<KeyboardDoubleArrowDownIcon />}
         aria-controls="panel1bh-content"
