@@ -1,11 +1,17 @@
-import * as React from 'react';
+import React, { useContext, useEffect,useState } from 'react'
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Copyright from './Copyright';
 import Typography from '@mui/material/Typography';
 import YouTubeIcon from '@mui/icons-material/YouTube';
+import { GlobalStoreContext } from '../store'
 
 export default function SplashScreen() {
+    const { store } = useContext(GlobalStoreContext);
+
+    function handleGuest(){
+        store.setUser("Guest");
+    }
 
 
     return (
@@ -31,7 +37,7 @@ export default function SplashScreen() {
                 as well as share playlists 
                 so that others may then play and comment on them
             </Typography>
-            <Button href="/AllLists" style={{width:'190px', height:'70px', color:'white' , backgroundColor:"black"}}variant="contained">Continue as Guest</Button>
+            <Button  onClick={handleGuest} style={{width:'190px', height:'70px', color:'white' , backgroundColor:"black"}}variant="contained">Continue as Guest</Button>
             </div>
          <Copyright style={{position: "fixed" , bottom: 0}}/>
         </div>

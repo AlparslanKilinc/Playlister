@@ -23,7 +23,6 @@ const UserScreen = () => {
         },
       });
     const { store } = useContext(GlobalStoreContext);
-    const [selection, setSelection] = useState(<VideoPlayer/>);
     const [playerVariant, setPlayerVariant] = useState("contained");
     const [commentsVariant, setCommentsVariant] = useState("outlined");
     store.history = useHistory();
@@ -32,13 +31,11 @@ const UserScreen = () => {
     let togglePlayer = ()=>{
             setPlayerVariant("contained");
             setCommentsVariant("outlined");
-            setSelection(<VideoPlayer/>);
            
     }
     let toggleComments =()=>{
             setPlayerVariant("outlined");
             setCommentsVariant("contained");
-            setSelection(<Comments/>);
     }
 
 
@@ -46,7 +43,7 @@ const UserScreen = () => {
         <div id="home-screen">
             <AppTools published={true}/>
             <div className="home-main">
-                <ListArea/>
+                <ListArea parent={"UserScreen"}/>
                 <div className='player-comments'>
                 <ButtonGroup className='buttonGroup'>
                 <ThemeProvider theme={theme}>
@@ -54,7 +51,8 @@ const UserScreen = () => {
                     <Button onClick={toggleComments} color="primary" variant={commentsVariant}>Comments</Button>
                     </ThemeProvider>
                 </ButtonGroup>
-                {selection}
+                <VideoPlayer selection={playerVariant}/>
+                <Comments selection={commentsVariant}/>
                 </div>
                 
             </div>

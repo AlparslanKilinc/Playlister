@@ -12,21 +12,21 @@ import SkipNextIcon from '@mui/icons-material/SkipNext';
 import PauseIcon from '@mui/icons-material/Pause';
 
 
-export const VideoPlayer = () => {
+export const VideoPlayer = (props) => {
 
 const { store } = useContext(GlobalStoreContext);
 const theme = useTheme();
 const [player,setPlayer]=useState(null);
 const [list,setList]=useState(null);
-
+const {selection} = props;
 const playerOptions = {
-  allow:'autoplay',
+
   height:'100%',
   width:'100%',
   borderRadius:'10px',
   playerVars: {
-      mute:0,
-      controls:0,
+      mute:1,
+      controls:1,
       host: 'https://www.youtube.com',
       origin: 'https://localhost:3000',
   },
@@ -52,7 +52,7 @@ let onPlayerReady=(event)=>{
 
 let loadCurrentSong = (player)=>{
   if(store.currentList &&store.currentList.songs[store.playIndex]){
-    if(store.getPlay()===0){
+    if(store.playIndex===0){
       player.cueVideoById(store.currentList.songs[store.playIndex]? store.currentList.songs[store.playIndex].youTubeId: '');
     }else{
       player.loadVideoById(store.currentList.songs[store.playIndex]? store.currentList.songs[store.playIndex].youTubeId: '');
@@ -139,10 +139,11 @@ function onPlayerStateChange(event) {
   }
   
   return (
-    <div className='video-player'>
+    <div style={{ opacity: selection === "contained" ? '1' :'0'}} className='video-player'>
 
           { store.currentList? 
           <YouTube
+          disabled={selection !== "contained"}
           className='video-area'
           onReady={onPlayerReady}
           videoId={store.currentList.songs[store.playIndex]? store.currentList.songs[store.playIndex].youTubeId: ''}

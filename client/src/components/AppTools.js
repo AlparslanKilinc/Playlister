@@ -41,8 +41,17 @@ export default function AppTools(props) {
       }
   }
 
-  let clear = ()=>{
-    store.setSearch("");
+
+  let handleAllListScreen = ()=>{
+    store.setScreen('AllListScreen');
+  }
+
+  let handleHomeScreen = ()=>{
+    store.setScreen('HomeScreen');
+  }
+
+  let handleUserScreen = ()=>{
+    store.setScreen('UserScreen');
   }
 
 
@@ -52,15 +61,15 @@ export default function AppTools(props) {
       <AppBar  position="static">
         <Toolbar id='AppTools' >
         <div className='tool-icons'>
-        <IconButton href="/" color={store.history.location.pathname==="/"? 'success' :'default'} onClick={clear} disabled={!auth.loggedIn} aria-label="home">
+        <IconButton  onClick={handleHomeScreen}  color={store.currentScreen==="HomeScreen"? 'warning' :'default'}  disabled={!auth.loggedIn} aria-label="home">
           <HomeIcon/>
         </IconButton>
 
-        <IconButton href="/AllLists"  color={store.history.location.pathname==="/AllLists"? 'success' :'default'}  onClick={clear} aria-label="all-list">
+        <IconButton onClick={handleAllListScreen} color={store.currentScreen==="AllListScreen"? 'warning' :'default'}   aria-label="all-list">
           <Groups3Icon/>
         </IconButton>
 
-        <IconButton href="/Users" color={store.history.location.pathname==="/Users"? 'success' :'default'}  onClick={clear} aria-label="users">
+        <IconButton  onClick={handleUserScreen}   color={store.currentScreen==="UserScreen"? 'warning' :'default'} aria-label="users">
           <PersonIcon/>
         </IconButton>
         </div>

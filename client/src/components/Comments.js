@@ -5,9 +5,10 @@ import AuthContext from '../auth'
 import Avatar from '@mui/material/Avatar';
 import { deepOrange, deepPurple } from '@mui/material/colors';
 
-export const Comments = () => {
+export const Comments = (props) => {
   const { store } = useContext(GlobalStoreContext);
   const { auth } = useContext(AuthContext);
+  const {selection} = props;
 
  
 
@@ -15,7 +16,6 @@ export const Comments = () => {
     if (event.key === 'Enter') {
       if(event.target.value!=="") store.AddComment(event.target.value);
       }
-    
   }
 
   
@@ -31,14 +31,14 @@ export const Comments = () => {
       </div>
       ))
   }
-
+  console.log(selection);
   return (
-    <div className='comments'>
+    <div style={{ opacity: selection === "contained" ? '1' :'0'}} className= {selection === "contained" ? 'commentsEnabled':'comments'}>
         <div className='comments-area'>
                {comments}
         </div>
         { auth.loggedIn && store.currentList && store.currentList.published?
-        <TextField 
+        <TextField
         style={{backgroundColor:'white' , marginRight:'1rem',borderRadius:'5px',border:'2px solid black',}}
         onKeyPress={handleAddComment} 
         id="outlined-basic" 

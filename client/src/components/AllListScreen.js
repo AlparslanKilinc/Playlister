@@ -24,7 +24,6 @@ const theme = createTheme({
 });
 
 const { store } = useContext(GlobalStoreContext);
-const [selection, setSelection] = useState(<VideoPlayer/>);
 const [playerVariant, setPlayerVariant] = useState("contained");
 const [commentsVariant, setCommentsVariant] = useState("outlined");
 store.history = useHistory();
@@ -32,21 +31,19 @@ store.history = useHistory();
 
 let togglePlayer = ()=>{
   setPlayerVariant("contained");
-  setCommentsVariant("outlined");
-  setSelection(<VideoPlayer/>);        
+  setCommentsVariant("outlined");      
 }
 
 let toggleComments =()=>{
   setPlayerVariant("outlined");
   setCommentsVariant("contained");
-  setSelection(<Comments/>);
 }
 
 return (
   <div id="home-screen">
     <AppTools published={true}/>
     <div className="home-main">
-         <ListArea/>
+         <ListArea parent={"AllListScreen"}/>
           <div className='player-comments'>
             <ButtonGroup className='buttonGroup'>
               <ThemeProvider theme={theme}>
@@ -54,7 +51,8 @@ return (
                 <Button onClick={toggleComments}  color="primary" variant={commentsVariant}>Comments</Button>
               </ThemeProvider>
             </ButtonGroup>
-            {selection}
+            <VideoPlayer selection={playerVariant}/>
+            <Comments selection={commentsVariant}/>
           </div>      
     </div>
   <div className="home-footer">

@@ -8,10 +8,6 @@ function SongCard(props) {
     const [ draggedTo, setDraggedTo ] = useState(0);
     const { song, index } = props;
 
-    // function prevent(event){
-    //     event.preventDefault();
-    //     event.stopPropagation();
-    // }
     function handlePlay(event){
         event.stopPropagation();
         store.setPlay(index);

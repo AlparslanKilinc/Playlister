@@ -9,10 +9,11 @@ import PublishedCard from './PublishedCard';
 import { useHistory } from 'react-router-dom'
 import PublishedArea from './PublishedArea';
 
-export const ListArea = () => {
+export const ListArea = (props) => {
 
 const { store } = useContext(GlobalStoreContext);
 const [expanded, setExpanded] = React.useState(false);
+const {parent}=props
 store.history = useHistory();
 
 const handleChange = (panel,id) => (event, isExpanded) => {
@@ -26,7 +27,7 @@ const handleChange = (panel,id) => (event, isExpanded) => {
 useEffect(() => {
     store.LoadPublishedPlaylists();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-}, [store.search]);
+}, [store.search,store.currentList]);
 
 
 let ListArea = "";
@@ -36,8 +37,8 @@ if (store.PublishedPlaylists) {
   /// Search by PlaylistName
   if(store.search!==""){
     playlists=store.PublishedPlaylists;
-    if(store.history.location.pathname==="/AllLists")playlists= playlists.filter( list => list.name.startsWith(store.search));
-    if(store.history.location.pathname==="/Users") playlists= playlists.filter( list => list.owner.startsWith(store.search));
+    if(parent==="AllListScreen")playlists= playlists.filter( list => list.name.startsWith(store.search));
+    if(parent==="UserScreen") playlists= playlists.filter( list => list.owner.startsWith(store.search));
   }
   //// Sorting
   switch (store.sortMethod) {

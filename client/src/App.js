@@ -12,6 +12,7 @@ import {
     SplashScreen,
     HomeScreen,
     UserScreen,
+    SuperScreen,
 } from './components'
 
 const App = () => {   
@@ -24,8 +25,6 @@ const App = () => {
                         <Route path="/" exact component={HomeWrapper} />
                         <Route path="/login/" exact component={LoginScreen} />
                         <Route path="/register/" exact component={RegisterScreen} />
-                        <Route path="/AllLists/" exact component={AllListScreen} />
-                        <Route path="/Users/" exact component={UserScreen} />
                     </Switch>
                 </GlobalStoreContextProvider>
             </AuthContextProvider>
