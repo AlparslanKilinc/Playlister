@@ -578,7 +578,7 @@ function GlobalStoreContextProvider(props) {
                 playlist.listens++;
                 response = await api.updatePublishedPlaylistListens(playlist._id,playlist);
                 if (response.data.success) {
-                    if(history.currentScreen==="HomeScreen")store.LoadPlaylists();
+                    if(store.currentScreen==="HomeScreen")store.LoadPlaylists();
                     else{
                         store.LoadPublishedPlaylists();
                     }
@@ -597,7 +597,7 @@ function GlobalStoreContextProvider(props) {
                 playlist.likes++;
                 response = await api.updatePublishedPlaylistByLike(playlist._id,playlist);
                 if (response.data.success) {
-                    if(history.currentScreen==="HomeScreen")store.LoadPlaylists();
+                    if(store.currentScreen==="HomeScreen")store.LoadPlaylists();
                     else{
                         store.LoadPublishedPlaylists();
                     }
@@ -615,7 +615,7 @@ function GlobalStoreContextProvider(props) {
                 playlist.dislikes++;
                 response = await api.updatePublishedPlaylistByDislike(playlist._id,playlist);
                 if (response.data.success) {
-                    if(history.currentScreen==="HomeScreen")store.LoadPlaylists();
+                    if(store.currentScreen==="HomeScreen")store.LoadPlaylists();
                     else{
                         store.LoadPublishedPlaylists();
                     }

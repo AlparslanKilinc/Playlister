@@ -38,28 +38,31 @@ const HomeScreen = () => {
     const { store } = useContext(GlobalStoreContext);
     const [playerVariant, setPlayerVariant] = useState("contained");
     const [commentsVariant, setCommentsVariant] = useState("outlined");
+    const [expanded, setExpanded] = useState(false);
     store.history = useHistory();
 
     useEffect(() => {
         store.LoadPlaylists();
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [store.search]);
+
     /// Accordion 
-    const [expanded, setExpanded] = useState(false);
-    const handleChange = (panel,id) => (event, isExpanded) => {
-      setExpanded(isExpanded ? panel : false);
+    const handleChange = () =>{
       store.clearTransaction();
-      if(!store.currentList || store.currentList._id!== id){
-        store.setCurrentList(id);
-      }
     };
 
-   
+    let toggleExpanded = (list)=>{
+      setExpanded(!expanded);
+      store.clearTransaction();
+      if(!store.currentList || store.currentList._id!== list._id){
+        if(list.published)store.setPublishedList(list._id);
+        else store.setCurrentList(list._id);
+      }
+    }
 
     function handleCreateNewList() {
         store.setSearch("");
         store.createNewList();
-
     }
 
     let togglePlayer = ()=>{
@@ -109,16 +112,13 @@ const HomeScreen = () => {
             <Accordion 
             key={list._id} id='user-list' 
             style={{backgroundColor: store.currentList && store.currentList._id===list._id? '#f8df7bd1': list.published? '#053b70':'#05498cd1' , color:'black'}}
-            expanded={ (expanded === 'panel'+(id+1).toString()) } 
-            onChange={handleChange('panel'+(id+1).toString(),list._id)}>
-                <AccordionSummary
-                expandIcon={<KeyboardDoubleArrowDownIcon />}
-                aria-controls="panel1bh-content"
-                id="panel1bh-header"
-                >
-                {list.published ? <PublishedCard key={list._id} List={list} />: <ListCard  key={list._id} List={list} />}
-                </AccordionSummary>
-
+            expanded={store.currentList ? store.currentList._id === list._id && expanded :false} 
+            onChange={handleChange}
+            >
+              <div>
+              {list.published ? <PublishedCard key={list._id} List={list} />: <ListCard  key={list._id} List={list} />}
+              <KeyboardDoubleArrowDownIcon onClick={()=>{toggleExpanded(list)}}/>
+              </div>
                 <AccordionDetails>
                     {list.published ? <PublishedArea userName={list.owner} key={list._id} id={list._id}/>: <WorkspaceScreen key={list._id} id={list._id}/>}
                 </AccordionDetails>

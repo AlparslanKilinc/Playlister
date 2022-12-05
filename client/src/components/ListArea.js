@@ -16,6 +16,11 @@ const [expanded, setExpanded] = React.useState(false);
 const {parent}=props
 store.history = useHistory();
 
+useEffect(() => {
+  store.LoadPublishedPlaylists();
+// eslint-disable-next-line react-hooks/exhaustive-deps
+}, [store.search,store.currentList]);
+
 const handleChange = (panel,id) => (event, isExpanded) => {
   setExpanded(isExpanded ? panel : false);
   store.clearTransaction();
@@ -24,10 +29,6 @@ const handleChange = (panel,id) => (event, isExpanded) => {
   }
 };
 
-useEffect(() => {
-    store.LoadPublishedPlaylists();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-}, [store.search,store.currentList]);
 
 
 let ListArea = "";
