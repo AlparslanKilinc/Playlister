@@ -139,7 +139,9 @@ function AuthContextProvider(props) {
                     user: response.data.user
                 }
             })
-            history.push("/");
+            /// Go to Playlister
+            
+            history.push("/Playlister/");
         }
         }catch(error){
             authReducer({
@@ -162,6 +164,7 @@ function AuthContextProvider(props) {
                 type: AuthActionType.LOGOUT_USER,
                 payload: null
             })
+            /// Go to Splash
             history.push("/");
         }
     }

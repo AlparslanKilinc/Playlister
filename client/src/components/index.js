@@ -1,7 +1,6 @@
 import AppBanner from './AppBanner'
 import EditToolbar from './EditToolbar'
 import HomeScreen from './HomeScreen'
-import HomeWrapper from './HomeWrapper'
 import ListCard from './ListCard'
 import LoginScreen from './LoginScreen'
 import MUIDeleteModal from './MUIDeleteModal'
@@ -14,6 +13,7 @@ import Statusbar from './Statusbar'
 import WorkspaceScreen from './WorkspaceScreen'
 import AllListScreen from './AllListScreen'
 import UserScreen from './UserScreen'
+import SuperScreen from './SuperScreen'
 /*
     This serves as a module so that we can import
     all the other components as we wish.
@@ -25,7 +25,6 @@ export {
     EditToolbar, 
     AllListScreen,
     HomeScreen,
-    HomeWrapper,
     ListCard, 
     LoginScreen,
     MUIDeleteModal,
@@ -36,4 +35,5 @@ export {
     SplashScreen,
     Statusbar,
     UserScreen,
-    WorkspaceScreen }
+    WorkspaceScreen,
+    SuperScreen }

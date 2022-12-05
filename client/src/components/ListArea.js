@@ -19,7 +19,7 @@ store.history = useHistory();
 useEffect(() => {
   store.LoadPublishedPlaylists();
 // eslint-disable-next-line react-hooks/exhaustive-deps
-}, [store.search,store.currentList]);
+}, [store.search]);
 
 const handleChange = (panel,id) => (event, isExpanded) => {
   setExpanded(isExpanded ? panel : false);
@@ -40,6 +40,8 @@ if (store.PublishedPlaylists) {
     playlists=store.PublishedPlaylists;
     if(parent==="AllListScreen")playlists= playlists.filter( list => list.name.startsWith(store.search));
     if(parent==="UserScreen") playlists= playlists.filter( list => list.owner.startsWith(store.search));
+  }else{
+    playlists=[];
   }
   //// Sorting
   switch (store.sortMethod) {

@@ -11,7 +11,6 @@ import TextField from '@mui/material/TextField';
 import { IconButton } from '@mui/material';
 import { GlobalStoreContext } from '../store'
 import AuthContext from '../auth'
-import { useHistory } from 'react-router-dom'
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -32,7 +31,11 @@ export default function AppTools(props) {
   const { store } = useContext(GlobalStoreContext);
   const { auth } = useContext(AuthContext);
   const {published}= props;
-  store.history = useHistory();
+
+  useEffect(() => {
+    
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+},[store.currentScreen]);
  
 
   const handleSearch = (event) => {

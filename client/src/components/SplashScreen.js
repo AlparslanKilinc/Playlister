@@ -5,12 +5,16 @@ import Copyright from './Copyright';
 import Typography from '@mui/material/Typography';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import { GlobalStoreContext } from '../store'
+import { useHistory } from 'react-router-dom'
 
 export default function SplashScreen() {
     const { store } = useContext(GlobalStoreContext);
+    store.history = useHistory();
+   
 
     function handleGuest(){
-        store.setUser("Guest");
+        store.setScreen("AllListScreen");
+        store.history.push("/Playlister/");
     }
 
 

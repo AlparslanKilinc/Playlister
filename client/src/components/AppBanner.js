@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom'
 import AuthContext from '../auth';
 import { GlobalStoreContext } from '../store'
-
+import { useHistory } from 'react-router-dom'
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import AppBar from '@mui/material/AppBar';
@@ -18,6 +18,7 @@ export default function AppBanner() {
     const { store } = useContext(GlobalStoreContext);
     const [anchorEl, setAnchorEl] = useState(null);
     const isMenuOpen = Boolean(anchorEl);
+    store.history = useHistory();
 
     const handleProfileMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
@@ -86,11 +87,16 @@ export default function AppBanner() {
             return <AccountCircle />;
     }
 
+    let handleClick=()=>{
+        if(auth.loggedIn)return;
+        else store.history.push("/");
+    }
+
     return (
         <Box>
             <AppBar style={{backgroundColor:"#071935"}} position="static">
                 <Toolbar>
-                <Link style={{ textDecoration: 'none'}} to='/'>
+                <Link style={{ textDecoration: 'none'}} onClick={handleClick}>
                         <Box className='logo'>
                             <YouTubeIcon   sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
                             <Typography                        

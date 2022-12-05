@@ -5,27 +5,30 @@ import UserScreen from './UserScreen';
 import { GlobalStoreContext } from '../store'
 import AuthContext from '../auth'
 
-export const SuperScreen = (props) => {
+export const SuperScreen = () => {
     const { store } = useContext(GlobalStoreContext);
     const { auth } = useContext(AuthContext);
-    const[screen,setScreen]=useState(store.currentScreen);
+    let selection="";
 
     useEffect(() => {
-        setScreen(store.currentScreen);
+ 
       // eslint-disable-next-line react-hooks/exhaustive-deps
     },[store.currentScreen]);
 
-    let selection = "";
-    if(screen==="HomeScreen" && auth.loggedIn){
-        selection=<HomeScreen/>
-    }else{
+
+    if(store.currentScreen==="HomeScreen" || auth.loggedIn){
+        selection=<HomeScreen/>;
+    }
+
+    if(store.currentScreen==="AllListScreen"){
         selection=<AllListScreen/>;
     }
-    if(screen==="AllListScreen"){
-        selection=<AllListScreen/>
-    }if(screen==="UserScreen"){
-        selection=<UserScreen/>
+
+    if(store.currentScreen==="UserScreen"){
+        selection=<UserScreen/>;
     }
+    
+   
     
   return (
     <div>
