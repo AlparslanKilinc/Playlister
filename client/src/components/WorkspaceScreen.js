@@ -15,7 +15,6 @@ function WorkspaceScreen(props) {
 
     useEffect(() => {
         store.LoadPlaylists();
-        store.setCurrentList(id);
       // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
    

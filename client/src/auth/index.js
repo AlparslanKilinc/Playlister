@@ -140,7 +140,7 @@ function AuthContextProvider(props) {
                 }
             })
             /// Go to Playlister
-            
+           
             history.push("/Playlister/");
         }
         }catch(error){

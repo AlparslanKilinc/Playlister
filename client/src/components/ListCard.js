@@ -12,15 +12,9 @@ function ListCard(props) {
     const [text, setText] = useState("");
     const {List} = props;
 
-    function handleLoadList(event, id) {
-        if (!event.target.disabled) {
-            if(!store.currentList || store.currentList._id!== id){
-            store.setCurrentList(id);
-            }
-        }
-    }
-
     function handleToggleEdit(event) {
+        event.preventDefault();
+        event.stopPropagation();
         toggleEdit();
     }
 
@@ -59,11 +53,6 @@ function ListCard(props) {
         <ListItem
             key={List._id}
             button
-            onClick={(event) => {
-                event.preventDefault();
-                event.stopPropagation();
-                handleLoadList(event, List._id);
-            }}
             onDoubleClick={handleToggleEdit}
         >  
         <Box style={{alignSelf:'flex-start', flex:'1'}} >{List.name}

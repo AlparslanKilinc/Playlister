@@ -12,15 +12,7 @@ function PublishedCard(props) {
     const { store } = useContext(GlobalStoreContext);
     const {List} = props;
 
- 
-
-    function handleLoadList(event, id) {
-        if (!event.target.disabled) {
-            if(!store.currentList || store.currentList._id!== id){
-                store.setPublishedList(id);
-            }
-        }
-    }
+    
     function handleLike(event){
         event.stopPropagation();
         event.preventDefault();
@@ -40,11 +32,6 @@ function PublishedCard(props) {
         <ListItem
             key={List._id}
             button
-            onClick={(event) => {
-                event.preventDefault();
-                event.stopPropagation();
-                handleLoadList(event, List._id);
-            }}
         >  
             <Box style={{alignSelf:'flex-start', gap:'2rem', flex:'1'}} >{List.name}
                 <Box style={{fontSize:'12pt',color:'blue' ,display:'flex' ,gap:'.5rem'}} > <p style={{color:'white'}}>By:</p> {List.owner} </Box>

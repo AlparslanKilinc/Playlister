@@ -10,11 +10,18 @@ export const Comments = (props) => {
   const { auth } = useContext(AuthContext);
   const {selection} = props;
 
+  // window.setInterval(function() {
+  //   var elem = document.getElementById('comments');
+  //   elem.scrollTop = elem.scrollHeight;
+  // }, 5000);
+
  
 
   const handleAddComment = (event) => {
     if (event.key === 'Enter') {
       if(event.target.value!=="") store.AddComment(event.target.value);
+      var elem = document.getElementById('comments');
+      elem.scrollTop = elem.scrollHeight;
       }
   }
 
@@ -33,8 +40,8 @@ export const Comments = (props) => {
   }
   console.log(selection);
   return (
-    <div style={{ opacity: selection === "contained" ? '1' :'0'}} className= {selection === "contained" ? 'commentsEnabled':'comments'}>
-        <div className='comments-area'>
+    <div  className='comments' style={{ opacity: selection === "contained" ? '1' :'0' , pointerEvents: selection === "contained" ? 'auto' :'none' }}  >
+        <div id="comments" className='comments-area'>
                {comments}
         </div>
         { auth.loggedIn && store.currentList && store.currentList.published?

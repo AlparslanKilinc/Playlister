@@ -34,15 +34,15 @@ const handleChange = (panel,id) => (event, isExpanded) => {
 let ListArea = "";
 
 if (store.PublishedPlaylists) {
-  let playlists=[];
+  // let playlists=[];
+  let playlists=store.PublishedPlaylists;
   /// Search by PlaylistName
-  if(store.search!==""){
-    playlists=store.PublishedPlaylists;
+  if(store.search==="")playlists=[];
+  if(store.search && store.search!==""){
     if(parent==="AllListScreen")playlists= playlists.filter( list => list.name.startsWith(store.search));
     if(parent==="UserScreen") playlists= playlists.filter( list => list.owner.startsWith(store.search));
-  }else{
-    playlists=[];
   }
+
   //// Sorting
   switch (store.sortMethod) {
     case 'Name':
@@ -76,7 +76,7 @@ if (store.PublishedPlaylists) {
 
      playlists.map((list,id=0) => (     
     <Accordion 
-    style={{backgroundColor: store.currentList && store.currentList._id===list._id? '#f37474': list.published? '#2c4ebde5':'#184d70' , color:'white'}}
+    style={{backgroundColor: store.currentList && store.currentList._id===list._id? '#f8df7bd1': list.published? '#053b70':'#05498cd1' , color:'black'}}
     key={list._id} 
     id='user-list' 
     expanded={store.currentList && store.currentList._id === list._id ? (expanded === 'panel'+(id+1).toString()): false } 

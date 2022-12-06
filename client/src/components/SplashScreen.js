@@ -16,6 +16,14 @@ export default function SplashScreen() {
         store.setScreen("AllListScreen");
         store.history.push("/Playlister/");
     }
+    function handleLogin(){
+        store.setScreen("HomeScreen");
+        store.history.push("/login/");
+    }
+    function handleRegister(){
+        store.setScreen("HomeScreen");
+        store.history.push("/register/");
+    }
 
 
     return (
@@ -30,8 +38,8 @@ export default function SplashScreen() {
                     Welcome to Playlister
                 </Typography>
                 <Stack  spacing={2} direction="row" >
-                    <Button href="/login/" style={{width:'160px', height:'70px',color:'white' , backgroundColor:"black"}}variant="contained">Login</Button>
-                    <Button href="/register/" style={{ width:'180px',height:'70px',color:'white' , backgroundColor:"black"}} variant="contained"> Create Account</Button>
+                    <Button onClick={handleLogin} style={{width:'160px', height:'70px',color:'white' , backgroundColor:"black"}}variant="contained">Login</Button>
+                    <Button onClick={handleRegister}  style={{ width:'180px',height:'70px',color:'white' , backgroundColor:"black"}} variant="contained"> Create Account</Button>
                 </Stack> 
             </div>
 

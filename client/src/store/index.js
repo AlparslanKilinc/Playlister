@@ -55,10 +55,10 @@ function GlobalStoreContextProvider(props) {
         listIdMarkedForDeletion: null,
         listMarkedForDeletion: null,
         message:"",
-        search:"",
+        search:null,
         sortMethod:null,
         playIndex:0,
-        currentScreen:"",
+        currentScreen:"HomeScreen",
     });
     const history = useHistory();
     // SINCE WE'VE WRAPPED THE STORE IN THE AUTH CONTEXT WE CAN ACCESS THE USER HERE
@@ -82,7 +82,7 @@ function GlobalStoreContextProvider(props) {
                     listIdMarkedForDeletion: null,
                     listMarkedForDeletion: null,
                     message:store.message,
-                    search:"",
+                    search:null,
                     sortMethod:store.sortMethod,
                     playIndex:store.playIndex,
                     currentScreen:store.currentScreen,
@@ -101,7 +101,7 @@ function GlobalStoreContextProvider(props) {
                     listIdMarkedForDeletion: null,
                     listMarkedForDeletion: null,
                     message:store.message,
-                    search:store.search,
+                    search:null,
                     sortMethod:store.sortMethod,
                     playIndex:store.playIndex,
                     currentScreen:store.currentScreen,
@@ -349,7 +349,7 @@ function GlobalStoreContextProvider(props) {
                         listIdMarkedForDeletion: store.listIdMarkedForDeletion,
                         listMarkedForDeletion: store.markListForDeletion,
                         message:store.message,
-                        search:"",
+                        search:null,
                         sortMethod:store.sortMethod,
                         playIndex:store.playIndex,
                         currentScreen:payload,
@@ -455,7 +455,6 @@ function GlobalStoreContextProvider(props) {
         if (response.status === 201) {
             tps.clearAllTransactions();
             let newList = response.data.playlist;
-            store.LoadPlaylists();
             storeReducer({
                 type: GlobalStoreActionType.CREATE_NEW_LIST,
                 payload: newList
@@ -478,13 +477,10 @@ function GlobalStoreContextProvider(props) {
             const response2 = await api.createPlaylist(playlist.name, playlist.songs, auth.user.email,[],auth.user.userName);
             if(response2.status===201){
                 tps.clearAllTransactions();
-                let newList = response2.data.playlist;
-                store.LoadPlaylists();
-            storeReducer({
-                type: GlobalStoreActionType.CREATE_NEW_LIST,
-                payload: newList
-            }
-            );
+                storeReducer({
+                    type: GlobalStoreActionType.ACCESS_ERROR,
+                    payload: "Playlist Successfully Duplicated To Home"
+                });
             } else {
                 console.log("API FAILED TO CREATE A NEW LIST");
             }

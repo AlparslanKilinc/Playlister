@@ -34,7 +34,7 @@ export default function AppBanner() {
         store.clearTransaction();
     }
 
-
+  
     const menuId = 'primary-search-account-menu';
     const loggedOutMenu = (
         <Menu
@@ -52,8 +52,8 @@ export default function AppBanner() {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleMenuClose}><Link to='/login/'>Login</Link></MenuItem>
-            <MenuItem onClick={handleMenuClose}><Link to='/register/'>Create New Account</Link></MenuItem>
+            <MenuItem onClick={handleMenuClose}><Link onClick={()=>{store.setScreen("HomeScreen")}} to='/login/'>Login</Link></MenuItem>
+            <MenuItem onClick={handleMenuClose}><Link onClick={()=>{store.setScreen("HomeScreen")}} to='/register/'>Create New Account</Link></MenuItem>
         </Menu>
     );
     const loggedInMenu = 
@@ -87,16 +87,11 @@ export default function AppBanner() {
             return <AccountCircle />;
     }
 
-    let handleClick=()=>{
-        if(auth.loggedIn)return;
-        else store.history.push("/");
-    }
-
     return (
         <Box>
             <AppBar style={{backgroundColor:"#071935"}} position="static">
                 <Toolbar>
-                <Link style={{ textDecoration: 'none'}} onClick={handleClick}>
+                <Link style={{ textDecoration: 'none'}} to={ auth.loggedIn? '/Playlister/':"/"}>
                         <Box className='logo'>
                             <YouTubeIcon   sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
                             <Typography                        

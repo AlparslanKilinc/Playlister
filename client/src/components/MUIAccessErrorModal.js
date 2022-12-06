@@ -10,24 +10,26 @@ export default function MUIAccessErrorModal() {
 
   let handleClose = ()=>{
     store.hideModals();
+    store.LoadPlaylists();
   }
 
 return(
     <Modal
-        id='error-style'
+        style={{border:'none'}}
+        id='alert-style'
         open={store.isAccessErrorModalOpen()}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box>
-          <Alert severity ="warning">
-            <AlertTitle>Error</AlertTitle>
+       
+          <Alert severity ="info" style={{border:'2px solid white'}}>
+            <AlertTitle>Info</AlertTitle>
             <div id='alert-style'> 
             <Typography component="h1" variant="h5"> {store.message} </Typography>
-            <Button onClick={()=>handleClose()}variant="outlined" color="error">Close</Button>
+            <Button onClick={()=>handleClose()}variant="outlined" color="info">Close</Button>
             </div>
           </Alert>
-        </Box>
+        
       </Modal>
 
   );

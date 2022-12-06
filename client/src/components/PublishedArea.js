@@ -10,7 +10,6 @@ function PublishedArea(props) {
    
     useEffect(() => {
           store.LoadPublishedPlaylists();
-          store.setPublishedList(id);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

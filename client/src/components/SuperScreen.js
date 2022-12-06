@@ -15,7 +15,7 @@ export const SuperScreen = () => {
       // eslint-disable-next-line react-hooks/exhaustive-deps
     },[store.currentScreen]);
 
-
+ 
     if(store.currentScreen==="HomeScreen" || auth.loggedIn){
         selection=<HomeScreen/>;
     }

@@ -170,7 +170,7 @@ getPlaylists = async (req, res) => {
             }).catch(err => console.log(err))
         }
         asyncFindList(user.email);
-    }).catch(err => console.log(err))
+    }).catch(err => console.log(err));
 }
 
 updatePlaylistNameById= async(req,res)=>{

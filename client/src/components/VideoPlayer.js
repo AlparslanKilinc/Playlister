@@ -62,13 +62,13 @@ let loadCurrentSong = (player)=>{
 }
 
 let play =()=>{
-  if(player){
+  if(player && player.h){
     player.playVideo();
   }
 }
 
 let pause=()=>{
- if(player)player.pauseVideo();
+ if(player && player.h)player.pauseVideo();
 }
 
 let prev =()=>{
@@ -139,7 +139,7 @@ function onPlayerStateChange(event) {
   }
   
   return (
-    <div style={{ opacity: selection === "contained" ? '1' :'0'}} className='video-player'>
+    <div style={{ opacity: selection === "contained" ? '1' :'0' , pointerEvents: selection === "contained" ? 'auto' :'none'}} className='video-player'>
 
           { store.currentList? 
           <YouTube

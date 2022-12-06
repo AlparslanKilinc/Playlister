@@ -39,30 +39,41 @@ const HomeScreen = () => {
     const [playerVariant, setPlayerVariant] = useState("contained");
     const [commentsVariant, setCommentsVariant] = useState("outlined");
     const [expanded, setExpanded] = useState(false);
+    const [clicked, setClicked] = useState(false);
     store.history = useHistory();
+
+ 
 
     useEffect(() => {
         store.LoadPlaylists();
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [store.search]);
+    }, [store.search, store.currentList?store.currentList._id:'']);
+
+    useEffect(() => {
+      store.clearTransaction();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [store.currentList? store.currentList._id:'']);
+
 
     /// Accordion 
-    const handleChange = () =>{
+    const handleChange = (panel,id) => (event, isExpanded) => {
+      setExpanded(isExpanded ? panel : false);
       store.clearTransaction();
+      if(!store.currentList || store.currentList._id!== id){
+        store.setCurrentList(id);
+      }
     };
 
-    let toggleExpanded = (list)=>{
-      setExpanded(!expanded);
-      store.clearTransaction();
-      if(!store.currentList || store.currentList._id!== list._id){
-        if(list.published)store.setPublishedList(list._id);
-        else store.setCurrentList(list._id);
+    let handleArrow =(id,event)=>{
+      if(!store.currentList || store.currentList._id!== id){
+      store.setCurrentList(id);
       }
+      setClicked(!clicked);
     }
 
-    function handleCreateNewList() {
-        store.setSearch("");
+    function handleCreateNewList(event) {
         store.createNewList();
+        setClicked(true);
     }
 
     let togglePlayer = ()=>{
@@ -82,7 +93,7 @@ const HomeScreen = () => {
     if (store.playlists) {
         /// Search by PlaylistName
         let playlists=store.playlists;
-        if(store.search!==""){
+        if(store.search && store.search!==""){
            playlists= playlists.filter( list => list.name.startsWith(store.search));
         }
         // Sorting
@@ -103,7 +114,7 @@ const HomeScreen = () => {
             default:
              
         }
-       
+        // store.currentList && store.currentList._id === list._id ?
 
         Lists = 
         <List sx={{width: '90%', left: '5%'}}>
@@ -112,16 +123,21 @@ const HomeScreen = () => {
             <Accordion 
             key={list._id} id='user-list' 
             style={{backgroundColor: store.currentList && store.currentList._id===list._id? '#f8df7bd1': list.published? '#053b70':'#05498cd1' , color:'black'}}
-            expanded={store.currentList ? store.currentList._id === list._id && expanded :false} 
-            onChange={handleChange}
+            expanded={store.currentList && store.currentList._id === list._id ?(expanded === 'panel'+(id++).toString() || clicked):false }
+            onChange={handleChange('panel'+(id-1).toString(),list._id)}
+            
             >
-              <div>
-              {list.published ? <PublishedCard key={list._id} List={list} />: <ListCard  key={list._id} List={list} />}
-              <KeyboardDoubleArrowDownIcon onClick={()=>{toggleExpanded(list)}}/>
-              </div>
-                <AccordionDetails>
+
+              <AccordionSummary
+              expandIcon={<KeyboardDoubleArrowDownIcon onClick={()=>{handleArrow(list._id)}} style={{alignSelf:'flex-end'}} />}
+              aria-controls="panel1bh-content"
+              id="panel1bh-header">
+                {list.published ? <PublishedCard key={list._id} List={list} />: <ListCard  key={list._id} List={list} />}
+              </AccordionSummary>
+        
+              <AccordionDetails>
                     {list.published ? <PublishedArea userName={list.owner} key={list._id} id={list._id}/>: <WorkspaceScreen key={list._id} id={list._id}/>}
-                </AccordionDetails>
+              </AccordionDetails>
 
             </Accordion>
             ))
