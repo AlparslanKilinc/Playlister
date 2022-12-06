@@ -21,8 +21,8 @@ export default function AppTools(props) {
 
   useEffect(() => {
     
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-},[store.currentScreen]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[store.currentScreen]);
  
 
   const handleSearch = (event) => {
