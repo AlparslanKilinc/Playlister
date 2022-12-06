@@ -10,18 +10,16 @@ export const Comments = (props) => {
   const { auth } = useContext(AuthContext);
   const {selection} = props;
 
-  // window.setInterval(function() {
-  //   var elem = document.getElementById('comments');
-  //   elem.scrollTop = elem.scrollHeight;
-  // }, 5000);
+  useEffect(() => {
+    store.scrollUp('comments');
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [store.currentList?store.currentList.comments.length: '']);
 
  
 
   const handleAddComment = (event) => {
     if (event.key === 'Enter') {
       if(event.target.value!=="") store.AddComment(event.target.value);
-      var elem = document.getElementById('comments');
-      elem.scrollTop = elem.scrollHeight;
       }
   }
 
@@ -30,9 +28,9 @@ export const Comments = (props) => {
   if(store.currentList){
      comments= store.currentList.comments.map((comment,index=0)=>(
       <div key={index++} className='comment'>
-        <Avatar sx={{ bgcolor: deepOrange[500] }}>{comment.initials}</Avatar>
+        <Avatar sx={{ bgcolor: '#678983' }}>{comment.initials}</Avatar>
         <div style={{display:'flex' ,flexDirection:'column'}}> 
-        <h4 style={{color:'blue'}}>{comment.userName}</h4>
+        <h4 style={{color:'#678983'}}>{comment.userName}</h4>
         <p>{comment.comment}</p>
         </div>
       </div>

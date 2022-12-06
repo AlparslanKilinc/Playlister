@@ -25,8 +25,8 @@ const playerOptions = {
   width:'100%',
   borderRadius:'10px',
   playerVars: {
-      mute:1,
-      controls:1,
+      mute:0,
+      controls:0,
       host: 'https://www.youtube.com',
       origin: 'https://localhost:3000',
   },
@@ -119,19 +119,19 @@ function onPlayerStateChange(event) {
     if(store.currentList.songs){
     videoInfo = 
     <CardContent className='video-info'>
-    <Typography component="div" style={{justifyContent:'center'}}variant="h4">
+    <Typography  component="div" style={{justifyContent:'center',fontFamily: "Gummy"}}variant="h4">
      Now Playing
     </Typography>
-    <Typography component="div" variant="h6">
+    <Typography style={{fontFamily: "Gummy"}} component="div" variant="h6">
       Playlist: {store.currentList.name}
     </Typography>
-    <Typography component="div" variant="h6">
+    <Typography style={{fontFamily: "Gummy"}} component="div" variant="h6">
       Song Number:{store.playIndex+1}
     </Typography>
-    <Typography component="div" variant="h6">
+    <Typography style={{fontFamily: "Gummy"}} component="div" variant="h6">
       Title: {store.currentList.songs[store.playIndex] ? store.currentList.songs[store.playIndex].title : ''}
     </Typography>
-    <Typography component="div" variant="h6">
+    <Typography style={{fontFamily: "Gummy"}} component="div" variant="h6">
       Artist: {store.currentList.songs[store.playIndex] ? store.currentList.songs[store.playIndex].artist: '' }
     </Typography>
     </CardContent> ; 
@@ -139,7 +139,7 @@ function onPlayerStateChange(event) {
   }
   
   return (
-    <div style={{ opacity: selection === "contained" ? '1' :'0' , pointerEvents: selection === "contained" ? 'auto' :'none'}} className='video-player'>
+    <div style={{ opacity: selection === "contained" ? '1' :'0' , pointerEvents: selection === "contained" ? 'auto' :'none' }} className='video-player'>
 
           { store.currentList? 
           <YouTube
@@ -155,7 +155,7 @@ function onPlayerStateChange(event) {
 
 
 
-        <div className='video-actions'>
+        <div  className='video-actions'>
               {videoInfo}
               <Box className='video-buttons'>
 

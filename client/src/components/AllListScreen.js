@@ -17,7 +17,7 @@ const AllListScreen = () => {
 const theme = createTheme({
   palette: {
   primary: {
-  main: '#071935',
+  main: '#678983',
   darker: '#1565c0',
     },
   },
@@ -56,7 +56,7 @@ return (
           </div>      
     </div>
   <div className="home-footer">
-    <Typography variant="h2"> {store.search}  Playlists</Typography>
+    <Typography style={{fontFamily: "Gummy"}} variant="h2"> {store.search}  Playlists</Typography>
   </div>
   <MUIDeleteModal/>
   </div>)

@@ -52,12 +52,12 @@ function WorkspaceScreen(props) {
             }
          </List> 
          <Button
-                style={{backgroundColor:'#071935'}}
+                style={{backgroundColor:'#E6DDC4'}}
                 disabled={!store.canAddNewSong()}
                 id='add-song-button'
                 onClick={handleAddNewSong}
                 variant="contained">
-                <AddIcon  />
+                <AddIcon  style={{color:'black'}} />
          </Button>
          <EditToolbar id={id}></EditToolbar>
          

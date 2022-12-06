@@ -3,11 +3,36 @@ import GlobalStoreContext from '../store';
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
-
+import Button from '@mui/material/Button';
+import { createTheme } from '@mui/material/styles';
+import { ThemeProvider } from '@emotion/react';
 
 
 export default function MUIRemoveSongModal() {
     const { store } = useContext(GlobalStoreContext);
+    
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+};
+    
+    const theme = createTheme({
+        status: {
+        danger: '#e53e3e',
+        },
+        palette: {
+        primary: {
+            main: '#678983',
+            darker: '#053e85',
+        },
+        neutral: {
+            main: '#64748B',
+            contrastText: '#fff',
+        },
+        },
+  });
 
     function prevent(event){
         event.preventDefault();
@@ -35,31 +60,39 @@ export default function MUIRemoveSongModal() {
             open={store.isRemoveSongModalOpen()}
             onClick={prevent}
         >
-            <Box>
+            <Box sx={style}>
             <div
         id="remove-song-modal"
         className={modalClass}
         data-animation="slideInOutLeft">
-        <div className="modal-dialog" id='verify-remove-song-root'>
+        <div className="modal-dialog">
             <div className="dialog-header">
-                Remove {songTitle}?
+                Remove Song ?
             </div>
-            <div>
-                    Are you sure you wish to permanently remove {songTitle} from the playlist?
-            </div>
+
+            <h3 className='modal-main'>
+                    Are you sure you wish to permanently remove "{songTitle}" from the playlist?
+            </h3>
+
             <div id="confirm-cancel-container">
-                <input type="button" 
-                    id="remove-song-confirm-button" 
-                    className="modal-button" 
-                    onClick={handleConfirmRemoveSong} 
-                    value='Confirm' />
-                <input 
-                    type="button" 
-                    id="remove-song-cancel-button" 
-                    className="modal-button" 
-                    onClick={handleCancelRemoveSong} 
-                    value='Cancel' />
-            </div>
+                    <ThemeProvider theme={theme}> 
+                        <Button variant="contained"
+                        id="dialog-yes-button"
+                        className="modal-button"
+                        color="primary"
+                        onClick={handleConfirmRemoveSong}>
+                            Confirm
+                        </Button>
+
+                        <Button variant="contained"
+                        id="dialog-no-button"
+                        className="modal-button"
+                        color="primary"
+                        onClick={handleCancelRemoveSong}>
+                            Cancel
+                        </Button>
+                    </ThemeProvider>
+                    </div>
         </div>
     </div>
             </Box>

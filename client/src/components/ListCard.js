@@ -52,7 +52,7 @@ function ListCard(props) {
     let cardElement =
         <ListItem
             key={List._id}
-            button
+            
             onDoubleClick={handleToggleEdit}
         >  
         <Box style={{alignSelf:'flex-start', flex:'1'}} >{List.name}
@@ -77,6 +77,7 @@ function ListCard(props) {
                     event.preventDefault();
                     event.stopPropagation();
                 }}
+                color={'success'}
                 onBlur={blurAction}
                 defaultValue={List.name}
                 inputProps={{style: {fontSize: 48}}}

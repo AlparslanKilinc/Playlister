@@ -3,9 +3,9 @@ import Typography from '@mui/material/Typography';
 
 export default function Copyright(props) {
     return (
-        <Typography variant="h6" color="black" align="center" {...props}>
-            {'Copyright © '}
-            <Link underline="none" style={{color:'black'}} href="/">
+        <Typography style={{ fontFamily: "Gummy"}} variant="h6" color="black" align="center" {...props}>
+            {' © '}
+            <Link underline="none" style={{color:'black',fontFamily: "Gummy"}} href="/">
                 Alparslan Kilinc
             </Link>{' '}
             {new Date().getFullYear()}

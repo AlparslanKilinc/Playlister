@@ -76,7 +76,7 @@ if (store.PublishedPlaylists) {
 
      playlists.map((list,id=0) => (     
     <Accordion 
-    style={{backgroundColor: store.currentList && store.currentList._id===list._id? '#f8df7bd1': list.published? '#053b70':'#05498cd1' , color:'black'}}
+    style={{backgroundColor: store.currentList && store.currentList._id===list._id? '#678983': list.published? '#f7e7b5':'#F0E9D2' , color:'black'}}
     key={list._id} 
     id='user-list' 
     expanded={store.currentList && store.currentList._id === list._id ? (expanded === 'panel'+(id+1).toString()): false } 

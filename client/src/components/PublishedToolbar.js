@@ -35,7 +35,7 @@ function PublishedToolbar(props) {
         <div style={{alignSelf:'flex-end'}}>
                 <Button
                 disabled={userName  !==  u}
-                style={{backgroundColor:'#071935'}}
+                style={{backgroundColor:'#678983'}}
                 variant="contained"
                 onClick={(event) => {
                             handleDeleteList(event,id)
@@ -46,7 +46,7 @@ function PublishedToolbar(props) {
 
                 <Button
                 disabled={!auth.loggedIn}
-                style={{backgroundColor:'#071935'}}
+                style={{backgroundColor:'#678983'}}
                 variant="contained"
                 onClick={(event) => {
                             handleDuplicate(event,id)

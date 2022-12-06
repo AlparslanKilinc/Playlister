@@ -12,20 +12,7 @@ import { IconButton } from '@mui/material';
 import { GlobalStoreContext } from '../store'
 import AuthContext from '../auth'
 
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginLeft: 0,
-  width: '100%',
-  [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(1),
-    width: 'auto',
-  },
-}));
+
 
 export default function AppTools(props) {
   const { store } = useContext(GlobalStoreContext);
@@ -64,28 +51,29 @@ export default function AppTools(props) {
       <AppBar  position="static">
         <Toolbar id='AppTools' >
         <div className='tool-icons'>
-        <IconButton  onClick={handleHomeScreen}  color={store.currentScreen==="HomeScreen"? 'warning' :'default'}  disabled={!auth.loggedIn} aria-label="home">
+        <IconButton  onClick={handleHomeScreen}  color={store.currentScreen==="HomeScreen"? 'success' :'default'}  disabled={!auth.loggedIn} aria-label="home">
           <HomeIcon/>
         </IconButton>
 
-        <IconButton onClick={handleAllListScreen} color={store.currentScreen==="AllListScreen"? 'warning' :'default'}   aria-label="all-list">
+        <IconButton onClick={handleAllListScreen} color={store.currentScreen==="AllListScreen"? 'success' :'default'}   aria-label="all-list">
           <Groups3Icon/>
         </IconButton>
 
-        <IconButton  onClick={handleUserScreen}   color={store.currentScreen==="UserScreen"? 'warning' :'default'} aria-label="users">
+        <IconButton  onClick={handleUserScreen}   color={store.currentScreen==="UserScreen"? 'success' :'default'} aria-label="users">
           <PersonIcon/>
         </IconButton>
         </div>
 
-        <Search >
+       
             <TextField      margin='normal'
                             id="search"
                             label="Search"
                             name="search"
                             defaultValue={""}
+                            color={'success'}
                             onKeyPress= {handleSearch}
                         />
-          </Search>
+         
           <StyledMenu published={published}/>
         </Toolbar>
       </AppBar>

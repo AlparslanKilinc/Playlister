@@ -539,6 +539,11 @@ function GlobalStoreContextProvider(props) {
         asyncUpdateCurrentList();
     }
 
+    store.scrollUp = (element) =>{
+        let elem = document.getElementById(element);
+        elem.scrollTop = elem.scrollHeight;  
+    }
+
     store.AddListen = function(id) {
         async function asyncUpdatePublishedList(id) {
             let response = await api.getPublishedPlaylistById(id);

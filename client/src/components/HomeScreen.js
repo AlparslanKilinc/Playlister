@@ -29,7 +29,7 @@ const HomeScreen = () => {
     const theme = createTheme({
         palette: {
           primary: {
-            main: '#071935',
+            main: '#678983',
             darker: '#1565c0',
           },
         },
@@ -39,13 +39,16 @@ const HomeScreen = () => {
     const [playerVariant, setPlayerVariant] = useState("contained");
     const [commentsVariant, setCommentsVariant] = useState("outlined");
     const [expanded, setExpanded] = useState(false);
-    const [clicked, setClicked] = useState(false);
     store.history = useHistory();
 
- 
+    useEffect(() => {
+      store.scrollUp('list-area');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [store.playlists?store.playlists.length: '']);
 
     useEffect(() => {
         store.LoadPlaylists();
+        
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [store.search, store.currentList?store.currentList._id:'']);
 
@@ -64,16 +67,9 @@ const HomeScreen = () => {
       }
     };
 
-    let handleArrow =(id,event)=>{
-      if(!store.currentList || store.currentList._id!== id){
-      store.setCurrentList(id);
-      }
-      setClicked(!clicked);
-    }
-
     function handleCreateNewList(event) {
         store.createNewList();
-        setClicked(true);
+     
     }
 
     let togglePlayer = ()=>{
@@ -117,19 +113,21 @@ const HomeScreen = () => {
         // store.currentList && store.currentList._id === list._id ?
 
         Lists = 
-        <List sx={{width: '90%', left: '5%'}}>
+        <List  sx={{width: '90%', left: '5%'}}>
         {
                 playlists.map((list,id=0) => (
             <Accordion 
+        
             key={list._id} id='user-list' 
-            style={{backgroundColor: store.currentList && store.currentList._id===list._id? '#f8df7bd1': list.published? '#053b70':'#05498cd1' , color:'black'}}
-            expanded={store.currentList && store.currentList._id === list._id ?(expanded === 'panel'+(id++).toString() || clicked):false }
-            onChange={handleChange('panel'+(id-1).toString(),list._id)}
+            style={{backgroundColor: store.currentList && store.currentList._id===list._id? '#678983': list.published? '#f7e7b5':'#F0E9D2' , color:'black'}}
+            expanded={store.currentList && store.currentList._id === list._id ?(expanded === 'panel'+(id+1).toString() ):false }
+            onChange={handleChange('panel'+(id+1).toString(),list._id)}
             
             >
 
               <AccordionSummary
-              expandIcon={<KeyboardDoubleArrowDownIcon onClick={()=>{handleArrow(list._id)}} style={{alignSelf:'flex-end'}} />}
+               style={{display:'flex' , alignItems:'flex-end'}} 
+              expandIcon={<KeyboardDoubleArrowDownIcon style={{marginBottom:'1rem', fontSize:'24pt'}}/>}
               aria-controls="panel1bh-content"
               id="panel1bh-header">
                 {list.published ? <PublishedCard key={list._id} List={list} />: <ListCard  key={list._id} List={list} />}
@@ -149,7 +147,7 @@ const HomeScreen = () => {
         <div id="home-screen">
             <AppTools published={false}/>
             <div className="home-main">
-                <div className='list-area'>
+                <div id="list-area" className='list-area'>
                     {Lists}
                 </div>
                 <div className='player-comments'>
@@ -176,7 +174,7 @@ const HomeScreen = () => {
             >
                 <AddIcon />
             </Fab>
-                <Typography variant="h2">Your Lists</Typography>
+                <Typography style={{fontFamily: "Gummy", marginLeft:"1rem"}} variant="h2">Your Lists</Typography>
             </div>
 
 
