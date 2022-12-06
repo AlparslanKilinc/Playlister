@@ -13,7 +13,6 @@ function PublishedToolbar(props) {
    
     useEffect(() => {
         store.LoadPublishedPlaylists();
-        store.setPublishedList(id);
         auth.getLoggedIn();
       // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

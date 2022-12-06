@@ -79,8 +79,8 @@ if (store.PublishedPlaylists) {
     style={{backgroundColor: store.currentList && store.currentList._id===list._id? '#678983': list.published? '#f7e7b5':'#F0E9D2' , color:'black'}}
     key={list._id} 
     id='user-list' 
-    expanded={store.currentList && store.currentList._id === list._id ? (expanded === 'panel'+(id+1).toString()): false } 
-    onChange={handleChange('panel'+(id+1).toString(),list._id)}>
+    expanded={store.currentList && store.currentList._id === list._id ? (expanded === 'panel'): false } 
+    onChange={handleChange('panel',list._id)}>
       <AccordionSummary
         expandIcon={<KeyboardDoubleArrowDownIcon />}
         aria-controls="panel1bh-content"

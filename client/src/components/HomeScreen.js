@@ -52,11 +52,6 @@ const HomeScreen = () => {
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [store.search, store.currentList?store.currentList._id:'']);
 
-    useEffect(() => {
-      store.clearTransaction();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [store.currentList? store.currentList._id:'']);
-
 
     /// Accordion 
     const handleChange = (panel,id) => (event, isExpanded) => {
@@ -65,9 +60,11 @@ const HomeScreen = () => {
       if(!store.currentList || store.currentList._id!== id){
         store.setCurrentList(id);
       }
+    
     };
 
     function handleCreateNewList(event) {
+        setExpanded('panel');
         store.createNewList();
      
     }
@@ -95,33 +92,30 @@ const HomeScreen = () => {
         // Sorting
         switch (store.sortMethod) {
             case 'Name':
-              console.log('Sort By Name');
               playlists=store.SortName(playlists);
               break;
             case 'CreationDate':
                 playlists=store.SortCreationDate(playlists);
-                console.log('Sort By Creation Date');
                 break;
             case 'LastEditDate':
               playlists=store.SortLastEdit(playlists);
-              console.log('Sort By Last Edit');
               break;
               
             default:
              
         }
-        // store.currentList && store.currentList._id === list._id ?
+ 
 
         Lists = 
         <List  sx={{width: '90%', left: '5%'}}>
         {
-                playlists.map((list,id=0) => (
+                playlists.map((list) => (
             <Accordion 
         
             key={list._id} id='user-list' 
             style={{backgroundColor: store.currentList && store.currentList._id===list._id? '#678983': list.published? '#f7e7b5':'#F0E9D2' , color:'black'}}
-            expanded={store.currentList && store.currentList._id === list._id ?(expanded === 'panel'+(id+1).toString() ):false }
-            onChange={handleChange('panel'+(id+1).toString(),list._id)}
+            expanded={store.currentList && store.currentList._id === list._id ?(expanded === 'panel' ):false}
+            onChange={handleChange('panel',list._id)}
             
             >
 

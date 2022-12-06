@@ -12,6 +12,7 @@ function PublishedCard(props) {
     const { store } = useContext(GlobalStoreContext);
     const {List} = props;
 
+
     
     function handleLike(event){
         event.stopPropagation();

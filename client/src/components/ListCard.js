@@ -12,6 +12,8 @@ function ListCard(props) {
     const [text, setText] = useState("");
     const {List} = props;
 
+
+
     function handleToggleEdit(event) {
         event.preventDefault();
         event.stopPropagation();
@@ -52,7 +54,6 @@ function ListCard(props) {
     let cardElement =
         <ListItem
             key={List._id}
-            
             onDoubleClick={handleToggleEdit}
         >  
         <Box style={{alignSelf:'flex-start', flex:'1'}} >{List.name}

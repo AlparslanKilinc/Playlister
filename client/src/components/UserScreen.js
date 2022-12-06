@@ -11,7 +11,7 @@ import { createTheme } from '@mui/material/styles';
 import { useHistory } from 'react-router-dom'
 import MUIDeleteModal from './MUIDeleteModal';
 import { ListArea } from './ListArea';
-
+import MUIAccessErrorModal from './MUIAccessErrorModal'
 
 const UserScreen = () => {
     const theme = createTheme({
@@ -61,6 +61,7 @@ const UserScreen = () => {
                 <Typography style={{fontFamily: "Gummy"}} variant="h2"> {store.search} Lists</Typography>
             </div>
             <MUIDeleteModal/>
+            <MUIAccessErrorModal/>
         </div>)
 }
 

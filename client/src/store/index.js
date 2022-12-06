@@ -82,7 +82,7 @@ function GlobalStoreContextProvider(props) {
                     listIdMarkedForDeletion: null,
                     listMarkedForDeletion: null,
                     message:store.message,
-                    search:null,
+                    search:store.search,
                     sortMethod:store.sortMethod,
                     playIndex:store.playIndex,
                     currentScreen:store.currentScreen,
