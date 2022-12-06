@@ -42,7 +42,7 @@ const HomeScreen = () => {
     store.history = useHistory();
 
     useEffect(() => {
-      store.scrollUp('list-area');
+      store.scrollUp('scroll-list');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [store.playlists?store.playlists.length: '']);
 
@@ -141,26 +141,26 @@ const HomeScreen = () => {
         <div id="home-screen">
             <AppTools published={false}/>
             <div className="home-main">
-                <div id="list-area" className='list-area'>
+              
+                <div id="scroll-list" className='list-area'>
                     {Lists}
                 </div>
+
                 <div className='player-comments'>
                 <ButtonGroup className='buttonGroup'>
                 <ThemeProvider theme={theme}>
                     <Button onClick={togglePlayer} color="primary"  variant={playerVariant} >Player</Button>
                     <Button onClick={toggleComments} disabled={!store.currentList || (store.currentList && !store.currentList.published)} color="primary" variant={commentsVariant}>Comments</Button>
-                    </ThemeProvider>
+                </ThemeProvider>
                 </ButtonGroup>
-                <ErrorBoundary>
                   <VideoPlayer selection={playerVariant}/>
                   <Comments selection={commentsVariant}/>
-                </ErrorBoundary>
                 </div>
                 
             </div>
 
 
-            <div className="home-footer">
+            <div style={{marginTop:'4rem'}} className="home-footer">
             <Fab 
                 aria-label="add"
                 id="add-list-button"

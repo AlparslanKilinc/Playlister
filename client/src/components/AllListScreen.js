@@ -1,4 +1,4 @@
-import React, { useContext,useState } from 'react'
+import React, { useContext,useState,useEffect } from 'react'
 import { GlobalStoreContext } from '../store'
 import Typography from '@mui/material/Typography'
 import AppTools from './AppTools';
@@ -29,6 +29,11 @@ const [playerVariant, setPlayerVariant] = useState("contained");
 const [commentsVariant, setCommentsVariant] = useState("outlined");
 store.history = useHistory();
 
+useEffect(() => {
+  store.LoadPublishedPlaylists();
+// eslint-disable-next-line react-hooks/exhaustive-deps
+}, [store.search]);
+
 
 let togglePlayer = ()=>{
   setPlayerVariant("contained");
@@ -44,7 +49,9 @@ return (
   <div id="home-screen">
     <AppTools published={true}/>
     <div className="home-main">
+
          <ListArea parent={"AllListScreen"}/>
+
           <div className='player-comments'>
             <ButtonGroup className='buttonGroup'>
               <ThemeProvider theme={theme}>
@@ -54,7 +61,8 @@ return (
             </ButtonGroup>
             <VideoPlayer selection={playerVariant}/>
             <Comments selection={commentsVariant}/>
-          </div>      
+          </div>     
+           
     </div>
   <div className="home-footer">
     <Typography style={{fontFamily: "Gummy"}} variant="h2"> {store.search}  Playlists</Typography>

@@ -110,7 +110,7 @@ function onPlayerStateChange(event) {
 /// Null checks 
   let videoInfo = 
   <CardContent className='video-info'>
-  <Typography component="div" variant="h4">
+  <Typography style={{fontFamily: "Gummy"}} component="div" variant="h4">
     Now Playing
   </Typography>
   </CardContent> ; 

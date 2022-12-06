@@ -82,7 +82,8 @@ if (store.PublishedPlaylists) {
     expanded={store.currentList && store.currentList._id === list._id ? (expanded === 'panel'): false } 
     onChange={handleChange('panel',list._id)}>
       <AccordionSummary
-        expandIcon={<KeyboardDoubleArrowDownIcon />}
+        style={{display:'flex' , alignItems:'flex-end'}} 
+        expandIcon={<KeyboardDoubleArrowDownIcon style={{marginBottom:'1rem', fontSize:'24pt'}} />}
         aria-controls="panel1bh-content"
         id="panel1bh-header"
         >

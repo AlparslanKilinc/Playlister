@@ -27,6 +27,11 @@ const UserScreen = () => {
     const [commentsVariant, setCommentsVariant] = useState("outlined");
     store.history = useHistory();
 
+    useEffect(() => {
+      store.LoadPublishedPlaylists();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [store.search]);
+
 
     let togglePlayer = ()=>{
             setPlayerVariant("contained");
