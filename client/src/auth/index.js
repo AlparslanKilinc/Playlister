@@ -100,8 +100,9 @@ function AuthContextProvider(props) {
                     user: response.data.user
                 }
             });
+            return response.data.loggedIn;
         }
-        
+        return false;
     }
 
     auth.registerUser = async function(userName,firstName, lastName, email, password, passwordVerify) {

@@ -10,7 +10,6 @@ export default function MUIAccessErrorModal() {
 
   let handleClose = ()=>{
     store.hideModals();
-    store.LoadPlaylists();
   }
 
 return(
