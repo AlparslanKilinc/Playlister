@@ -47,10 +47,9 @@ const HomeScreen = () => {
   }, [store.playlists?store.playlists.length: '']);
 
     useEffect(() => {
-        store.LoadPlaylists();
-        
+      store.LoadPlaylists();
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [store.search, store.currentList?store.currentList._id:'']);
+    }, []);
 
 
     /// Accordion 
