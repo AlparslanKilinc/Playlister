@@ -28,6 +28,7 @@ export const GlobalStoreActionType = {
     SET_SEARCH:"SET_SEARCH",
     SET_PLAY:"SET_PLAY",
     SET_SCREEN:"SET_SCREEN",
+    SET_HOME_SCREEN:"SET_HOME_SCREEN",
 }
 
 
@@ -358,6 +359,25 @@ function GlobalStoreContextProvider(props) {
                         
                     });
             }
+            case GlobalStoreActionType.SET_HOME_SCREEN: {
+                return setStore({
+                        currentModal : CurrentModal.NONE,
+                        playlists:payload.playlists ,
+                        PublishedPlaylists:store.PublishedPlaylists,
+                        currentList: null,
+                        currentSongIndex: store.currentSongIndex,
+                        currentSong: store.currentSong,
+                        listNameActive: store.listNameActive,
+                        listIdMarkedForDeletion: store.listIdMarkedForDeletion,
+                        listMarkedForDeletion: store.markListForDeletion,
+                        message:store.message,
+                        search:null,
+                        sortMethod:store.sortMethod,
+                        playIndex:store.playIndex,
+                        currentScreen:payload.screen,
+                        
+                    });
+            }
             default:
                 return store;
         }
@@ -370,6 +390,25 @@ function GlobalStoreContextProvider(props) {
             type:GlobalStoreActionType.SET_SCREEN,
             payload:screen
         });
+    }
+    store.setHomeScreen = (screen)=>{
+        async function asyncLoadPlaylists() {
+            const response = await api.getPlaylists();
+            if (response.data.success) {
+                let playlists = response.data.playlists;
+                storeReducer({
+                    type:GlobalStoreActionType.SET_HOME_SCREEN,
+                    payload:{
+                        screen:screen,
+                        playlist:playlists,
+                    }
+                });
+            }
+            else {
+                console.log("API FAILED TO GET PLAYLISTS");
+            }
+        }
+        asyncLoadPlaylists(); 
     }
 
     /// Play 

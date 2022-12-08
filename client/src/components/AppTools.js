@@ -37,7 +37,7 @@ export default function AppTools(props) {
   }
 
   let handleHomeScreen = ()=>{
-    store.setScreen('HomeScreen');
+    store.setHomeScreen('HomeScreen');
   }
 
   let handleUserScreen = ()=>{
