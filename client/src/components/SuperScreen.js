@@ -11,23 +11,21 @@ export const SuperScreen = () => {
     let selection="";
 
     useEffect(() => {
-      
+     
       // eslint-disable-next-line react-hooks/exhaustive-deps
     },[store.currentScreen]);
 
-
+    
     if(store.currentScreen==="HomeScreen" || auth.loggedIn){
         selection=<HomeScreen/>;
     }
 
     if(store.currentScreen==="AllListScreen" || !auth.loggedIn){
-        selection=<AllListScreen/>;
-        if(store.currentScreen==="HomeScreen") store.setScreen("AllListScreen");
+        selection=<AllListScreen/>;  
     }
 
     if(store.currentScreen==="UserScreen"){
         selection=<UserScreen/>;
-        if(store.currentScreen==="HomeScreen") store.setScreen("UserScreen");
     }
 
    

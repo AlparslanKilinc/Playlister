@@ -6,13 +6,13 @@ import ListItem from '@mui/material/ListItem';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import Button from '@mui/material/Button';
+import AuthContext from '../auth'
 
 function PublishedCard(props) {
     
     const { store } = useContext(GlobalStoreContext);
     const {List} = props;
-
-
+    const { auth } = useContext(AuthContext);
     
     function handleLike(event){
         event.stopPropagation();
@@ -45,14 +45,17 @@ function PublishedCard(props) {
                 <Button
                     className='like'
                     id='like' 
+                    disabled={!auth.loggedIn}
                     onClick={handleLike}
                     variant="none">
+                    
                     <ThumbUpIcon />
                     <Box style={{fontSize:'12pt', margin:'1rem',marginTop:'1rem'}} >{List.likes} </Box>
                 </Button>
                 <Button
                     className='like'
                     id='like'
+                    disabled={!auth.loggedIn}
                     onClick={handleDislike}
                     variant="none">
                     <ThumbDownIcon />

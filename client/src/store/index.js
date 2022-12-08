@@ -43,6 +43,7 @@ const CurrentModal = {
 // WITH THIS WE'RE MAKING OUR GLOBAL DATA STORE
 // AVAILABLE TO THE REST OF THE APPLICATION
 function GlobalStoreContextProvider(props) {
+    const { auth } = useContext(AuthContext);
     // THESE ARE ALL THE THINGS OUR DATA STORE WILL MANAGE
     const [store, setStore] = useState({
         currentModal : CurrentModal.NONE,
@@ -58,11 +59,11 @@ function GlobalStoreContextProvider(props) {
         search:null,
         sortMethod:null,
         playIndex:0,
-        currentScreen:"HomeScreen",
+        currentScreen: auth.loggedIn ?"HomeScreen":"AllListScreen",
     });
     const history = useHistory();
     // SINCE WE'VE WRAPPED THE STORE IN THE AUTH CONTEXT WE CAN ACCESS THE USER HERE
-    const { auth } = useContext(AuthContext);
+  
 
 
     // HERE'S THE DATA STORE'S REDUCER, IT MUST

@@ -52,13 +52,8 @@ let onPlayerReady=(event)=>{
 
 let loadCurrentSong = (player)=>{
   if(store.currentList &&store.currentList.songs[store.playIndex]){
-    if(store.playIndex===0){
-      player.cueVideoById(store.currentList.songs[store.playIndex]? store.currentList.songs[store.playIndex].youTubeId: '');
-    }else{
       player.loadVideoById(store.currentList.songs[store.playIndex]? store.currentList.songs[store.playIndex].youTubeId: '');
-    }
-    
-  }  
+    }  
 }
 
 let play =()=>{
@@ -72,8 +67,12 @@ let pause=()=>{
 }
 
 let prev =()=>{
-  if(store.playIndex===0) return;
-  store.setPlay(store.playIndex-1);
+  if(store.playIndex===0){
+    if(store.currentList && store.currentList.songs.length-1 >0)store.setPlay(store.currentList.songs.length-1);
+  }else{
+    store.setPlay(store.playIndex-1);
+  }
+  
 }
 
 let next =()=>{
@@ -101,7 +100,7 @@ function onPlayerStateChange(event) {
       console.log("3 Video buffering");
   } else if (playerStatus === 5) {
       console.log("5 Video cued");
-      if(store.playIndex!==0) event.target.playVideo();
+      event.target.playVideo();
   }
 }
 
