@@ -30,7 +30,7 @@ export default function SplashScreen() {
         <div id="splash-screen">
             <div className='splash-header'>
             <YouTubeIcon style={{fontSize:"100px" }}/>
-            <Typography style={{fontFamily: "Gummy"}} variant="h1" component="h1">Playlister</Typography>
+            <Typography style={{fontFamily: "Gummy"}} variant="h1" component="h1">PlayLister</Typography>
             </div>
             
             <div id='main-splash'>
