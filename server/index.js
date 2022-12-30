@@ -24,9 +24,7 @@ app.use('/auth', authRouter)
 const playlistsRouter = require('./routes/playlists-router')
 app.use('/api', playlistsRouter)
 
-app.get('/', function (req, res) {
-    res.render('index', {});
-  });
+
 // INITIALIZE OUR DATABASE OBJECT
 const db = require('./db')
 db.on('error', console.error.bind(console, 'MongoDB connection error:'))
