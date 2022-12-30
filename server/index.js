@@ -6,7 +6,6 @@ const cookieParser = require('cookie-parser')
 
 // CREATE OUR SERVER
 dotenv.config()
-const PORT = 10000;
 const app = express()
 
 // SETUP THE MIDDLEWARE
@@ -28,7 +27,7 @@ app.use('/api', playlistsRouter)
 const db = require('./db')
 db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 
-// PUT THE SERVER IN LISTENING MODE
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
+
+
 
 
