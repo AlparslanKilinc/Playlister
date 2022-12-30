@@ -6,13 +6,13 @@ const cookieParser = require('cookie-parser')
 
 // CREATE OUR SERVER
 dotenv.config()
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT;
 const app = express()
 
 // SETUP THE MIDDLEWARE
 app.use(express.urlencoded({ extended: true }))
 app.use(cors({
-    origin: ["http://localhost:3000"],
+    origin: ["https://playlister.onrender.com"],
     credentials: true
 }))
 app.use(express.json())
