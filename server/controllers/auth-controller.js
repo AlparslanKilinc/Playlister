@@ -148,15 +148,21 @@ registerUser = async (req, res) => {
         });
         const savedUser = await newUser.save();
         console.log("new user saved: " + savedUser._id);
-
-        res.status(200).json({
+        // LOGIN THE USER
+        const token = auth.signToken(existingUser._id);
+        console.log(token);
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: true
+        }).status(200).json({
             success: true,
             user: {
-                userName:savedUser.userName,
-                firstName: savedUser.firstName,
-                lastName: savedUser.lastName,  
-                email: savedUser.email,
-                interactions:savedUser.interactions,             
+                firstName: existingUser.firstName,
+                lastName: existingUser.lastName,  
+                email: existingUser.email,
+                userName: existingUser.userName,
+                interactions:existingUser.interactions,           
             }
         })
 
