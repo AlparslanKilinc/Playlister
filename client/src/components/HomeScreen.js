@@ -21,7 +21,6 @@ import PublishedCard from './PublishedCard';
 import { useHistory } from 'react-router-dom'
 import PublishedArea from './PublishedArea';
 import MUIDeleteModal from './MUIDeleteModal';
-import ErrorBoundary from './ErrorBoundary'
 import MUIAccessErrorModal from './MUIAccessErrorModal'
 
 
@@ -49,7 +48,7 @@ const HomeScreen = () => {
     useEffect(() => {
       store.LoadPlaylists();
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [store.search,store.currentList? store.currentList._id:'']);
+    },[store.search,store.currentList? store.currentList._id:'']);
 
 
     /// Accordion 
@@ -59,30 +58,25 @@ const HomeScreen = () => {
       if(!store.currentList || store.currentList._id!== id){
         store.setCurrentList(id);
       }
-    
     };
-
-    function handleCreateNewList(event) {
+    let handleCreateNewList =(event) =>{
         setExpanded('panel');
         store.createNewList();
-     
     }
-
     let togglePlayer = ()=>{
-            setPlayerVariant("contained");
-            setCommentsVariant("outlined");
-           
+      setPlayerVariant("contained");
+      setCommentsVariant("outlined");     
     }
     let toggleComments =()=>{
-            setPlayerVariant("outlined");
-            setCommentsVariant("contained");
+      setPlayerVariant("outlined");
+      setCommentsVariant("contained");
     }
 
     //// Editing Functions 
         
     let Lists = "";
   
-    if (store.playlists) {
+      if (store.playlists) {
         /// Search by PlaylistName
         let playlists=store.playlists;
         if(store.search && store.search!==""){
@@ -99,42 +93,36 @@ const HomeScreen = () => {
             case 'LastEditDate':
               playlists=store.SortLastEdit(playlists);
               break;
-              
             default:
-             
+              break;
         }
  
 
         Lists = 
         <List  sx={{width: '90%', left: '5%'}}>
-        {
-                playlists.map((list) => (
+          {
+            playlists.map((list) => (
             <Accordion 
-        
             key={list._id} id='user-list' 
             style={{backgroundColor: store.currentList && store.currentList._id===list._id? '#678983': list.published? '#f7e7b5':'#F0E9D2' , color:'black'}}
             expanded={store.currentList && store.currentList._id === list._id ?(expanded === 'panel' ):false}
             onChange={handleChange('panel',list._id)}
-            
             >
-
               <AccordionSummary
-               style={{display:'flex' , alignItems:'flex-end'}} 
+              style={{display:'flex' , alignItems:'flex-end'}} 
               expandIcon={<KeyboardDoubleArrowDownIcon style={{marginBottom:'1rem', fontSize:'24pt'}}/>}
               aria-controls="panel1bh-content"
               id="panel1bh-header">
                 {list.published ? <PublishedCard key={list._id} List={list} />: <ListCard  key={list._id} List={list} />}
               </AccordionSummary>
-        
               <AccordionDetails>
                     {list.published ? <PublishedArea userName={list.owner} key={list._id} id={list._id}/>: <WorkspaceScreen key={list._id} id={list._id}/>}
               </AccordionDetails>
-
             </Accordion>
             ))
-       }
-    </List>
-    }
+          }
+        </List>
+      }
    
     return (
         <div id="home-screen">

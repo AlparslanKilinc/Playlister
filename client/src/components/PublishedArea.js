@@ -7,18 +7,12 @@ import PublishedToolbar from './PublishedToolbar.js';
 function PublishedArea(props) {
     const { store } = useContext(GlobalStoreContext);
     const {id,userName} = props;
-   
-    useEffect(() => {
-          store.LoadPublishedPlaylists();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     let handleSongSelect = (index,event)=>{
         event.stopPropagation();
         store.setPlay(index);
     }
     
-
     return (
         <div className='workspace'>
             <List 

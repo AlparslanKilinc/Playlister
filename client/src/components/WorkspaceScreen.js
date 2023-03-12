@@ -13,11 +13,6 @@ function WorkspaceScreen(props) {
     const { store } = useContext(GlobalStoreContext);
     const {id} = props;
 
-    useEffect(() => {
-        store.LoadPlaylists();
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-   
     /// Song Editing
     let modalJSX = "";
     if (store.isEditSongModalOpen()) {
@@ -30,8 +25,6 @@ function WorkspaceScreen(props) {
         store.addNewSong();
     }
   
-    
-
     return (
         <div className='workspace'>
         { modalJSX }     

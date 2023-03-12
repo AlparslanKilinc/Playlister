@@ -11,11 +11,6 @@ function PublishedToolbar(props) {
     const { auth } = useContext(AuthContext);
     const {id,userName} = props;
    
-    useEffect(() => {
-        store.LoadPublishedPlaylists();
-        auth.getLoggedIn();
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
     function handleDeleteList(event, id) {
         event.stopPropagation();

@@ -15,11 +15,7 @@ const { store } = useContext(GlobalStoreContext);
 const [expanded, setExpanded] = React.useState(false);
 const {parent}=props
 store.history = useHistory();
-
-useEffect(() => {
-  store.LoadPublishedPlaylists();
-// eslint-disable-next-line react-hooks/exhaustive-deps
-}, [store.search]);
+let ListArea = "";
 
 const handleChange = (panel,id) => (event, isExpanded) => {
   setExpanded(isExpanded ? panel : false);
@@ -28,77 +24,52 @@ const handleChange = (panel,id) => (event, isExpanded) => {
     store.setPublishedList(id);
   }
 };
-
-
-
-let ListArea = "";
-
 if (store.PublishedPlaylists) {
-  // let playlists=[];
   let playlists=store.PublishedPlaylists;
-  /// Search by PlaylistName
   if(store.search==="")playlists=[];
   if(store.search && store.search!==""){
     if(parent==="AllListScreen")playlists= playlists.filter( list => list.name.startsWith(store.search));
     if(parent==="UserScreen") playlists= playlists.filter( list => list.owner.startsWith(store.search));
   }
-
-  //// Sorting
   switch (store.sortMethod) {
     case 'Name':
-      console.log('Sort By Name');
       playlists=store.SortName(playlists);
-    break;
+      break;
     case 'PublishedDate':
       playlists=store.SortPublishedDate(playlists);
-      console.log('Sort By Published');
-    break;
+      break;
     case 'Listens':
       playlists=store.SortMostListens(playlists);
-      console.log('Sort By Listens');
-    break;
+      break;
     case 'Likes':
       playlists=store.SortMostLikes(playlists);
-      console.log('Sort by Likes');
-    break;
+      break;
     case 'Dislikes':
       playlists=store.SortMostDislikes(playlists);
-      console.log('Sort by Dislikes');
-    break;
-    
+      break;
     default:
-      console.log("Sort Method null");
+      break;
   }
-
-  ListArea = 
+ListArea= 
     <List sx={{width: '90%', left: '5%'}}>
-    {
-
-     playlists.map((list,id=0) => (     
+    {playlists.map((list) => (   
     <Accordion 
     style={{backgroundColor: store.currentList && store.currentList._id===list._id? '#678983': list.published? '#f7e7b5':'#F0E9D2' , color:'black'}}
     key={list._id} 
     id='user-list' 
     expanded={store.currentList && store.currentList._id === list._id ? (expanded === 'panel'): false } 
-    onChange={handleChange('panel',list._id)}>
-      <AccordionSummary
-        style={{display:'flex' , alignItems:'flex-end'}} 
-        expandIcon={<KeyboardDoubleArrowDownIcon style={{marginBottom:'1rem', fontSize:'24pt'}} />}
-        aria-controls="panel1bh-content"
-        id="panel1bh-header"
-        >
+    onChange={handleChange('panel',list._id)}
+    >
+    <AccordionSummary style={{display:'flex' , alignItems:'flex-end'}}  
+    expandIcon={<KeyboardDoubleArrowDownIcon style={{marginBottom:'1rem', fontSize:'24pt'}} />} aria-controls="panel1bh-content" id="panel1bh-header">
       {list.published ? <PublishedCard  key={list._id} List={list} selected={false}/>:""}
-      </AccordionSummary>
-      <AccordionDetails>
+    </AccordionSummary>
+    <AccordionDetails>
       {list.published ? <PublishedArea key={list._id} userName={list.owner} id={list._id}/>:""}
-      </AccordionDetails>
+    </AccordionDetails>
     </Accordion>
-            ))
-
-    }
-    </List>
-    }
-
+    ))}
+    </List>}
 return (
   <div className='list-area'>{ListArea}</div>
 )

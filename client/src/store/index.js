@@ -390,6 +390,13 @@ function GlobalStoreContextProvider(props) {
             type:GlobalStoreActionType.SET_SCREEN,
             payload:screen
         });
+        if(screen == "HomeScreen"){
+            store.history.push("/home/");
+        }else if(screen=="AllListScreen"){
+            store.history.push("/public/");
+        }else{
+            store.history.push("/users/");
+        }
     }
     store.setHomeScreen = (screen)=>{
         async function asyncLoadPlaylists() {

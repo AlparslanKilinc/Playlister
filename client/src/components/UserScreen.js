@@ -14,62 +14,52 @@ import { ListArea } from './ListArea';
 import MUIAccessErrorModal from './MUIAccessErrorModal'
 
 const UserScreen = () => {
-    const theme = createTheme({
-        palette: {
-          primary: {
-            main: '#678983',
-            darker: '#1565c0',
-          },
+  const theme = createTheme({
+      palette: {
+        primary: {
+          main: '#678983',
+          darker: '#1565c0',
         },
-      });
-    const { store } = useContext(GlobalStoreContext);
-    const [playerVariant, setPlayerVariant] = useState("contained");
-    const [commentsVariant, setCommentsVariant] = useState("outlined");
-    store.history = useHistory();
-
-    useEffect(() => {
-      store.LoadPublishedPlaylists();
+      },
+    });
+  const { store } = useContext(GlobalStoreContext);
+  const [playerVariant, setPlayerVariant] = useState("contained");
+  const [commentsVariant, setCommentsVariant] = useState("outlined");
+  store.history = useHistory();
+  useEffect(() => {
+    store.LoadPublishedPlaylists();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [store.search]);
+  },[store.search]);
+  let togglePlayer = ()=>{
+    setPlayerVariant("contained");
+    setCommentsVariant("outlined");       
+  }
+  let toggleComments =()=>{
+    setPlayerVariant("outlined");
+    setCommentsVariant("contained");
+  }
+  return (
+    <div id="home-screen">
+      <AppTools published={true}/>
+        <div className="home-main">
+          <ListArea parent={"UserScreen"}/>
+          <div className='player-comments'>
+              <ButtonGroup className='buttonGroup'>
+              <ThemeProvider theme={theme}>
+                <Button onClick={togglePlayer} color="primary"  variant={playerVariant} >Player</Button>
+                <Button onClick={toggleComments} color="primary" variant={commentsVariant}>Comments</Button>
+              </ThemeProvider>
+              </ButtonGroup>
+              <VideoPlayer selection={playerVariant}/>
+              <Comments selection={commentsVariant}/>
+          </div> 
+        </div>
 
-
-    let togglePlayer = ()=>{
-            setPlayerVariant("contained");
-            setCommentsVariant("outlined");
-           
-    }
-    let toggleComments =()=>{
-            setPlayerVariant("outlined");
-            setCommentsVariant("contained");
-    }
-
-
-    return (
-        <div id="home-screen">
-            <AppTools published={true}/>
-            <div className="home-main">
-                <ListArea parent={"UserScreen"}/>
-                <div className='player-comments'>
-                <ButtonGroup className='buttonGroup'>
-                <ThemeProvider theme={theme}>
-                    <Button onClick={togglePlayer} color="primary"  variant={playerVariant} >Player</Button>
-                    <Button onClick={toggleComments} color="primary" variant={commentsVariant}>Comments</Button>
-                    </ThemeProvider>
-                </ButtonGroup>
-                <VideoPlayer selection={playerVariant}/>
-                <Comments selection={commentsVariant}/>
-                </div>
-                
-            </div>
-
-            <div className="home-footer">
-                <Typography style={{fontFamily: "Gummy"}} variant="h2"> {store.search} Lists</Typography>
-            </div>
-            <MUIDeleteModal/>
-            <MUIAccessErrorModal/>
-        </div>)
+        <div className="home-footer">
+          <Typography style={{fontFamily: "Gummy"}} variant="h2"> {store.search} Lists</Typography>
+        </div>
+        <MUIDeleteModal/>
+        <MUIAccessErrorModal/>
+    </div>)
 }
-
-
-
 export default UserScreen;

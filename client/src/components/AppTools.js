@@ -1,5 +1,4 @@
-import React, { useContext, useEffect,useState } from 'react'
-import { styled, alpha } from '@mui/material/styles';
+import React, { useContext, useEffect,useState,} from 'react'
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -11,7 +10,7 @@ import TextField from '@mui/material/TextField';
 import { IconButton } from '@mui/material';
 import { GlobalStoreContext } from '../store'
 import AuthContext from '../auth'
-
+import { useHistory } from 'react-router-dom'
 
 
 export default function AppTools(props) {
@@ -20,66 +19,50 @@ export default function AppTools(props) {
   const {published}= props;
   store.history = useHistory();
 
-  useEffect(() => {
-    
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[store.currentScreen]);
- 
+const handleSearch = (event) => {
+  if (event.key === 'Enter') {
+    store.setSearch(event.target.value);
+    }
+}
 
-  const handleSearch = (event) => {
-    if (event.key === 'Enter') {
-      store.setSearch(event.target.value);
-      }
-  }
-
-  let handleAllListScreen = ()=>{
-    store.setScreen('AllListScreen');
-    store.history.push("/public/");
-  }
-
-  let handleHomeScreen = ()=>{
-    store.setHomeScreen('HomeScreen');
+let loadScreen = (screen) =>{
+  console.log(store.history.location);
+  if(screen == "home"){
     store.history.push("/home/");
-  }
-
-  let handleUserScreen = ()=>{
-    store.setScreen('UserScreen');
+  }else if(screen=="public"){
+    store.history.push("/public/");
+    
+  }else if(screen=="users"){
     store.history.push("/users/");
   }
-
-
-
-  return (
-    <Box>
-      <AppBar  position="static">
-        <Toolbar id='AppTools' >
-        <div className='tool-icons'>
-        <IconButton  onClick={handleHomeScreen}  color={store.currentScreen==="HomeScreen"? 'success' :'default'}  disabled={!auth.loggedIn} aria-label="home">
+}
+return (
+  <Box>
+    <AppBar  position="static">
+    <Toolbar id='AppTools' >
+      <div className='tool-icons'>
+        <IconButton  onClick={()=>{loadScreen("home")}}  color={store.history.location.pathname==="/home/"? 'success' :'default'}  disabled={!auth.loggedIn} aria-label="home">
           <HomeIcon/>
         </IconButton>
-
-        <IconButton onClick={handleAllListScreen} color={store.currentScreen==="AllListScreen"? 'success' :'default'}   aria-label="all-list">
+        <IconButton onClick={()=>{loadScreen("public")}} color={store.history.location.pathname==="/public/"? 'success' :'default'}   aria-label="all-list">
           <Groups3Icon/>
         </IconButton>
-
-        <IconButton  onClick={handleUserScreen}   color={store.currentScreen==="UserScreen"? 'success' :'default'} aria-label="users">
+        <IconButton  onClick={()=>{loadScreen("users")}}   color={store.history.location.pathname==="/users/"? 'success' :'default'} aria-label="users">
           <PersonIcon/>
         </IconButton>
-        </div>
-
-       
-            <TextField      margin='normal'
-                            id="search"
-                            label="Search"
-                            name="search"
-                            defaultValue={""}
-                            color={'success'}
-                            onKeyPress= {handleSearch}
-                        />
-         
-          <StyledMenu published={published}/>
-        </Toolbar>
-      </AppBar>
-    </Box>
+      </div>
+      <TextField
+      margin='normal'
+      id="search"
+      label="Search"
+      name="search"
+      defaultValue={""}
+      color={'success'}
+      onKeyPress= {handleSearch}
+      /> 
+      <StyledMenu published={published}/>
+    </Toolbar>
+    </AppBar>
+  </Box>
   );
 }

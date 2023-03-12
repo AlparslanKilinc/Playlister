@@ -3,7 +3,6 @@ import TextField from '@mui/material/TextField';
 import { GlobalStoreContext } from '../store'
 import AuthContext from '../auth'
 import Avatar from '@mui/material/Avatar';
-import { deepOrange, deepPurple } from '@mui/material/colors';
 
 export const Comments = (props) => {
   const { store } = useContext(GlobalStoreContext);

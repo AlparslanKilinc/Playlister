@@ -52,8 +52,8 @@ export default function AppBanner() {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleMenuClose}><Link onClick={()=>{store.setScreen("HomeScreen")}} to='/login/'>Login</Link></MenuItem>
-            <MenuItem onClick={handleMenuClose}><Link onClick={()=>{store.setScreen("HomeScreen")}} to='/register/'>Create New Account</Link></MenuItem>
+            <MenuItem onClick={handleMenuClose}><Link to='/login/'>Login</Link></MenuItem>
+            <MenuItem onClick={handleMenuClose}><Link to='/register/'>Create New Account</Link></MenuItem>
         </Menu>
     );
     const loggedInMenu = 
@@ -91,7 +91,7 @@ export default function AppBanner() {
         <Box style={{ fontFamily: "Gummy"}}>
             <AppBar style={{backgroundColor:"#678983" , fontFamily: "Gummy"}} position="static">
                 <Toolbar>
-                <Link style={{ textDecoration: 'none'}} to={ auth.loggedIn? '/Playlister/':"/"}>
+                <Link style={{ textDecoration: 'none'}} to={ auth.loggedIn? '/home/':"/"}>
                         <Box className='logo'>
                             <YouTubeIcon   sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
                             <Typography

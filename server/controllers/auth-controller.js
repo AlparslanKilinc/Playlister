@@ -149,7 +149,7 @@ registerUser = async (req, res) => {
         const savedUser = await newUser.save();
         console.log("new user saved: " + savedUser._id);
         // LOGIN THE USER
-        const token = auth.signToken(existingUser._id);
+        const token = auth.signToken(savedUser._id);
         console.log(token);
         res.cookie("token", token, {
             httpOnly: true,

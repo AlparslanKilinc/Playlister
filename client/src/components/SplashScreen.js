@@ -13,15 +13,12 @@ export default function SplashScreen() {
    
 
     function handleGuest(){
-        store.setScreen("AllListScreen");
         store.history.push("/public/");
     }
     function handleLogin(){
-        store.setScreen("HomeScreen");
         store.history.push("/login/");
     }
     function handleRegister(){
-        store.setScreen("HomeScreen");
         store.history.push("/register/");
     }
 
