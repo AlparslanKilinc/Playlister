@@ -115,7 +115,7 @@ function AuthContextProvider(props) {
                         user: response.data.user
                     }
                 })
-                history.push("/Playlister/");
+                history.push("/home/");
             }
         }catch(error){
             authReducer({
@@ -142,7 +142,7 @@ function AuthContextProvider(props) {
             })
             /// Go to Playlister
            
-            history.push("/Playlister/");
+            history.push("/home/");
         }
         }catch(error){
             authReducer({

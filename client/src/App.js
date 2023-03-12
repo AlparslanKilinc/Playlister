@@ -23,7 +23,9 @@ const App = () => {
                     <AppBanner />
                     <Switch>
                         <Route path="/" exact component={SplashScreen} />
-                        <Route path="/Playlister/" exact component={SuperScreen}/>
+                        <Route path="/home/" exact component={HomeScreen}/>
+                        <Route path="/public/" exact component={AllListScreen}/>
+                        <Route path="/users/" exact component={UserScreen}/>
                         <Route path="/login/" exact component={LoginScreen} />
                         <Route path="/register/" exact component={RegisterScreen} />
                     </Switch>

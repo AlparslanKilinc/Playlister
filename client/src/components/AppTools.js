@@ -18,6 +18,7 @@ export default function AppTools(props) {
   const { store } = useContext(GlobalStoreContext);
   const { auth } = useContext(AuthContext);
   const {published}= props;
+  store.history = useHistory();
 
   useEffect(() => {
     
@@ -31,17 +32,19 @@ export default function AppTools(props) {
       }
   }
 
-
   let handleAllListScreen = ()=>{
     store.setScreen('AllListScreen');
+    store.history.push("/public/");
   }
 
   let handleHomeScreen = ()=>{
     store.setHomeScreen('HomeScreen');
+    store.history.push("/home/");
   }
 
   let handleUserScreen = ()=>{
     store.setScreen('UserScreen');
+    store.history.push("/users/");
   }
 
 
