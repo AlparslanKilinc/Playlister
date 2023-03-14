@@ -66,10 +66,6 @@ export default function LoginScreen() {
                         >
                             Sign In
                         </Button>
-                        
-                        <Link style={{alignSelf:'flex-end'}} to='/register/' variant="body2">
-                        {"Don't have an account? Sign Up"}
-                        </Link>
                     </Box>
             </Box>
         </>

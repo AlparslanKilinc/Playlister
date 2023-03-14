@@ -91,7 +91,7 @@ export default function AppBanner() {
         <Box style={{ fontFamily: "Gummy"}}>
             <AppBar style={{backgroundColor:"#678983" , fontFamily: "Gummy"}} position="static">
                 <Toolbar>
-                <Link style={{ textDecoration: 'none'}} to={ auth.loggedIn? '/home/':"/"}>
+                <Link style={{ textDecoration: 'none'}} to={ auth.loggedIn? '/home/':'/'}>
                         <Box className='logo'>
                             <YouTubeIcon   sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
                             <Typography

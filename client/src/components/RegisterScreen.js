@@ -1,6 +1,5 @@
 import { useContext } from 'react';
 import AuthContext from '../auth'
-import Copyright from './Copyright'
 import MUIRegisterErrorModal from './MUIRegisterErrorModal';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
@@ -123,11 +122,6 @@ export default function RegisterScreen() {
                             Sign Up
                         </Button>
                         <Grid container justifyContent="flex-end">
-                            <Grid item>
-                                <Link to='/login/' variant="body2">
-                                    Already have an account? Sign in
-                                </Link>
-                            </Grid>
                         </Grid>
                     </Box>
                 </Box>
