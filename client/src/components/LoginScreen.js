@@ -11,7 +11,6 @@ import Typography from '@mui/material/Typography';
 
 export default function LoginScreen() {
     const { auth } = useContext(AuthContext);
-
     const handleSubmit = (event) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
@@ -19,9 +18,7 @@ export default function LoginScreen() {
             formData.get('email'),
             formData.get('password')
         );
-
     };
-
     return (
         <>
         <MUILoginErrorModal/>
@@ -37,11 +34,9 @@ export default function LoginScreen() {
                     <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                         <LockOutlinedIcon />
                     </Avatar>
-
                     <Typography component="h1" variant="h5">
                         Sign in
                     </Typography>
-
                     <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
                         <TextField
                             margin="normal"
@@ -72,7 +67,7 @@ export default function LoginScreen() {
                             Sign In
                         </Button>
                         
-                        <Link style={{alignSelf:'flex-end'}} href="/register/" variant="body2">
+                        <Link style={{alignSelf:'flex-end'}} to="/register/" variant="body2">
                         {"Don't have an account? Sign Up"}
                         </Link>
                     </Box>
