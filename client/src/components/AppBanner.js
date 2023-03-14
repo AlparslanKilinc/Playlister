@@ -88,24 +88,15 @@ export default function AppBanner() {
     }
 
     return (
-        <Box style={{ fontFamily: "Gummy"}}>
-            <AppBar style={{backgroundColor:"#678983" , fontFamily: "Gummy"}} position="static">
+        <Box>
+            <AppBar style={{backgroundColor:"#678983"}} position="static">
                 <Toolbar>
                 <Link style={{ textDecoration: 'none'}} to={ auth.loggedIn? '/home/':'/'}>
                         <Box className='logo'>
                             <YouTubeIcon   sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-                            <Typography
-                        style={{ fontFamily: "Gummy"}}                      
-                        variant="h6"
-                        noWrap
-                        component="div"
-                        sx={{ display: { xs: 'none', sm: 'block' } }}                        
-                    >
-                            Playlister
-                        </Typography>
-                    </Box>
+                            <Typography  variant="h6" noWrap component="div" sx={{ display: { xs: 'none', sm: 'block' }}}>Playlister</Typography>
+                        </Box>
                 </Link>
-                 
                     <Box sx={{ flexGrow: 1 }}></Box>
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                         <IconButton
@@ -117,7 +108,7 @@ export default function AppBanner() {
                             onClick={handleProfileMenuOpen}
                             color="inherit"
                         >
-                            { getAccountMenu(auth.loggedIn) }
+                            {getAccountMenu(auth.loggedIn)}
                         </IconButton>
                     </Box>
                 </Toolbar>

@@ -7,12 +7,10 @@ import PublishedToolbar from './PublishedToolbar.js';
 function PublishedArea(props) {
     const { store } = useContext(GlobalStoreContext);
     const {id,userName} = props;
-
     let handleSongSelect = (index,event)=>{
         event.stopPropagation();
         store.setPlay(index);
     }
-    
     return (
         <div className='workspace'>
             <List 
@@ -34,5 +32,4 @@ function PublishedArea(props) {
          </div>
     )
 }
-
 export default  PublishedArea;

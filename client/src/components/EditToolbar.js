@@ -8,7 +8,6 @@ import PublishIcon from '@mui/icons-material/Publish';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 
-
 function EditToolbar(props) {
     const { store } = useContext(GlobalStoreContext);
     const {id} = props;

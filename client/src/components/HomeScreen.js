@@ -49,8 +49,6 @@ const HomeScreen = () => {
       store.LoadPlaylists();
       // eslint-disable-next-line react-hooks/exhaustive-deps
     },[store.search,store.currentList? store.currentList._id:'']);
-
-
     /// Accordion 
     const handleChange = (panel,id) => (event, isExpanded) => {
       setExpanded(isExpanded ? panel : false);
@@ -71,11 +69,8 @@ const HomeScreen = () => {
       setPlayerVariant("outlined");
       setCommentsVariant("contained");
     }
-
     //// Editing Functions 
-        
     let Lists = "";
-  
       if (store.playlists) {
         /// Search by PlaylistName
         let playlists=store.playlists;
@@ -96,8 +91,6 @@ const HomeScreen = () => {
             default:
               break;
         }
- 
-
         Lists = 
         <List  sx={{width: '90%', left: '5%'}}>
           {
@@ -128,11 +121,9 @@ const HomeScreen = () => {
         <div id="home-screen">
             <AppTools published={false}/>
             <div className="home-main">
-              
                 <div id="scroll-list" className='list-area'>
                     {Lists}
                 </div>
-
                 <div className='player-comments'>
                 <ButtonGroup className='buttonGroup'>
                 <ThemeProvider theme={theme}>
@@ -145,8 +136,6 @@ const HomeScreen = () => {
                 </div>
                 
             </div>
-
-
             <div style={{marginTop:'4rem'}} className="home-footer">
             <Fab 
                 aria-label="add"
@@ -155,15 +144,9 @@ const HomeScreen = () => {
             >
                 <AddIcon />
             </Fab>
-                <Typography style={{fontFamily: "Gummy", marginLeft:"1rem"}} variant="h2">Your Lists</Typography>
             </div>
-
-
             <MUIDeleteModal/>
             <MUIAccessErrorModal/>
         </div>)
 }
-
-
-
 export default HomeScreen;

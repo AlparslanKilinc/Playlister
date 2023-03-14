@@ -118,19 +118,19 @@ function onPlayerStateChange(event) {
     if(store.currentList.songs){
     videoInfo = 
     <CardContent className='video-info'>
-    <Typography  component="div" style={{justifyContent:'center',fontFamily: "Gummy"}}variant="h4">
+    <Typography  component="div" style={{justifyContent:'center'}}variant="h4">
      Now Playing
     </Typography>
-    <Typography style={{fontFamily: "Gummy"}} component="div" variant="h6">
+    <Typography component="div" variant="h6">
       Playlist: {store.currentList.name}
     </Typography>
-    <Typography style={{fontFamily: "Gummy"}} component="div" variant="h6">
+    <Typography  component="div" variant="h6">
       Song Number:{store.playIndex+1}
     </Typography>
-    <Typography style={{fontFamily: "Gummy"}} component="div" variant="h6">
+    <Typography  component="div" variant="h6">
       Title: {store.currentList.songs[store.playIndex] ? store.currentList.songs[store.playIndex].title : ''}
     </Typography>
-    <Typography style={{fontFamily: "Gummy"}} component="div" variant="h6">
+    <Typography  component="div" variant="h6">
       Artist: {store.currentList.songs[store.playIndex] ? store.currentList.songs[store.playIndex].artist: '' }
     </Typography>
     </CardContent> ; 

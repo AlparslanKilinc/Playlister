@@ -64,5 +64,4 @@ function PublishedCard(props) {
         </ListItem>
     );
 }
-
 export default PublishedCard;

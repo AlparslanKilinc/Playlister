@@ -13,13 +13,11 @@ export const Comments = (props) => {
 //     store.scrollUp('comments');
 //   // eslint-disable-next-line react-hooks/exhaustive-deps
 // }, [store.currentList?store.currentList.comments.length: '']);
-
   const handleAddComment = (event) => {
     if (event.key === 'Enter') {
       if(event.target.value!=="") store.AddComment(event.target.value);
       }
   }
-
   let comments = ""
   if(store.currentList){
      comments= store.currentList.comments.map((comment,index=0)=>(
@@ -33,7 +31,7 @@ export const Comments = (props) => {
       ))
   }
   return (
-    <div  className='comments' style={{ opacity: selection === "contained" ? '1' :'0' , pointerEvents: selection === "contained" ? 'auto' :'none' }}  >
+    <div  className='comments' style={{opacity: selection === "contained" ? '1' :'0' , pointerEvents: selection === "contained" ? 'auto' :'none' }}>
         <div id="comments" className='comments-area'>
                {comments}
         </div>

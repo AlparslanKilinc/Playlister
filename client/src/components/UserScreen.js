@@ -56,7 +56,7 @@ const UserScreen = () => {
         </div>
 
         <div className="home-footer">
-          <Typography style={{fontFamily: "Gummy"}} variant="h2"> {store.search} Lists</Typography>
+          <Typography variant="h2"> {store.search} Lists</Typography>
         </div>
         <MUIDeleteModal/>
         <MUIAccessErrorModal/>

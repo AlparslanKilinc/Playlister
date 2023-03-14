@@ -5,13 +5,10 @@
   --second-color:#f7e7b5;
   --bounceEasing: cubic-bezier(0.51, 0.92, 0.24, 1.15);
 }
-@font-face {
-  font-family:"Gummy";
-  src: url(./Gummy\ Bears.ttf);
-}
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap');
 
 body,html{
-  font-family: "Gummy", Times, serif;
+  font-family: 'Lato', sans-serif;
   min-height: 100vh;
   max-height: 100vh;
 }
