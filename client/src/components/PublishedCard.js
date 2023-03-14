@@ -17,7 +17,6 @@ function PublishedCard(props) {
     function handleLike(event){
         event.stopPropagation();
         event.preventDefault();
-        console.log("like");
         store.AddLike(List._id);
     }
 
@@ -25,8 +24,6 @@ function PublishedCard(props) {
         event.stopPropagation();
         event.preventDefault();
         store.AddDislike(List._id);
-        console.log("dislike");
-
     }
   
     return (

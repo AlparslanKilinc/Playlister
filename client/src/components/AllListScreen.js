@@ -51,7 +51,6 @@ return (
     <div className="home-main">
 
          <ListArea parent={"AllListScreen"}/>
-
           <div className='player-comments'>
             <ButtonGroup className='buttonGroup'>
               <ThemeProvider theme={theme}>
@@ -65,7 +64,7 @@ return (
            
     </div>
   <div className="home-footer">
-    <Typography style={{fontFamily: "Gummy"}} variant="h2"> {store.search}  Playlists</Typography>
+    <Typography style={{fontFamily: "Gummy"}} variant="h2"> {store.search} Playlists</Typography>
   </div>
   <MUIDeleteModal/>
   <MUIAccessErrorModal/>

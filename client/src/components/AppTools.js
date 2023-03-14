@@ -26,7 +26,6 @@ const handleSearch = (event) => {
 }
 
 let loadScreen = (screen) =>{
-  console.log(store.history.location);
   if(screen == "home"){
     store.history.push("/home/");
   }else if(screen=="public"){

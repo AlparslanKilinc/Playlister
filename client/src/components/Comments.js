@@ -9,12 +9,10 @@ export const Comments = (props) => {
   const { auth } = useContext(AuthContext);
   const {selection} = props;
 
-  useEffect(() => {
-    store.scrollUp('comments');
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-}, [store.currentList?store.currentList.comments.length: '']);
-
- 
+//   useEffect(() => {
+//     store.scrollUp('comments');
+//   // eslint-disable-next-line react-hooks/exhaustive-deps
+// }, [store.currentList?store.currentList.comments.length: '']);
 
   const handleAddComment = (event) => {
     if (event.key === 'Enter') {
@@ -22,7 +20,6 @@ export const Comments = (props) => {
       }
   }
 
-  
   let comments = ""
   if(store.currentList){
      comments= store.currentList.comments.map((comment,index=0)=>(
@@ -35,7 +32,6 @@ export const Comments = (props) => {
       </div>
       ))
   }
-  console.log(selection);
   return (
     <div  className='comments' style={{ opacity: selection === "contained" ? '1' :'0' , pointerEvents: selection === "contained" ? 'auto' :'none' }}  >
         <div id="comments" className='comments-area'>

@@ -36,8 +36,6 @@ function SongCard(props) {
         let targetIndex = index;
         let sourceIndex = Number(event.dataTransfer.getData("song"));
         setDraggedTo(false);
-        console.log(draggedTo);
-
         // UPDATE THE LIST
         store.addMoveSongTransaction(sourceIndex, targetIndex);
     }
