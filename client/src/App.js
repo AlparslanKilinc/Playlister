@@ -1,23 +1,22 @@
 import './App.css';
 import { React } from 'react'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { HashRouter, Route, Switch } from 'react-router-dom'
 import { AuthContextProvider } from './auth';
 import { GlobalStoreContextProvider } from './store'
+
 import {
     AppBanner,
-    HomeWrapper,
     LoginScreen,
     RegisterScreen,
     AllListScreen,
     SplashScreen,
     HomeScreen,
     UserScreen,
-    SuperScreen,
 } from './components'
 
 const App = () => {   
     return (
-        <BrowserRouter>
+        <HashRouter>
             <AuthContextProvider>
                 <GlobalStoreContextProvider>              
                     <AppBanner />
@@ -31,7 +30,7 @@ const App = () => {
                     </Switch>
                 </GlobalStoreContextProvider>
             </AuthContextProvider>
-        </BrowserRouter>
+        </HashRouter>
     )
 }
 
