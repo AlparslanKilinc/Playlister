@@ -28,7 +28,7 @@ const playerOptions = {
       mute:0,
       controls:0,
       host: 'https://www.youtube.com',
-      origin: 'https://localhost:3000',
+      origin: 'https://playlister.onrender.com',
   },
   
 };
