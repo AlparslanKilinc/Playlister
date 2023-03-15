@@ -32,19 +32,16 @@ store.history = useHistory();
 useEffect(() => {
   store.LoadPublishedPlaylists();
 // eslint-disable-next-line react-hooks/exhaustive-deps
-}, [store.search]);
-
+},[store.search]);
 
 let togglePlayer = ()=>{
   setPlayerVariant("contained");
   setCommentsVariant("outlined");      
 }
-
 let toggleComments =()=>{
   setPlayerVariant("outlined");
   setCommentsVariant("contained");
 }
-
 return (
   <div id="home-screen">
     <AppTools published={true}/>

@@ -22,14 +22,12 @@ const playerOptions = {
   width:'100%',
   borderRadius:'10px',
   playerVars: {
-      mute:0,
-      controls:0,
-      host: 'https://www.youtube.com',
-      origin: 'https://playlister.onrender.com',
+    mute:0,
+    controls:0,
+    host: 'https://www.youtube.com',
+    origin: 'https://localhost:3000',
   },
-  
 };
-
 useEffect( ()=>{
   if(player&& player.h)loadCurrentSong(player);
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -48,7 +46,7 @@ let onPlayerReady=(event)=>{
 
 let loadCurrentSong = (player)=>{
   if(store.currentList &&store.currentList.songs[store.playIndex]){
-      player.loadVideoById(store.currentList.songs[store.playIndex]? store.currentList.songs[store.playIndex].youTubeId: '');
+      player.cueVideoById(store.currentList.songs[store.playIndex]? store.currentList.songs[store.playIndex].youTubeId: '');
     }  
 }
 
@@ -95,7 +93,7 @@ let onPlayerStateChange= (event)=>{
     /// Video buffering
   } else if (playerStatus === 5) {
     /// Video cued
-    event.target.playVideo();
+    if(store.playIndex!==0)play();
   }
 }
 

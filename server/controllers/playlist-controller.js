@@ -138,7 +138,7 @@ getPlaylists = async (req, res) => {
     }
     await User.findOne({ _id: req.userId }, (err, user) => {
         async function asyncFindList(email) {
-            await Playlist.find({ ownerEmail: email }, (err, playlists) => {
+            await Playlist.find({ ownerEmail: email}, (err, playlists) => {
                 if (err) {
                     return res.status(400).json({ success: false, error: err })
                 }
@@ -322,7 +322,7 @@ updatePlaylistById = async (req, res) => {
 ///// Published Methods
 getPublishedPlaylists = async (req, res) => {
     async function asyncFindLists() {
-        await Playlist.find({ published: true }, (err, playlists) => {
+        await Playlist.find({ published: true}, (err, playlists) => {
             if (err) {
                 return res.status(400).json({ success: false, error: err })
             }
