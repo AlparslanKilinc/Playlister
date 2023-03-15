@@ -11,16 +11,13 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import SkipNextIcon from '@mui/icons-material/SkipNext';
 import PauseIcon from '@mui/icons-material/Pause';
 
-
 export const VideoPlayer = (props) => {
-
 const { store } = useContext(GlobalStoreContext);
 const theme = useTheme();
 const [player,setPlayer]=useState(null);
 const [list,setList]=useState(null);
 const {selection} = props;
 const playerOptions = {
-
   height:'100%',
   width:'100%',
   borderRadius:'10px',
@@ -37,7 +34,6 @@ useEffect( ()=>{
   if(player&& player.h)loadCurrentSong(player);
   // eslint-disable-next-line react-hooks/exhaustive-deps
 },[store.currentList , store.playIndex])
-
 
 let addListen = ()=>{
   if(store.currentList !==list && store.currentList.published){
@@ -72,7 +68,6 @@ let prev =()=>{
   }else{
     store.setPlay(store.playIndex-1);
   }
-  
 }
 
 let next =()=>{
@@ -83,39 +78,36 @@ let next =()=>{
   }
 }
 
-function onPlayerStateChange(event) {
+let onPlayerStateChange= (event)=>{
   let playerStatus = event.data;
   if (playerStatus === -1) {
-      console.log("-1 Video unstarted");
-  } else if (playerStatus === 0) {
-      next();
-      console.log("0 Video ended");
-  } else if (playerStatus === 1) {
+    /// Video Not started 
+  }else if (playerStatus === 0) {
+    /// Video ended
+    next();
+  }else if (playerStatus === 1) {
+    /// Video played
     addListen();
     setList(store.currentList);
-      console.log("1 Video played");
   } else if (playerStatus === 2) {
-      console.log("2 Video paused");
+    /// Video paused
   } else if (playerStatus === 3) {
-      console.log("3 Video buffering");
+    /// Video buffering
   } else if (playerStatus === 5) {
-      console.log("5 Video cued");
-      event.target.playVideo();
+    /// Video cued
+    event.target.playVideo();
   }
 }
 
-
-
-/// Null checks 
-  let videoInfo = 
+let videoInfo= 
   <CardContent className='video-info'>
-  <Typography style={{fontFamily: "Gummy"}} component="div" variant="h4">
-    Now Playing
-  </Typography>
-  </CardContent> ; 
+    <Typography component="div" variant="h4">
+      Now Playing
+    </Typography>
+  </CardContent>; 
 
-  if(store.currentList){
-    if(store.currentList.songs){
+if(store.currentList){
+  if(store.currentList.songs){
     videoInfo = 
     <CardContent className='video-info'>
     <Typography  component="div" style={{justifyContent:'center'}}variant="h4">
@@ -135,11 +127,9 @@ function onPlayerStateChange(event) {
     </Typography>
     </CardContent> ; 
     }
-  }
-  
-  return (
+}
+return(
     <div style={{ opacity: selection === "contained" ? '1' :'0' , pointerEvents: selection === "contained" ? 'auto' :'none' }} className='video-player'>
-
           { store.currentList? 
           <YouTube
           disabled={selection !== "contained"}
@@ -151,31 +141,23 @@ function onPlayerStateChange(event) {
            />
           : <Box className='video-area' />
           }
-
-
-
-        <div  className='video-actions'>
+      <div  className='video-actions'>
               {videoInfo}
               <Box className='video-buttons'>
-
                 <IconButton  onClick={prev} aria-label="previous">
                   {theme.direction === 'rtl' ? <SkipNextIcon /> : <SkipPreviousIcon />}
                 </IconButton>
-
                 <IconButton onClick={pause} aria-label="play">
                   <PauseIcon sx={{ height: 38, width: 38 }} />
                 </IconButton>
-
                 <IconButton onClick={play} aria-label="play">
                   <PlayArrowIcon sx={{ height: 38, width: 38 }} />
                 </IconButton>
-
                 <IconButton onClick={next} aria-label="next">
                   {theme.direction === 'rtl' ? <SkipPreviousIcon /> : <SkipNextIcon />}
                 </IconButton>
               </Box>
-          </div>
-
+      </div>
     </div>
   )
 }
