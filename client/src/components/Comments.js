@@ -9,10 +9,10 @@ export const Comments = (props) => {
   const { auth } = useContext(AuthContext);
   const {selection} = props;
 
-//   useEffect(() => {
-//     store.scrollUp('comments');
-//   // eslint-disable-next-line react-hooks/exhaustive-deps
-// }, [store.currentList?store.currentList.comments.length: '']);
+  useEffect(() => {
+    store.scrollUp('comments');
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [store.currentList?store.currentList.comments.length: '']);
   const handleAddComment = (event) => {
     if (event.key === 'Enter') {
       if(event.target.value!=="") store.AddComment(event.target.value);

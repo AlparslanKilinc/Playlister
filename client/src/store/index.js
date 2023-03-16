@@ -48,8 +48,8 @@ function GlobalStoreContextProvider(props) {
         listIdMarkedForDeletion: null,
         listMarkedForDeletion: null,
         message:"",
-        search:null,
-        sortMethod:null,
+        search:"",
+        sortMethod:"",
         playIndex:0,
     });
     const history = useHistory();
@@ -88,7 +88,7 @@ function GlobalStoreContextProvider(props) {
                     listIdMarkedForDeletion: null,
                     listMarkedForDeletion: null,
                     message:store.message,
-                    search:null,
+                    search:store.search,
                     sortMethod:store.sortMethod,
                     playIndex:store.playIndex,
                 })
@@ -331,7 +331,7 @@ function GlobalStoreContextProvider(props) {
                     if (response.data.success) {
                         let newCurrentList=response.data.list;
                         async function getPlaylists() {
-                            response = await api.getPlaylists();
+                            response = await api.getPlaylists(store.sortMethod,store.search);
                             if (response.data.success) {
                                 let NewPlaylists = response.data.playlists;
                                 storeReducer({
@@ -408,7 +408,7 @@ function GlobalStoreContextProvider(props) {
     }
     store.LoadPlaylists = function () {
         async function asyncLoadPlaylists() {
-            const response = await api.getPlaylists();
+            const response = await api.getPlaylists(store.sortMethod,store.search);
             if (response.data.success) {
                 let playlists = response.data.playlists;
                 storeReducer({
@@ -422,9 +422,18 @@ function GlobalStoreContextProvider(props) {
         }
         asyncLoadPlaylists();
     }
+
     store.LoadPublishedPlaylists = function () {
         async function asyncLoadPublishedPlaylists() {
-            const response = await api.getPublishedPlaylists();
+            let search_type="";
+            if(history.location.pathname==="/public/"){
+                search_type= "name";
+            }else if(history.location.pathname==="/users/") {
+                search_type= "owner";
+            }else{
+                console.log("error");
+            }
+            const response = await api.getPublishedPlaylists(store.sortMethod,store.search,search_type);
             if (response.data.success) {
                 let playlists = response.data.playlists;
                 storeReducer({
@@ -505,7 +514,6 @@ function GlobalStoreContextProvider(props) {
                     else{
                         store.LoadPublishedPlaylists();
                     }
-                    
                 }
             }
         }
@@ -539,7 +547,6 @@ function GlobalStoreContextProvider(props) {
                         type: GlobalStoreActionType.SET_CURRENT_LIST,
                         payload: playlist
                     });
-                  
                 }
             }
         }
@@ -639,27 +646,20 @@ function GlobalStoreContextProvider(props) {
         return store.currentModal === CurrentModal.ACCESS_ERROR;
     }
 
-    store.getplaylistsize = function() {
+    store.get_playlist_size = function() {
         return store.currentList.songs.length;
     }
     store.addNewSong = function() {
-        let index = this.getplaylistsize();
-        this.addCreateSongTransaction(index, "Untitled", "?", "dQw4w9WgXcQ");
+        let index = this.get_playlist_size();
+        this.addCreateSongTransaction(index, "Untitled", "?", "");
     }
-    // THIS FUNCTION CREATES A NEW SONG IN THE CURRENT LIST
-    // USING THE PROVIDED DATA AND PUTS THIS SONG AT INDEX
     store.createSong = function(index, song) {
         let list = store.currentList;      
         list.songs.splice(index, 0, song);
-        // NOW MAKE IT OFFICIAL
         store.updateCurrentList();
     }
-    // THIS FUNCTION MOVES A SONG IN THE CURRENT LIST FROM
-    // start TO end AND ADJUSTS ALL OTHER ITEMS ACCORDINGLY
     store.moveSong = function(start, end) {
         let list = store.currentList;
-
-        // WE NEED TO UPDATE THE STATE FOR THE APP
         if (start < end) {
             let temp = list.songs[start];
             for (let i = start; i < end; i++) {
@@ -674,35 +674,26 @@ function GlobalStoreContextProvider(props) {
             }
             list.songs[end] = temp;
         }
-        // NOW MAKE IT OFFICIAL
         store.updateCurrentList();
     }
-    // THIS FUNCTION REMOVES THE SONG AT THE index LOCATION
-    // FROM THE CURRENT LIST
     store.removeSong = function(index) {
         let list = store.currentList;      
         list.songs.splice(index, 1); 
-        // NOW MAKE IT OFFICIAL
         store.updateCurrentList();
     }
-    // THIS FUNCTION UPDATES THE TEXT IN THE ITEM AT index TO text
     store.updateSong = function(index, songData) {
         let list = store.currentList;
         let song = list.songs[index];
         song.title = songData.title;
         song.artist = songData.artist;
         song.youTubeId = songData.youTubeId;
-        // NOW MAKE IT OFFICIAL
         store.updateCurrentList();
     }
     store.addNewSong = () => {
-        let playlistsize = store.getplaylistsize();
-        store.addCreateSongTransaction(
-            playlistsize, "Untitled", "?", "dQw4w9WgXcQ");
+        let playlist_size = store.get_playlist_size();
+        store.addCreateSongTransaction(playlist_size, "Untitled", "?", "");
     }
-    // THIS FUNCTION ADDS A CreateSong_Transaction TO THE TRANSACTION STACK
     store.addCreateSongTransaction = (index, title, artist, youTubeId) => {
-        // ADD A SONG ITEM AND ITS NUMBER
         let song = {
             title: title,
             artist: artist,
@@ -715,7 +706,6 @@ function GlobalStoreContextProvider(props) {
         let transaction = new MoveSong_Transaction(store, start, end);
         tps.addTransaction(transaction);
     }
-    // THIS FUNCTION ADDS A RemoveSong_Transaction TO THE TRANSACTION STACK
     store.addRemoveSongTransaction = () => {
         let index = store.currentSongIndex;
         let song = store.currentList.songs[index];
@@ -732,7 +722,6 @@ function GlobalStoreContextProvider(props) {
         let transaction = new UpdateSong_Transaction(this, index, oldSongData, newSongData);        
         tps.addTransaction(transaction);
     }
-    
     store.undo = function () {
         tps.undoTransaction();
     }
@@ -751,88 +740,6 @@ function GlobalStoreContextProvider(props) {
     store.canClose = function() {
         return (store.currentList !== null);
     }
-    //// All of the Sort Methods
-    store.SortName = (playlists)=>{
-       return playlists.sort(function(a, b) {
-          const nameA=a.name.toUpperCase();
-          const nameB=b.name.toUpperCase();
-          if (nameA > nameB) {
-            return 1;
-          }
-          if (nameA < nameB) {
-            return -1;
-          }
-          return 0;
-          });
-    }
-    store.SortCreationDate = (playlists)=>{
-        return playlists.sort(function(a, b) {
-           const nameA=a.date
-           const nameB=b.date
-           if (nameA > nameB) {
-             return 1;
-           }
-           if (nameA < nameB) {
-             return -1;
-           }
-           return 0;
-           });
-     }
-     store.SortLastEdit = (playlists)=>{
-        return playlists.sort(function(a, b) {
-           const nameA=new Date(a.lastEdit);
-           const nameB=new Date(b.lastEdit);
-           return nameB-nameA;
-           });
-     }
-     store.SortPublishedDate = (playlists)=>{
-        return playlists.sort(function(a, b) {
-           const nameA=new Date(a.publishedDate);
-           const nameB=new Date(b.publishedDate);
-       
-           return nameA-nameB;
-           });
-     }
-     store.SortMostListens = (playlists)=>{
-        return playlists.sort(function(a, b) {
-           const nameA=a.listens
-           const nameB=b.listens
-           if (nameA > nameB) {
-             return -1;
-           }
-           if (nameA < nameB) {
-             return 1;
-           }
-           return 0;
-           });
-     }
-     store.SortMostLikes = (playlists)=>{
-        return playlists.sort(function(a, b) {
-           const nameA=a.likes
-           const nameB=b.likes
-           if (nameA > nameB) {
-             return -1;
-           }
-           if (nameA < nameB) {
-             return 1;
-           }
-           return 0;
-           });
-     }
-     store.SortMostDislikes = (playlists)=>{
-        return playlists.sort(function(a, b) {
-           const nameA=a.dislikes
-           const nameB=b.dislikes
-           if (nameA > nameB) {
-             return -1;
-           }
-           if (nameA < nameB) {
-             return 1;
-           }
-           return 0;
-           });
-     }
-
     return (
         <GlobalStoreContext.Provider value={{
             store

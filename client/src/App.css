@@ -79,6 +79,11 @@ body,html{
   gap: 1rem;
   background-image: linear-gradient(to bottom, #E6DDC4, #678983);
 }
+.add-button{
+  position: absolute;
+  left:1%;
+  top: 9%;
+}
 
 /*Main Section */
 .home-main{

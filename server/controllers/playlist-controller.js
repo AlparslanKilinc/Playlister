@@ -136,38 +136,51 @@ getPlaylists = async (req, res) => {
             errorMessage: 'UNAUTHORIZED'
         })
     }
+    const body = req.body
+    if (!body) {
+        return res.status(400).json({
+            success: false,
+            error: 'You must provide a body to update',
+        })
+    }
+    let sort = body.sort;
+    let search = body.search;
+    
     await User.findOne({ _id: req.userId }, (err, user) => {
         async function asyncFindList(email) {
-            await Playlist.find({ ownerEmail: email}, (err, playlists) => {
-                if (err) {
-                    return res.status(400).json({ success: false, error: err })
+            let query ={ownerEmail: email};
+            if(search!==""){
+                query.name = {$regex: "^"+search, $options: "?i"};
+            }
+            let sort_method = "name";
+            if(sort !== ""){
+                if(sort==="lastEdit"){
+                sort_method="-"+sort;
                 }
-                if (!playlists) {
-                    return res
-                        .status(404)
-                        .json({ success: false, error: 'Playlists not found' })
+                else{
+                sort_method=sort;
                 }
-                else {
-                    let fields = [];
-                    for (let key in playlists) {
-                        let list = playlists[key];
-                        let field = {
-                            _id: list._id,
-                            name: list.name,
-                            owner:list.owner,
-                            date:list.date,
-                            published:list.published,
-                            publishedDate:list.publishedDate,
-                            listens:list.listens,
-                            likes:list.likes,
-                            dislikes:list.dislikes,
-                            lastEdit:list.lastEdit,
-                        };
-                        fields.push(field);
-                    }
-                    return res.status(200).json({ success: true, playlists: fields })
+            }
+            let field= "_id name owner date published publishedDate listens likes dislikes lastEdit";
+            let playlists= await Playlist.find(query,field).sort(sort_method);
+                let fields = [];
+                for (let key in playlists) {
+                    let list = playlists[key];
+                    let field = {
+                        _id: list._id,
+                        name: list.name,
+                        owner:list.owner,
+                        date:list.date,
+                        published:list.published,
+                        publishedDate:list.publishedDate,
+                        listens:list.listens,
+                        likes:list.likes,
+                        dislikes:list.dislikes,
+                        lastEdit:list.lastEdit,
+                    };
+                    fields.push(field);
                 }
-            }).catch(err => console.log(err))
+            return res.status(200).json({ success: true, playlists: fields })
         }
         asyncFindList(user.email);
     }).catch(err => console.log(err));
@@ -322,36 +335,52 @@ updatePlaylistById = async (req, res) => {
 ///// Published Methods
 getPublishedPlaylists = async (req, res) => {
     async function asyncFindLists() {
-        await Playlist.find({ published: true}, (err, playlists) => {
-            if (err) {
-                return res.status(400).json({ success: false, error: err })
+        const body = req.body
+        if (!body) {
+            return res.status(400).json({
+                success: false,
+                error: 'You must provide a body to update',
+            })
+        }
+        let sort = body.sort;
+        let search = body.search;
+
+        let search_type = body.search_type;
+        let query ={published: true}
+        if(search_type==="name"){
+            query.name = {$regex: "^"+search, $options: "?i"}
+        }else{
+            query.owner = {$regex: "^"+search, $options: "?i"}
+        }
+        let sort_method = "name";
+        if(sort !== ""){
+            if(sort==="likes" || sort==="dislikes" || sort==="listens"){
+                sort_method="-"+sort;
             }
-            if (!playlists) {
-                return res
-                    .status(404)
-                    .json({ success: false, error: 'Playlists not found' })
+            else{
+                sort_method=sort;
             }
-            else {
-                let fields = [];
-                for (let key in playlists) {
-                    let list = playlists[key];
-                    let field = {
-                        _id: list._id,
-                        name: list.name,
-                        owner:list.owner,
-                        date:list.date,
-                        published:list.published,
-                        publishedDate:list.publishedDate,
-                        listens:list.listens,
-                        likes:list.likes,
-                        dislikes:list.dislikes,
-                        lastEdit:list.lastEdit,
-                    };
-                    fields.push(field);
-                }
-                return res.status(200).json({ success: true, playlists: fields})
+        }
+        let field= "_id name owner date published publishedDate listens likes dislikes lastEdit";
+        let playlists= await Playlist.find(query,field).limit(100).sort(sort_method);
+            let fields = [];
+            for (let key in playlists) {
+                let list = playlists[key];
+                let field = {
+                    _id: list._id,
+                    name: list.name,
+                    owner:list.owner,
+                    date:list.date,
+                    published:list.published,
+                    publishedDate:list.publishedDate,
+                    listens:list.listens,
+                    likes:list.likes,
+                    dislikes:list.dislikes,
+                    lastEdit:list.lastEdit,
+                };
+                fields.push(field);
             }
-        }).catch(err => console.log(err))
+        return res.status(200).json({ success: true, playlists: fields})
     }
     asyncFindLists();
 }

@@ -4,7 +4,6 @@ import ListCard from './ListCard.js'
 import AddIcon from '@mui/icons-material/Add';
 import Fab from '@mui/material/Fab'
 import List from '@mui/material/List';
-import Typography from '@mui/material/Typography'
 import AppTools from './AppTools';
 import { ButtonGroup } from '@mui/material';
 import Button from '@mui/material/Button';
@@ -48,7 +47,7 @@ const HomeScreen = () => {
     useEffect(() => {
       store.LoadPlaylists();
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[store.search,store.currentList? store.currentList._id:'']);
+    },[store.search,store.sortMethod,store.currentList? store.currentList._id:'']);
     /// Accordion 
     const handleChange = (panel,id) => (event, isExpanded) => {
       setExpanded(isExpanded ? panel : false);
@@ -69,28 +68,9 @@ const HomeScreen = () => {
       setPlayerVariant("outlined");
       setCommentsVariant("contained");
     }
-    //// Editing Functions 
     let Lists = "";
       if (store.playlists) {
-        /// Search by PlaylistName
         let playlists=store.playlists;
-        if(store.search && store.search!==""){
-           playlists= playlists.filter( list => list.name.startsWith(store.search));
-        }
-        // Sorting
-        switch (store.sortMethod) {
-            case 'Name':
-              playlists=store.SortName(playlists);
-              break;
-            case 'CreationDate':
-                playlists=store.SortCreationDate(playlists);
-                break;
-            case 'LastEditDate':
-              playlists=store.SortLastEdit(playlists);
-              break;
-            default:
-              break;
-        }
         Lists = 
         <List  sx={{width: '90%', left: '5%'}}>
           {
@@ -120,6 +100,15 @@ const HomeScreen = () => {
     return (
         <div id="home-screen">
             <AppTools published={false}/>
+            <div style={{marginTop:'4rem'}} className="add-button">
+              <Fab
+                  aria-label="add"
+                  id="add-list-button"
+                  onClick={handleCreateNewList}
+              >
+                  <AddIcon />
+              </Fab>
+            </div>
             <div className="home-main">
                 <div id="scroll-list" className='list-area'>
                     {Lists}
@@ -135,15 +124,6 @@ const HomeScreen = () => {
                   <Comments selection={commentsVariant}/>
                 </div>
                 
-            </div>
-            <div style={{marginTop:'4rem'}} className="home-footer">
-            <Fab 
-                aria-label="add"
-                id="add-list-button"
-                onClick={handleCreateNewList}
-            >
-                <AddIcon />
-            </Fab>
             </div>
             <MUIDeleteModal/>
             <MUIAccessErrorModal/>

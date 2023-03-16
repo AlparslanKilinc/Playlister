@@ -29,7 +29,7 @@ const UserScreen = () => {
   useEffect(() => {
     store.LoadPublishedPlaylists();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[store.search]);
+  },[store.search,store.sortMethod]);
   let togglePlayer = ()=>{
     setPlayerVariant("contained");
     setCommentsVariant("outlined");       

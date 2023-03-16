@@ -61,13 +61,13 @@ export default function CustomizedMenus(props) {
     setAnchorEl(null);
   };
 
-  let SortCreationDate = ()=>{store.setSort("CreationDate");}
-  let SortLastEditDate = ()=>{store.setSort("LastEditDate");}
-  let SortName = ()=>{store.setSort("Name");}
-  let SortPublishedDate = ()=>{store.setSort("PublishedDate");}
-  let SortListens = ()=>{store.setSort("Listens");}
-  let SortLikes = ()=>{store.setSort("Likes");}
-  let SortDislikes = ()=>{store.setSort("Dislikes");}
+  let SortCreationDate = ()=>{store.setSort("date");}
+  let SortLastEditDate = ()=>{store.setSort("lastEdit");}
+  let SortName = ()=>{store.setSort("name");}
+  let SortPublishedDate = ()=>{store.setSort("publishedDate");}
+  let SortListens = ()=>{store.setSort("listens");}
+  let SortLikes = ()=>{store.setSort("likes");}
+  let SortDislikes = ()=>{store.setSort("dislikes");}
 
   let Items = 
     <div>

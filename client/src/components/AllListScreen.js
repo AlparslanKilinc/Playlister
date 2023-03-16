@@ -32,7 +32,7 @@ store.history = useHistory();
 useEffect(() => {
   store.LoadPublishedPlaylists();
 // eslint-disable-next-line react-hooks/exhaustive-deps
-},[store.search]);
+},[store.search,store.sortMethod]);
 
 let togglePlayer = ()=>{
   setPlayerVariant("contained");
@@ -60,9 +60,6 @@ return (
           </div>     
            
     </div>
-  <div className="home-footer">
-    <Typography style={{fontFamily: "Gummy"}} variant="h2"> {store.search} Playlists</Typography>
-  </div>
   <MUIDeleteModal/>
   <MUIAccessErrorModal/>
   </div>)

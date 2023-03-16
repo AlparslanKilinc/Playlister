@@ -25,7 +25,8 @@ getLoggedIn = async (req, res) => {
             }
         })
     } catch (err) {
-        res.json(false);
+        res.status(401)
+            json(false);
     }
 }
 

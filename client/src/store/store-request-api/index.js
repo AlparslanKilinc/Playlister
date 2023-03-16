@@ -22,11 +22,11 @@ export const createPlaylist = (newListName, newSongs, email,newComments,Username
 }
 export const deletePlaylistById = (id) => api.delete(`/playlist/${id}`)
 export const getPlaylistById = (id) => api.get(`/playlist/${id}`)
-export const getPlaylists = () => api.get(`/playlists/`)
+export const getPlaylists = (sort,search) => api.put(`/playlists/`,{sort:sort, search:search})
 export const updatePlaylistNameById = (id, playlist) => {return api.put(`/playlist/Name/${id}`, {playlist : playlist})}
 export const updatePlaylistById = (id, playlist) => {return api.put(`/playlist/${id}`, {playlist : playlist})}
 /// Public 
-export const getPublishedPlaylists = () => api.get(`/PublishedPlaylists/`)
+export const getPublishedPlaylists = (sort,search,search_type) => api.put(`/PublishedPlaylists/`,{sort:sort, search:search , search_type:search_type})
 export const getPublishedPlaylistById = (id) => api.get(`/PublishedPlaylists/${id}`)
 export const updatePublishedPlaylistComments = (id, playlist) => {return api.put(`/PublishedPlaylistsComments/${id}`,{playlist : playlist})}
 export const updatePublishedPlaylistListens = (id, playlist) => {return api.put(`/PublishedPlaylistsListens/${id}`, {playlist : playlist})}

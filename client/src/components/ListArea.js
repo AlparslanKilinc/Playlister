@@ -26,30 +26,30 @@ const handleChange = (panel,id) => (event, isExpanded) => {
 };
 if (store.PublishedPlaylists) {
   let playlists=store.PublishedPlaylists;
-  if(store.search==="")playlists=[];
-  if(store.search && store.search!==""){
-    if(parent==="AllListScreen")playlists= playlists.filter( list => list.name.startsWith(store.search));
-    if(parent==="UserScreen") playlists= playlists.filter( list => list.owner.startsWith(store.search));
-  }
-  switch (store.sortMethod) {
-    case 'Name':
-      playlists=store.SortName(playlists);
-      break;
-    case 'PublishedDate':
-      playlists=store.SortPublishedDate(playlists);
-      break;
-    case 'Listens':
-      playlists=store.SortMostListens(playlists);
-      break;
-    case 'Likes':
-      playlists=store.SortMostLikes(playlists);
-      break;
-    case 'Dislikes':
-      playlists=store.SortMostDislikes(playlists);
-      break;
-    default:
-      break;
-  }
+  // if(store.search==="")playlists=[];
+  // if(store.search && store.search!==""){
+  //   if(parent==="AllListScreen")playlists= playlists.filter( list => list.name.startsWith(store.search));
+  //   if(parent==="UserScreen") playlists= playlists.filter( list => list.owner.startsWith(store.search));
+  // }
+  // switch (store.sortMethod) {
+  //   case 'Name':
+  //     playlists=store.SortName(playlists);
+  //     break;
+  //   case 'PublishedDate':
+  //     playlists=store.SortPublishedDate(playlists);
+  //     break;
+  //   case 'Listens':
+  //     playlists=store.SortMostListens(playlists);
+  //     break;
+  //   case 'Likes':
+  //     playlists=store.SortMostLikes(playlists);
+  //     break;
+  //   case 'Dislikes':
+  //     playlists=store.SortMostDislikes(playlists);
+  //     break;
+  //   default:
+  //     break;
+  // }
 ListArea= 
     <List sx={{width: '90%', left: '5%'}}>
     {playlists.map((list) => (   
