@@ -2,11 +2,16 @@ import React, { useContext, useState } from 'react'
 import { GlobalStoreContext } from '../store'
 import ClearIcon from '@mui/icons-material/Clear';
 import Button from '@mui/material/Button';
+import { useDoubleTap } from 'use-double-tap';
 
 function SongCard(props) {
     const { store } = useContext(GlobalStoreContext);
     const [ draggedTo, setDraggedTo ] = useState(0);
     const { song, index } = props;
+
+    const bind = useDoubleTap((event) => {
+        store.showEditSongModal(index, song);
+      });
 
     function handlePlay(event){
         event.stopPropagation();
@@ -44,7 +49,7 @@ function SongCard(props) {
         event.stopPropagation();
         store.showRemoveSongModal(index, song);
     }
-    function handleDoubleClick(event) {
+    let handleDoubleClick =(event)=> {
         store.showEditSongModal(index, song);
     }
 
@@ -61,11 +66,13 @@ function SongCard(props) {
             draggable="true"
             onClick={handlePlay}
             onDoubleClick={handleDoubleClick}
+            {...bind}
         >
-            <h5 style={{color: store.playIndex===index? 'red':''}} >
+            <h4 style={{color: store.playIndex===index? 'red':''}} >
             {index + 1}. {song.title} by {song.artist}
-            </h5>
+            </h4>
               <Button
+               
                 id='delete-song-button'
                 onClick={handleRemoveSong}
                 variant="none">

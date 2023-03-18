@@ -33,8 +33,6 @@ export default function AppBanner() {
         auth.logoutUser();
         store.clearTransaction();
     }
-
-  
     const menuId = 'primary-search-account-menu';
     const loggedOutMenu = (
         <Menu
@@ -88,17 +86,15 @@ export default function AppBanner() {
     }
 
     return (
-        <Box>
-            <AppBar style={{backgroundColor:"#678983"}} position="static">
-                <Toolbar>
+        <Box >
+            <AppBar  style={{backgroundColor:"#678983" }} position="static">
+                <Toolbar id='app-banner'>
                 <Link style={{ textDecoration: 'none'}} to={ auth.loggedIn? '/home/':'/'}>
                         <Box className='logo'>
-                            <YouTubeIcon   sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-                            <Typography  variant="h6" noWrap component="div" sx={{ display: { xs: 'none', sm: 'block' }}}>Playlister</Typography>
+                            <Typography  variant="h6" noWrap component="div">Playlister</Typography>
                         </Box>
                 </Link>
-                    <Box sx={{ flexGrow: 1 }}></Box>
-                    <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                    <Box>
                         <IconButton
                             size="large"
                             edge="end"

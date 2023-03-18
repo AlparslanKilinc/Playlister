@@ -117,7 +117,7 @@ export default function CustomizedMenus(props) {
         onClick={handleClick}
         endIcon={<KeyboardArrowDownIcon />}
       >
-        Sort By
+        Filter
       </Button>
       <StyledMenu
         id="demo-customized-menu"

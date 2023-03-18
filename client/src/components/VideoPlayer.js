@@ -96,36 +96,6 @@ let onPlayerStateChange= (event)=>{
     if(store.playIndex!==0)play();
   }
 }
-
-let videoInfo= 
-  <CardContent className='video-info'>
-    <Typography component="div" variant="h4">
-      Now Playing
-    </Typography>
-  </CardContent>; 
-
-if(store.currentList){
-  if(store.currentList.songs){
-    videoInfo = 
-    <CardContent className='video-info'>
-    <Typography  component="div" style={{justifyContent:'center'}}variant="h4">
-     Now Playing
-    </Typography>
-    <Typography component="div" variant="h6">
-      Playlist: {store.currentList.name}
-    </Typography>
-    <Typography  component="div" variant="h6">
-      Song Number:{store.playIndex+1}
-    </Typography>
-    <Typography  component="div" variant="h6">
-      Title: {store.currentList.songs[store.playIndex] ? store.currentList.songs[store.playIndex].title : ''}
-    </Typography>
-    <Typography  component="div" variant="h6">
-      Artist: {store.currentList.songs[store.playIndex] ? store.currentList.songs[store.playIndex].artist: '' }
-    </Typography>
-    </CardContent> ; 
-    }
-}
 return(
     <div style={{ opacity: selection === "contained" ? '1' :'0' , pointerEvents: selection === "contained" ? 'auto' :'none' }} className='video-player'>
           { store.currentList? 
@@ -140,22 +110,21 @@ return(
           : <Box className='video-area' />
           }
       <div  className='video-actions'>
-              {videoInfo}
               <Box className='video-buttons'>
                 <IconButton  onClick={prev} aria-label="previous">
-                  {theme.direction === 'rtl' ? <SkipNextIcon /> : <SkipPreviousIcon />}
+                  {theme.direction === 'rtl' ? <SkipNextIcon  /> : <SkipPreviousIcon  />}
                 </IconButton>
                 <IconButton onClick={pause} aria-label="play">
-                  <PauseIcon sx={{ height: 38, width: 38 }} />
+                  <PauseIcon />
                 </IconButton>
                 <IconButton onClick={play} aria-label="play">
-                  <PlayArrowIcon sx={{ height: 38, width: 38 }} />
+                  <PlayArrowIcon />
                 </IconButton>
                 <IconButton onClick={next} aria-label="next">
                   {theme.direction === 'rtl' ? <SkipPreviousIcon /> : <SkipNextIcon />}
                 </IconButton>
               </Box>
-      </div>
+       </div>
     </div>
   )
 }

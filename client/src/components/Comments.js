@@ -18,7 +18,7 @@ export const Comments = (props) => {
       if(event.target.value!=="") store.AddComment(event.target.value);
       }
   }
-  let comments = ""
+  let comments = "";
   if(store.currentList){
      comments= store.currentList.comments.map((comment,index=0)=>(
       <div key={index++} className='comment'>
@@ -37,10 +37,11 @@ export const Comments = (props) => {
         </div>
         { auth.loggedIn && store.currentList && store.currentList.published?
         <TextField
-        style={{backgroundColor:'white' , marginRight:'1rem',borderRadius:'5px',border:'2px solid black',}}
+        style={{backgroundColor:'white' ,borderRadius:'5px',border:'2px solid black',}}
         onKeyPress={handleAddComment} 
         id="outlined-basic" 
-        label="Add Comment" 
+        label="Add Comment"
+        className='comment-field'
         variant="filled" /> : ""
         }
     </div>

@@ -28,7 +28,8 @@ export default function LoginScreen() {
                         flexDirection: 'column',
                         alignItems: 'center',
                         justifyContent:'center',
-                        mt:'5rem'
+                        mt:'5rem',
+                        padding:'1rem'
                     }}
                 >
                     <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>

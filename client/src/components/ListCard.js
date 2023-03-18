@@ -12,8 +12,6 @@ function ListCard(props) {
     const [text, setText] = useState("");
     const {List} = props;
 
-
-
     function handleToggleEdit(event) {
         event.preventDefault();
         event.stopPropagation();
@@ -52,12 +50,9 @@ function ListCard(props) {
   
 
     let cardElement =
-        <ListItem
-            key={List._id}
-            onDoubleClick={handleToggleEdit}
-        >  
-        <Box style={{alignSelf:'flex-start', flex:'1'}} >{List.name}
-            <Box style={{fontSize:'12pt'}} >By: {List.owner} </Box>
+        <ListItem key={List._id} onDoubleClick={handleToggleEdit}>  
+        <Box className='title-name'>{List.name}
+            <Box className='card'>By: {List.owner} </Box>
         </Box>
         </ListItem>
 
@@ -81,8 +76,6 @@ function ListCard(props) {
                 color={'success'}
                 onBlur={blurAction}
                 defaultValue={List.name}
-                inputProps={{style: {fontSize: 48}}}
-                InputLabelProps={{style: {fontSize: 17,} }}
                 autoFocus
             />
     }

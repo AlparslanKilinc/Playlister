@@ -21,6 +21,8 @@ import { useHistory } from 'react-router-dom'
 import PublishedArea from './PublishedArea';
 import MUIDeleteModal from './MUIDeleteModal';
 import MUIAccessErrorModal from './MUIAccessErrorModal'
+import MUIEditSongModal from './MUIEditSongModal'
+import MUIRemoveSongModal from './MUIRemoveSongModal'
 
 
 const HomeScreen = () => {
@@ -68,11 +70,18 @@ const HomeScreen = () => {
       setPlayerVariant("outlined");
       setCommentsVariant("contained");
     }
+    let modalJSX = "";
+    if (store.isEditSongModalOpen()) {
+        modalJSX = <MUIEditSongModal />;
+    }
+    if (store.isRemoveSongModalOpen()) {
+        modalJSX = <MUIRemoveSongModal />;
+    }
     let Lists = "";
       if (store.playlists) {
         let playlists=store.playlists;
         Lists = 
-        <List  sx={{width: '90%', left: '5%'}}>
+        <List sx={{padding:'1rem'}} id="scroll-list" className='list-area'>
           {
             playlists.map((list) => (
             <Accordion 
@@ -83,7 +92,7 @@ const HomeScreen = () => {
             >
               <AccordionSummary
               style={{display:'flex' , alignItems:'flex-end'}} 
-              expandIcon={<KeyboardDoubleArrowDownIcon style={{marginBottom:'1rem', fontSize:'24pt'}}/>}
+              expandIcon={<KeyboardDoubleArrowDownIcon style={{marginBottom:'1rem'}}/>}
               aria-controls="panel1bh-content"
               id="panel1bh-header">
                 {list.published ? <PublishedCard key={list._id} List={list} />: <ListCard  key={list._id} List={list} />}
@@ -110,9 +119,7 @@ const HomeScreen = () => {
               </Fab>
             </div>
             <div className="home-main">
-                <div id="scroll-list" className='list-area'>
-                    {Lists}
-                </div>
+                {Lists}
                 <div className='player-comments'>
                 <ButtonGroup className='buttonGroup'>
                 <ThemeProvider theme={theme}>
@@ -123,10 +130,11 @@ const HomeScreen = () => {
                   <VideoPlayer selection={playerVariant}/>
                   <Comments selection={commentsVariant}/>
                 </div>
-                
+               
             </div>
             <MUIDeleteModal/>
             <MUIAccessErrorModal/>
+            {modalJSX}
         </div>)
 }
 export default HomeScreen;

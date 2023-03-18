@@ -13,25 +13,13 @@ function WorkspaceScreen(props) {
     const { store } = useContext(GlobalStoreContext);
     const {id} = props;
 
-    /// Song Editing
-    let modalJSX = "";
-    if (store.isEditSongModalOpen()) {
-        modalJSX = <MUIEditSongModal />;
-    }
-    if (store.isRemoveSongModalOpen()) {
-        modalJSX = <MUIRemoveSongModal />;
-    }
     function handleAddNewSong(event) {
         store.addNewSong();
     }
   
     return (
         <div className='workspace'>
-        { modalJSX }     
-        <List 
-            id="list-selector-list" 
-            sx={{  width:'100%' , backgroundColor: 'transparent' }}
-        >
+        <List id="list-selector-list" sx={{  width:'100%' , backgroundColor: 'transparent',marginBottom:'1rem' }}>
             {
                store.currentList? store.currentList.songs.map((song, index) => (
                     <SongCard
@@ -45,7 +33,7 @@ function WorkspaceScreen(props) {
             }
          </List> 
          <Button
-                style={{backgroundColor:'#E6DDC4'}}
+                style={{backgroundColor:'#E6DDC4',marginBottom:'0.5rem' }}
                 disabled={!store.canAddNewSong()}
                 id='add-song-button'
                 onClick={handleAddNewSong}

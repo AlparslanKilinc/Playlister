@@ -11,32 +11,56 @@ body,html{
   font-family: 'Lato', sans-serif;
   font-weight: bold;
   min-height: 100vh;
-  max-height: 100vh;
 }
 * { 
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  
+}
+*::-webkit-scrollbar {
+  width: 0.5rem;
+}
+*::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
+}
+*::-webkit-scrollbar-thumb {
+  background-color: #E6DDC4;
+  outline: 0.5px solid slategrey;
+  border-radius: 20px;
 }
 #root {
   display: flex;
   flex-direction: column;
-  min-width: 100vh;
-  min-height: 100vh;
-  max-height: 100vh;
 }
 
 #like:hover{
  color: var(--light-color);
  background-color: transparent;
 }
+.like{
+  margin: 0;
+  width: 12px;
+}
+
+.card{
+  display: flex;
+  justify-content: flex-start;
+  align-items:flex-start ;
+  font-size: 14px;
+}
+.title-name{
+  font-size: 18px;
+}
+
+.like-group{
+  display: flex;
+}
 
 /* Splash Screen */ 
 #splash-screen {
-  flex: 1;
+  min-height: 100vh;
   display: flex;
-  gap: 4rem;
+  gap: 1rem;
   flex-direction: column;
   align-items: center;
   background-image: linear-gradient(to bottom, #E6DDC4, #678983);
@@ -52,23 +76,24 @@ body,html{
 }
 #main-splash{
   display: flex;
+  flex-direction: column;
+  flex: 1;
   gap: 2rem;
 }
 .splash-header{
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
   flex: 0.3;
 }
-.splash-bottom{
+
+#app-banner{
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 2rem;
-  flex: 0.3;
-}
-.splash-text{
-  flex: 0.5;
+  justify-content: space-between;
+  max-width: 100vw;
 }
 /* Home Screen */
 #home-screen{
@@ -81,32 +106,28 @@ body,html{
 }
 .add-button{
   position: absolute;
-  left:1%;
+  left:2%;
   top: 9%;
 }
 
 /*Main Section */
 .home-main{
   display: flex;
+  flex-direction: column;
   flex: 1;
-  max-height: 730px;
   justify-content:center;
 }
-.home-footer{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+
+/* sx={{width: '90%', left: '5%'}} */
 /* List Area */
 .list-area{
-  flex: 1;
-  max-height: 730px;
   display: flex;
+  flex: 1;
   flex-direction: column;
   overflow: scroll;
   overflow-x: hidden;
+  max-height: 45vh;
 }
-
 /* List */ 
 #user-list{
   display: flex;
@@ -124,39 +145,36 @@ body,html{
 .workspace{
   display: flex;
   flex: 1;
+  font-size: 14px;
   flex-direction: column;
-  gap: 2rem;
   width: 100%;
-  max-height: 420px;
+  max-height: 25vh;
 }
 #list-selector-list {
   flex: 1;
-  max-height: 430px;
   display: flex;
   flex-direction: column;
   overflow: scroll;
   overflow-x: hidden;
   padding: 1rem;
   gap: 2rem;
+  min-height: 120px;
 }
 
 /*published area */ 
 #published-list{
   flex: 1;
-  max-height: 430px;
   display: flex;
   flex-direction: column;
   overflow: scroll;
   overflow-x: hidden;
-  padding: 1rem;
   border-radius: 5px;
-  
 }
 .song-card{
   display: flex;
   justify-content: space-between;
-  padding: 1rem;
-  margin-right: 2rem;
+  align-items: center;
+  padding: 0.7rem;
   border-radius: 5px;
   box-shadow: 15px 15px 0 -4px transparent,
   5px 6px rgb(73, 93, 99);
@@ -169,8 +187,6 @@ body,html{
   padding: 1rem;
   margin-right: 2rem;
   border-radius: 5px;
-  
-  
 }
 .published-card:hover{
   cursor: pointer;
@@ -181,23 +197,16 @@ body,html{
   background-color: #e4f0ee;
   color: #071935;
 }
-
-
-
-
 #edit-toolbar {
   background-color: transparent;
   display: flex;
   justify-content: space-between;
 }
-
-
 /* Video Player & Comments */
 .player-comments{
-  position: relative;
+  position: relative;  
   display: flex;
   flex: 1;
-  max-height: 730px;
   flex-direction: column;
   padding: 5px;
 }
@@ -205,56 +214,44 @@ body,html{
 /* Video Player*/
 .video-player{
   position: absolute;
-  top:10%;
+  top:14%;
   bottom:2%;
   left:1%;
   right: 2%;
   display: flex;
   flex-direction: column;
-  
+  flex: 1;
+  gap: 0.2rem;
  }
-
 .video-area{
   display: flex;
   flex: 1;
-  min-height: 300px;
-  background-color:#333333 ;
-  border-radius: 3px;
+  background-color:#000000;
+  border-radius: 10px;
 }
 .video-actions{
   display: flex;
   flex-direction: column;
-  background-color:var(--light-color);
-  color: #071935;
-  border-radius: 4px;
+  background-color: #E6DDC4;
+  color:black;
+  border-radius: 5px;
 }
-.video-info{
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  min-height:150px;
-  max-height:170px;
-}
-
 .video-buttons{
   align-self: center;
 }
 
-/* Video Player End */
-
 /*Comments */ 
-
 .comments{
   position: absolute;
-  top:6%;
+  top:14%;
   bottom:2%;
-  left:2%;
+  left:1%;
   right: 2%;
   display: flex;
   flex-direction: column;
   flex: 1;
   padding: 0.5rem;
-  gap: 0.5rem;
+  gap: 1rem;
 }
 
 .comments-area{
@@ -264,7 +261,14 @@ body,html{
   overflow: scroll;
   overflow-x: hidden;
   gap: 0.3rem;
-  border-radius: 10px;
+  border-radius: 5px;
+  padding: 1rem;
+}
+.comment-field{
+  border-radius: 4px;
+  box-shadow: 15px 15px 0 -4px transparent,
+  5px 6px #071935;
+  border: #071935 1.5px solid;
 }
 .comment{
   display: flex;
@@ -286,10 +290,11 @@ body,html{
   color:black;
   justify-content: space-between;
   background-color:var(--light-color);
+  gap: 1rem;
 }
 .tool-icons{
  display: flex;
- gap: 2rem;
+ gap: 0.2rem;
 }
 #add-list-button {
   float: left;
@@ -313,22 +318,12 @@ input {
   align-items: center;
   gap: 1rem;
 }
-
-/* #app-root {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0%;
-  left: 0%;
-} */
-
 /* THIS STYLE SHEET MANAGES STYLE FOR OUR MODAL, i.e. DIALOG BOX */
-
 .modal-dialog{
   display: flex;
   flex-direction: column;
   background-color: #e4f0ee;
-  width: 400px;
+  width: 370px;
   height: 345px;
   border: 1px solid black;
 }
@@ -345,15 +340,12 @@ input {
   align-items: center;
   margin-left: 1rem;
   padding: 1rem;
-  font-size: 28px;
+  font-size: 18px;
   justify-content: center;
 }
 .modal-prompt{
   font-weight: bold;
 }
-
-
-
 #close-modal-button {
   float: right;
 }
@@ -461,4 +453,24 @@ input {
   100% {
     transform: rotate(0deg);
   }
+}
+
+/* Mobile */
+@media screen and (min-width: 425px) {
+
+
+}
+/* Tablet */
+@media screen and (min-width: 620px) {
+
+}
+@media screen and (min-width: 768px) {
+
+}
+/* Desktop */
+@media screen and (min-width: 1024px) {
+
+}
+@media screen and (min-width: 1440px) {
+
 }

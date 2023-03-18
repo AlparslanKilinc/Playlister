@@ -38,7 +38,7 @@ let loadScreen = (screen) =>{
 return (
   <Box>
     <AppBar  position="static">
-    <Toolbar id='AppTools' >
+    <Toolbar id='AppTools'>
       <div className='tool-icons'>
         <IconButton  onClick={()=>{loadScreen("home")}}  color={store.history.location.pathname==="/home/"? 'success' :'default'}  disabled={!auth.loggedIn} aria-label="home">
           <HomeIcon/>

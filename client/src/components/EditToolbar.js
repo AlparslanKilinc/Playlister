@@ -37,7 +37,6 @@ function EditToolbar(props) {
 
     return (
         <div id="edit-toolbar">
-            <div> 
                 <Button 
                     style={{backgroundColor:'#678983'}}
                     disabled={!store.canUndo()}
@@ -55,9 +54,6 @@ function EditToolbar(props) {
                     variant="contained">
                         <RedoIcon />
                 </Button>
-            </div>
-            
-            <div> 
                 <Button 
                 style={{backgroundColor:'#678983'}}
                 variant="contained"
@@ -65,7 +61,7 @@ function EditToolbar(props) {
                     handlePublishList(event,id)
                 }} 
                 aria-label='publish'>
-                    <PublishIcon style={{fontSize:'22pt'}} />
+                    <PublishIcon />
                 </Button>
             
                 <Button 
@@ -75,7 +71,7 @@ function EditToolbar(props) {
                             handleDeleteList(event,id)
                         }} 
                 aria-label='delete'>
-                    <DeleteIcon style={{fontSize:'22pt'}} />
+                    <DeleteIcon />
                 </Button>
 
                 <Button
@@ -85,9 +81,8 @@ function EditToolbar(props) {
                             handleDuplicate(event,id)
                         }} 
                 aria-label='duplicate'>
-                    <ContentCopyIcon style={{fontSize:'22pt'}} />
+                    <ContentCopyIcon />
                 </Button>
-            </div>   
         </div>
     )
 }

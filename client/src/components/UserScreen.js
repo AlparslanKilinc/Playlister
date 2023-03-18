@@ -54,10 +54,6 @@ const UserScreen = () => {
               <Comments selection={commentsVariant}/>
           </div> 
         </div>
-
-        <div className="home-footer">
-          <Typography variant="h2"> {store.search} Lists</Typography>
-        </div>
         <MUIDeleteModal/>
         <MUIAccessErrorModal/>
     </div>)
