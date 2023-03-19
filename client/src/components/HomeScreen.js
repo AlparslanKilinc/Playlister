@@ -23,7 +23,7 @@ import MUIDeleteModal from './MUIDeleteModal';
 import MUIAccessErrorModal from './MUIAccessErrorModal'
 import MUIEditSongModal from './MUIEditSongModal'
 import MUIRemoveSongModal from './MUIRemoveSongModal'
-
+import AppBanner from './AppBanner';
 
 const HomeScreen = () => {
     const theme = createTheme({
@@ -108,6 +108,7 @@ const HomeScreen = () => {
    
     return (
         <div id="home-screen">
+            <AppBanner/> 
             <AppTools published={false}/>
             <div style={{marginTop:'4rem'}} className="add-button">
               <Fab

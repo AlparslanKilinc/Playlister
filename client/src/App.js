@@ -18,16 +18,16 @@ const App = () => {
     return (
         <HashRouter>
             <AuthContextProvider>
-                <GlobalStoreContextProvider>              
-                    <AppBanner />
+                <GlobalStoreContextProvider>         
                     <Switch>
-                        <Route path="/" exact component={SplashScreen} />
+                        <Route path="/" exact component={SplashScreen} /> 
                         <Route path="/home/" exact component={HomeScreen}/>
                         <Route path="/public/" exact component={AllListScreen}/>
                         <Route path="/users/" exact component={UserScreen}/>
                         <Route path="/login/" exact component={LoginScreen} />
                         <Route path="/register/" exact component={RegisterScreen} />
                     </Switch>
+                     
                 </GlobalStoreContextProvider>
             </AuthContextProvider>
         </HashRouter>

@@ -12,6 +12,7 @@ import { useHistory } from 'react-router-dom'
 import MUIDeleteModal from './MUIDeleteModal';
 import { ListArea } from './ListArea';
 import MUIAccessErrorModal from './MUIAccessErrorModal'
+import AppBanner from './AppBanner';
 
 const AllListScreen = () => {
 
@@ -44,6 +45,7 @@ let toggleComments =()=>{
 }
 return (
   <div id="home-screen">
+    <AppBanner/>
     <AppTools published={true}/>
     <div className="home-main">
 

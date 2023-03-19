@@ -28,13 +28,12 @@ export default function LoginScreen() {
                         flexDirection: 'column',
                         alignItems: 'center',
                         justifyContent:'center',
-                        mt:'5rem',
-                        padding:'1rem'
+                        mt:'1rem',
+                        padding:'1rem',
+                        
+                        
                     }}
                 >
-                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                        <LockOutlinedIcon />
-                    </Avatar>
                     <Typography component="h1" variant="h5">
                         Sign in
                     </Typography>
@@ -64,6 +63,7 @@ export default function LoginScreen() {
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
+                            style={{backgroundColor:'#143C9A'}}
                         >
                             Sign In
                         </Button>

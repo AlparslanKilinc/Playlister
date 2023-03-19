@@ -38,29 +38,29 @@ let loadScreen = (screen) =>{
 return (
   <Box>
     <AppBar  position="static">
-    <Toolbar id='AppTools'>
-      <div className='tool-icons'>
-        <IconButton  onClick={()=>{loadScreen("home")}}  color={store.history.location.pathname==="/home/"? 'success' :'default'}  disabled={!auth.loggedIn} aria-label="home">
-          <HomeIcon/>
-        </IconButton>
-        <IconButton onClick={()=>{loadScreen("public")}} color={store.history.location.pathname==="/public/"? 'success' :'default'}   aria-label="all-list">
-          <Groups3Icon/>
-        </IconButton>
-        <IconButton  onClick={()=>{loadScreen("users")}}   color={store.history.location.pathname==="/users/"? 'success' :'default'} aria-label="users">
-          <PersonIcon/>
-        </IconButton>
-      </div>
-      <TextField
-      margin='normal'
-      id="search"
-      label="Search"
-      name="search"
-      defaultValue={""}
-      color={'success'}
-      onKeyPress= {handleSearch}
-      /> 
-      <StyledMenu published={published}/>
-    </Toolbar>
+      <Toolbar id='nav-bar'>
+        <div className='nav-icons'>
+          <IconButton  onClick={()=>{loadScreen("home")}}  color={store.history.location.pathname==="/home/"? 'success' :'default'}  disabled={!auth.loggedIn} aria-label="home">
+            <HomeIcon/>
+          </IconButton>
+          <IconButton onClick={()=>{loadScreen("public")}} color={store.history.location.pathname==="/public/"? 'success' :'default'}   aria-label="all-list">
+            <Groups3Icon/>
+          </IconButton>
+          <IconButton  onClick={()=>{loadScreen("users")}}   color={store.history.location.pathname==="/users/"? 'success' :'default'} aria-label="users">
+            <PersonIcon/>
+          </IconButton>
+        </div>
+        <TextField
+        margin='normal'
+        id="search"
+        label="Search"
+        name="search"
+        defaultValue={""}
+        color={'success'}
+        onKeyPress= {handleSearch}
+        /> 
+        <StyledMenu published={published}/>
+      </Toolbar>
     </AppBar>
   </Box>
   );

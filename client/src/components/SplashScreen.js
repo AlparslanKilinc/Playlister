@@ -6,35 +6,34 @@ import Typography from '@mui/material/Typography';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import { GlobalStoreContext } from '../store'
 import { useHistory } from 'react-router-dom'
+import logo from '../images/p_logo.png';
+import LoginScreen from './LoginScreen';
+
 
 export default function SplashScreen() {
     const { store } = useContext(GlobalStoreContext);
     store.history = useHistory();
-   
-
     function handleGuest(){
         store.history.push("/public/");
-    }
-    function handleLogin(){
-        store.history.push("/login/");
     }
     function handleRegister(){
         store.history.push("/register/");
     }
-
-
     return (
         <div id="splash-screen">
             <div className='splash-header'>
+                <img className="images" src={logo}/>
                 <h3>Welcome to Playlister</h3>
-                <h4>Use Playlister to create,edit, and play playlists as well as share playlists so that others may then play and comment on them</h4>
+                <h4>Use Playlister to create,edit, and play playlists as well as share 
+                playlists so that others may then play and comment on them</h4>
+                <div class='button-group'>
+                <Button  style={{backgroundColor:'#143C9A'}} onClick={handleRegister} variant="contained">Sign Up</Button>
+                <Button style={{backgroundColor:'#143C9A'}} onClick={handleGuest}   variant="contained">Guest</Button>
+                </div>
+                <LoginScreen/>
             </div>
-            <div id='main-splash'>
-                <Button onClick={handleLogin} style={{width:'190px', height:'70px',color:'white' , backgroundColor:"black"}}variant="contained">Login</Button>
-                <Button onClick={handleRegister}  style={{ width:'190px',height:'70px',color:'white' , backgroundColor:"black"}} variant="contained"> Create Account</Button>
-                <Button  onClick={handleGuest} style={{width:'190px', height:'70px', color:'white' , backgroundColor:"black"}}variant="contained">Continue as Guest</Button>
-            </div>
-         <Copyright/>
+          
+            <Copyright/>
         </div>
     )
 }

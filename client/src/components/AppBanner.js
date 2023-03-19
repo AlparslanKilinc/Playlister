@@ -12,6 +12,8 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import Avatar from '@mui/material/Avatar';
+import logo from '../images/p_logo.png';
 
 export default function AppBanner() {
     const { auth } = useContext(AuthContext);
@@ -79,39 +81,34 @@ export default function AppBanner() {
     
     function getAccountMenu(loggedIn) {
         let userInitials = auth.getUserInitials();
-        if (loggedIn) 
-            return <div>{userInitials}</div>;
+        if (loggedIn)
+            return <Avatar>{userInitials}</Avatar>;
         else
-            return <AccountCircle />;
+            return <AccountCircle/>;
     }
 
     return (
-        <Box >
-            <AppBar  style={{backgroundColor:"#678983" }} position="static">
+        <Box>
+            <AppBar position="static">
                 <Toolbar id='app-banner'>
-                <Link style={{ textDecoration: 'none'}} to={ auth.loggedIn? '/home/':'/'}>
-                        <Box className='logo'>
-                            <Typography  variant="h6" noWrap component="div">Playlister</Typography>
+                    <Link style={{ textDecoration: 'none'}} to={ auth.loggedIn? '/home/':'/'}>
+                        <img className="images" src={logo}/>   
+                    </Link>
+                        <Box>
+                            <IconButton
+                                size="large"
+                                edge="end"
+                                aria-label="account of current user"
+                                aria-controls={menuId}
+                                aria-haspopup="true"
+                                onClick={handleProfileMenuOpen}
+                            >
+                                {getAccountMenu(auth.loggedIn)}
+                            </IconButton>
                         </Box>
-                </Link>
-                    <Box>
-                        <IconButton
-                            size="large"
-                            edge="end"
-                            aria-label="account of current user"
-                            aria-controls={menuId}
-                            aria-haspopup="true"
-                            onClick={handleProfileMenuOpen}
-                            color="inherit"
-                        >
-                            {getAccountMenu(auth.loggedIn)}
-                        </IconButton>
-                    </Box>
                 </Toolbar>
             </AppBar>
-            {
-                menu
-            }
+            {menu}
         </Box>
     );
 }
