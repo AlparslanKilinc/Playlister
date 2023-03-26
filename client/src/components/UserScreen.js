@@ -42,8 +42,8 @@ const UserScreen = () => {
   return (
     <div id="home-screen">
       <AppBanner/>
-      <AppTools published={true}/>
         <div className="home-main">
+          <AppTools published={true}/>
           <ListArea parent={"UserScreen"}/>
           <div className='player-comments'>
               <ButtonGroup className='buttonGroup'>

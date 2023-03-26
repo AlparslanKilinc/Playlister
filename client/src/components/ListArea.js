@@ -29,7 +29,7 @@ ListArea=
     <List sx={{width: '90%', left: '5%'}}>
     {playlists.map((list) => (   
     <Accordion 
-    style={{backgroundColor: store.currentList && store.currentList._id===list._id? '#678983': list.published? '#f7e7b5':'#F0E9D2' , color:'black'}}
+    style={{backgroundColor: store.currentList && store.currentList._id===list._id? '#143C9A': list.published? '#0e2c74':'#1a4072' , color:'white'}}
     key={list._id} 
     id='user-list' 
     expanded={store.currentList && store.currentList._id === list._id ? (expanded === 'panel'): false } 

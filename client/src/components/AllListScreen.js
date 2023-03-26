@@ -46,9 +46,8 @@ let toggleComments =()=>{
 return (
   <div id="home-screen">
     <AppBanner/>
-    <AppTools published={true}/>
     <div className="home-main">
-
+        <AppTools published={true}/>
          <ListArea parent={"AllListScreen"}/>
           <div className='player-comments'>
             <ButtonGroup className='buttonGroup'>

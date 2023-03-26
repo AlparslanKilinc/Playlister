@@ -111,16 +111,16 @@ return(
           }
       <div  className='video-actions'>
               <Box className='video-buttons'>
-                <IconButton  onClick={prev} aria-label="previous">
+                <IconButton style={{color:'white'}} onClick={prev} aria-label="previous">
                   {theme.direction === 'rtl' ? <SkipNextIcon  /> : <SkipPreviousIcon  />}
                 </IconButton>
-                <IconButton onClick={pause} aria-label="play">
+                <IconButton style={{color:'white'}} onClick={pause} aria-label="play">
                   <PauseIcon />
                 </IconButton>
-                <IconButton onClick={play} aria-label="play">
+                <IconButton style={{color:'white'}} onClick={play} aria-label="play">
                   <PlayArrowIcon />
                 </IconButton>
-                <IconButton onClick={next} aria-label="next">
+                <IconButton style={{color:'white'}} onClick={next} aria-label="next">
                   {theme.direction === 'rtl' ? <SkipPreviousIcon /> : <SkipNextIcon />}
                 </IconButton>
               </Box>

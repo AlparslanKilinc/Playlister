@@ -68,16 +68,15 @@ function SongCard(props) {
             onDoubleClick={handleDoubleClick}
             {...bind}
         >
-            <h4 style={{color: store.playIndex===index? 'red':''}} >
+            <h4 className="song-name" style={{color: store.playIndex===index? '#7369ff':''}} >
             {index + 1}. {song.title} by {song.artist}
             </h4>
-              <Button
-               
+              <button
                 id='delete-song-button'
                 onClick={handleRemoveSong}
                 variant="none">
                 <ClearIcon />
-              </Button>
+              </button>
         </div>
     );
 }

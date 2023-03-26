@@ -19,7 +19,7 @@ function WorkspaceScreen(props) {
   
     return (
         <div className='workspace'>
-        <List id="list-selector-list" sx={{  width:'100%' , backgroundColor: 'transparent',marginBottom:'1rem' }}>
+        <List id="list-selector-list" sx={{  width:'100%' , backgroundColor: 'transparent' }}>
             {
                store.currentList? store.currentList.songs.map((song, index) => (
                     <SongCard
@@ -33,12 +33,11 @@ function WorkspaceScreen(props) {
             }
          </List> 
          <Button
-                style={{backgroundColor:'#E6DDC4',marginBottom:'0.5rem' }}
                 disabled={!store.canAddNewSong()}
                 id='add-song-button'
                 onClick={handleAddNewSong}
                 variant="contained">
-                <AddIcon  style={{color:'black'}} />
+                <AddIcon  style={{color:'white'}} />
          </Button>
          <EditToolbar id={id}></EditToolbar>
          

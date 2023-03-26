@@ -30,9 +30,9 @@ function PublishedCard(props) {
         <ListItem className='card' key={List._id}>  
             <Box style={{display:'flex' , flexDirection:'column'}}>
                 <Box className='title-name' >{List.name}</Box>
-                <Box style={{color:'blue' ,display:'flex'}} > <p style={{color:'black'}}>By:</p> {List.owner} </Box>
-                <Box style={{ display:'flex', color:'red'}} > <p style={{color:'black'}}>Listens:</p> {List.listens} </Box>
-                <Box style={{display:'flex', color:'green'}} > <p style={{color:'black'}}>Published:</p>{new Date(List.date).toDateString()} </Box>
+                <Box style={{color:'#7369ff' ,display:'flex', gap:3}} > <p style={{color:'white'}}>By:</p> {List.owner} </Box>
+                <Box style={{ display:'flex',color:'#7369ff',  gap:3}} > <p style={{color:'white'}}>Listens:</p> {List.listens} </Box>
+                <Box style={{display:'flex', color:'#7369ff',gap:3}} > <p style={{color:'white'}}>Published:</p>{new Date(List.date).toDateString()} </Box>
                 <div className='like-group'> 
                     <Button
                         className='like'

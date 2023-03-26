@@ -29,7 +29,7 @@ const HomeScreen = () => {
     const theme = createTheme({
         palette: {
           primary: {
-            main: '#678983',
+            main: '#143C9A',
             darker: '#1565c0',
           },
         },
@@ -86,7 +86,7 @@ const HomeScreen = () => {
             playlists.map((list) => (
             <Accordion 
             key={list._id} id='user-list' 
-            style={{backgroundColor: store.currentList && store.currentList._id===list._id? '#678983': list.published? '#f7e7b5':'#F0E9D2' , color:'black'}}
+            style={{backgroundColor: store.currentList && store.currentList._id===list._id ? '#143C9A': list.published? '#0e2c74' : '#1a4072' ,color:'white'}}
             expanded={store.currentList && store.currentList._id === list._id ?(expanded === 'panel' ):false}
             onChange={handleChange('panel',list._id)}
             >
@@ -125,10 +125,10 @@ const HomeScreen = () => {
                   <h4 className='list-text'>Lists</h4>
                   <div className='player-comments'>
                     <ButtonGroup className='buttonGroup'>
-                    <ThemeProvider theme={theme}>
-                        <Button onClick={togglePlayer} color="primary"  variant={playerVariant} >Player</Button>
-                        <Button onClick={toggleComments} disabled={!store.currentList || (store.currentList && !store.currentList.published)} color="primary" variant={commentsVariant}>Comments</Button>
-                    </ThemeProvider>
+                      <ThemeProvider theme={theme}>
+                          <Button onClick={togglePlayer} color="primary"  variant={playerVariant} >Player</Button>
+                          <Button onClick={toggleComments} disabled={!store.currentList || (store.currentList && !store.currentList.published)} color="primary" variant={commentsVariant}>Comments</Button>
+                      </ThemeProvider>
                     </ButtonGroup>
                       <VideoPlayer selection={playerVariant}/>
                       <Comments selection={commentsVariant}/>

@@ -37,52 +37,50 @@ function EditToolbar(props) {
 
     return (
         <div id="edit-toolbar">
-                <Button 
-                    style={{backgroundColor:'#678983'}}
+                <button 
                     disabled={!store.canUndo()}
                     id='undo-button'
                     onClick={handleUndo}
                     variant="contained">
                         <UndoIcon  />
-                </Button>
+                </button>
 
-                <Button 
-                    style={{backgroundColor:'#678983'}}
+                <button 
                     disabled={!store.canRedo()}
                     id='redo-button'
                     onClick={handleRedo}
                     variant="contained">
                         <RedoIcon />
-                </Button>
-                <Button 
-                style={{backgroundColor:'#678983'}}
+                </button>
+                <button
+                id='publish-button'
                 variant="contained"
                 onClick={(event) => {
                     handlePublishList(event,id)
                 }} 
                 aria-label='publish'>
                     <PublishIcon />
-                </Button>
+                </button>
             
-                <Button 
-                style={{backgroundColor:'#678983'}}
+                <button 
+                id='delete-button'
                 variant="contained"
                 onClick={(event) => {
                             handleDeleteList(event,id)
                         }} 
                 aria-label='delete'>
                     <DeleteIcon />
-                </Button>
+                </button>
 
-                <Button
-                style={{backgroundColor:'#678983'}}
+                <button
+                id='duplicate-button'
                 variant="contained"
                 onClick={(event) => {
                             handleDuplicate(event,id)
                         }} 
                 aria-label='duplicate'>
                     <ContentCopyIcon />
-                </Button>
+                </button>
         </div>
     )
 }
