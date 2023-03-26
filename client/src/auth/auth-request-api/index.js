@@ -4,9 +4,9 @@ const api = axios.create({
     baseURL: 'http://localhost:4000/auth',
 })
 export const getLoggedIn = () => api.get(`/loggedIn/`);
-export const loginUser = (email, password) => {
+export const loginUser = (userName, password) => {
     return api.post(`/login/`, {
-        email : email,
+        userName : userName,
         password : password
     })
 }

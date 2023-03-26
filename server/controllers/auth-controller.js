@@ -32,20 +32,20 @@ getLoggedIn = async (req, res) => {
 
 loginUser = async (req, res) => {
     try {
-        const { email, password } = req.body;
-
-        if (!email || !password) {
+        const { userName, password } = req.body;
+        console.log(userName);
+        if (!userName || !password) {
             return res
                 .status(400)
                 .json({ errorMessage: "Please enter all required fields" });
         }
 
-        const existingUser = await User.findOne({ email: email });
+        const existingUser = await User.findOne({ userName: userName });
         if (!existingUser) {
             return res
                 .status(401)
                 .json({
-                    errorMessage: "Wrong email or password provided"
+                    errorMessage: "Wrong User Name or password provided"
                 })
         }
 
@@ -159,14 +159,13 @@ registerUser = async (req, res) => {
         }).status(200).json({
             success: true,
             user: {
-                firstName: existingUser.firstName,
-                lastName: existingUser.lastName,  
-                email: existingUser.email,
-                userName: existingUser.userName,
-                interactions:existingUser.interactions,           
+                firstName: savedUser.firstName,
+                lastName: savedUser.lastName,  
+                email: savedUser.email,
+                userName: savedUser.userName,
+                interactions:savedUser.interactions,           
             }
         })
-
     } catch (err) {
         console.error(err);
         res.status(500).send();
