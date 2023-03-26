@@ -8,7 +8,7 @@ import { GlobalStoreContext } from '../store'
 import { useHistory } from 'react-router-dom'
 import logo from '../images/p_logo.png';
 import LoginScreen from './LoginScreen';
-
+import Divider from '@mui/material/Divider';
 
 export default function SplashScreen() {
     const { store } = useContext(GlobalStoreContext);
@@ -26,13 +26,13 @@ export default function SplashScreen() {
                 <h3>Welcome to Playlister</h3>
                 <h4>Use Playlister to create,edit, and play playlists as well as share 
                 playlists so that others may then play and comment on them</h4>
-                <div class='button-group'>
-                <Button  style={{backgroundColor:'#143C9A'}} onClick={handleRegister} variant="contained">Sign Up</Button>
-                <Button style={{backgroundColor:'#143C9A'}} onClick={handleGuest}   variant="contained">Guest</Button>
-                </div>
                 <LoginScreen/>
+                <Divider className='divider'>OR</Divider>
+                <div className='button-group'>
+                    <Button  style={{backgroundColor:'#143C9A'}} onClick={handleRegister} variant="contained">Sign Up</Button>
+                    <Button style={{backgroundColor:'#143C9A'}} onClick={handleGuest}   variant="contained">Guest</Button>
+                </div>
             </div>
-          
             <Copyright/>
         </div>
     )
