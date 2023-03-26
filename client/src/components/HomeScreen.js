@@ -107,35 +107,36 @@ const HomeScreen = () => {
       }
    
     return (
-        <div id="home-screen">
-            <AppBanner/> 
-            <AppTools published={false}/>
-            <div style={{marginTop:'4rem'}} className="add-button">
-              <Fab
-                  aria-label="add"
-                  id="add-list-button"
-                  onClick={handleCreateNewList}
-              >
-                  <AddIcon />
-              </Fab>
-            </div>
-            <div className="home-main">
-                {Lists}
-                <div className='player-comments'>
-                <ButtonGroup className='buttonGroup'>
-                <ThemeProvider theme={theme}>
-                    <Button onClick={togglePlayer} color="primary"  variant={playerVariant} >Player</Button>
-                    <Button onClick={toggleComments} disabled={!store.currentList || (store.currentList && !store.currentList.published)} color="primary" variant={commentsVariant}>Comments</Button>
-                </ThemeProvider>
-                </ButtonGroup>
-                  <VideoPlayer selection={playerVariant}/>
-                  <Comments selection={commentsVariant}/>
+          <div id="home-screen">
+            <AppBanner/>
+                <div className="home-main">
+                  <AppTools published={false}/>
+                  <div className="add-button"style={{marginTop:'4rem'}} >
+                    <Fab
+                        aria-label="add"
+                        id="add-list-button"
+                        size='medium'
+                        onClick={handleCreateNewList}
+                    >
+                        <AddIcon />
+                    </Fab>
+                  </div>
+                  {Lists}
+                  <h4 className='list-text'>Lists</h4>
+                  <div className='player-comments'>
+                    <ButtonGroup className='buttonGroup'>
+                    <ThemeProvider theme={theme}>
+                        <Button onClick={togglePlayer} color="primary"  variant={playerVariant} >Player</Button>
+                        <Button onClick={toggleComments} disabled={!store.currentList || (store.currentList && !store.currentList.published)} color="primary" variant={commentsVariant}>Comments</Button>
+                    </ThemeProvider>
+                    </ButtonGroup>
+                      <VideoPlayer selection={playerVariant}/>
+                      <Comments selection={commentsVariant}/>
+                  </div>
                 </div>
-               
-            </div>
             <MUIDeleteModal/>
             <MUIAccessErrorModal/>
             {modalJSX}
-        </div>)
+          </div>)
 }
 export default HomeScreen;

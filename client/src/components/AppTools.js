@@ -11,13 +11,22 @@ import { IconButton } from '@mui/material';
 import { GlobalStoreContext } from '../store'
 import AuthContext from '../auth'
 import { useHistory } from 'react-router-dom'
-
+import { createTheme } from '@mui/material/styles';
+import { ThemeProvider } from '@emotion/react';
 
 export default function AppTools(props) {
   const { store } = useContext(GlobalStoreContext);
   const { auth } = useContext(AuthContext);
   const {published}= props;
   store.history = useHistory();
+
+  const theme = createTheme({
+    palette: {
+      primary:{
+        main:'#143C9A'
+      }
+    },
+  });
 
 const handleSearch = (event) => {
   if (event.key === 'Enter') {
@@ -40,15 +49,17 @@ return (
     <AppBar  position="static">
       <Toolbar id='nav-bar'>
         <div className='nav-icons'>
-          <IconButton  onClick={()=>{loadScreen("home")}}  color={store.history.location.pathname==="/home/"? 'success' :'default'}  disabled={!auth.loggedIn} aria-label="home">
+        <ThemeProvider theme={theme}>
+          <IconButton  onClick={()=>{loadScreen("home")}}  color={store.history.location.pathname==="/home/"? 'primary' :'default'}  disabled={!auth.loggedIn} aria-label="home">
             <HomeIcon/>
           </IconButton>
-          <IconButton onClick={()=>{loadScreen("public")}} color={store.history.location.pathname==="/public/"? 'success' :'default'}   aria-label="all-list">
+          <IconButton onClick={()=>{loadScreen("public")}} color={store.history.location.pathname==="/public/"? 'primary' :'default'}   aria-label="all-list">
             <Groups3Icon/>
           </IconButton>
-          <IconButton  onClick={()=>{loadScreen("users")}}   color={store.history.location.pathname==="/users/"? 'success' :'default'} aria-label="users">
+          <IconButton  onClick={()=>{loadScreen("users")}}   color={store.history.location.pathname==="/users/"? 'primary' :'default'} aria-label="users">
             <PersonIcon/>
           </IconButton>
+        </ThemeProvider>
         </div>
         <TextField
         margin='normal'

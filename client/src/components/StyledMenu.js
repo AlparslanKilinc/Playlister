@@ -85,7 +85,7 @@ export default function CustomizedMenus(props) {
   if(published){
     Items=
      <div>
-      <MenuItem onClick={SortName} disableRipple>
+       <MenuItem onClick={SortName} disableRipple>
           Name (A-Z)
         </MenuItem>
         <Divider sx={{ my: 0.5 }} />
@@ -108,7 +108,7 @@ export default function CustomizedMenus(props) {
     <div>
       <Button
         id="demo-customized-button"
-        style={{backgroundColor:'#678983'}}
+        style={{backgroundColor:'#143C9A'}}
         aria-controls={open ? 'demo-customized-menu' : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
