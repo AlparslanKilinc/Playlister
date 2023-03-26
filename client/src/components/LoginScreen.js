@@ -28,16 +28,13 @@ export default function LoginScreen() {
                         flexDirection: 'column',
                         alignItems: 'center',
                         justifyContent:'center',
-                        mt:'1rem',
                         padding:'1rem',
-                        
-                        
                     }}
                 >
                     <Typography component="h1" variant="h5">
                         Sign in
                     </Typography>
-                    <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+                    <Box component="form" noValidate onSubmit={handleSubmit}>
                         <TextField
                             margin="normal"
                             required
@@ -62,7 +59,6 @@ export default function LoginScreen() {
                             type="submit"
                             fullWidth
                             variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
                             style={{backgroundColor:'#143C9A'}}
                         >
                             Sign In

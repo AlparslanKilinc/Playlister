@@ -31,26 +31,21 @@ export default function RegisterScreen() {
 
     return (
             <Container component="main" maxWidth="xs">
-                <AppBanner/>
                 <MUIRegisterErrorModal/>
                 <CssBaseline />
                 <Box
                     sx={{
-                        marginTop: 8,
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
                     }}
                 >
-                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                        <LockOutlinedIcon />
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                        Sign up
+                    <Typography  variant="h5" sx={{mb:1}}>
+                        Register
                     </Typography>
-                    <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-                        <Grid container spacing={2}>
-                            <Grid item xs={12}>
+                    <Box component="form" noValidate onSubmit={handleSubmit}>
+                        <Grid container spacing={1}>
+                            <Grid item xs={12} >
                                 <TextField
                                     required
                                     fullWidth
@@ -119,9 +114,9 @@ export default function RegisterScreen() {
                             type="submit"
                             fullWidth
                             variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
+                            sx={{ mt: 3, mb: 2 ,backgroundColor:'#143C9A'}}
                         >
-                            Sign Up
+                            Register
                         </Button>
                         <Grid container justifyContent="flex-end">
                         </Grid>
