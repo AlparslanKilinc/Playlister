@@ -31,8 +31,6 @@ body,html{
 }
 
 #root {
-  display: flex;
-  justify-content:center ;
   font-family: 'Lato', sans-serif;
   font-weight: bold;
   height: 100vh;
@@ -67,17 +65,25 @@ body,html{
   align-items: center;
   color: var(--dark-color);
   font-size: 14px;
-  margin: 1rem;
+  padding: 1rem;
   justify-content: space-around;
+  height: 100vh;
 }
 .splash-header{
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
   align-items: center;
+  justify-content: center;
   margin: 1rem;
 }
 .splash-main{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+.splash-form{
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -98,7 +104,7 @@ body,html{
   height: 50px;
 }
 .images{
-  width:90%;
+  width: 85%;
 }
 
 
@@ -401,9 +407,41 @@ input {
 }
 /* Desktop */
 @media screen and (min-width: 1024px) {
+  /* Splash */
+  #splash-screen {
+    font-size: 18px;
+  }
+  .splash-main{
+    flex-direction: row;
+    flex: 1;
+    justify-content: space-between;
+  }
+  .logo{
+    width: 80px;
+    height: 80px;
+  }
+  .images{
+    width: 50%;
+  }
+
 
 }
 @media screen and (min-width: 1440px) {
+  #splash-screen {
+    font-size: 18px;
+  }
+  .splash-main{
+    flex-direction: row;
+    flex: 1;
+    justify-content: space-between;
+  }
+  .logo{
+    width: 80px;
+    height: 80px;
+  }
+  .images{
+    width: 50%;
+  }
 
 }
 

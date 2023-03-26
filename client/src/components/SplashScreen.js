@@ -31,19 +31,23 @@ export default function SplashScreen() {
                     <img className="logo" src={logo}/>
                     <h2>Welcome to PlayLister</h2>
                     <h4 style={{fontStyle:'italic'}}>Create and Publish PlayLists for the World to See!</h4>
-                    {Login=="SignIn" ? <img className="images" src={player}/> :''}
             </div>
-            <div className='splash-main'>
-                { Login=="SignIn" ? <LoginScreen/>: <RegisterScreen/>}
-                <Divider className='divider'>OR</Divider>
-                <div className='button-group'>
-                    {Login=="SignIn" 
-                    ?<Button style={{backgroundColor:'#143C9A'}}  onClick={handleRegister} variant="contained">Register</Button>
-                    :<Button style={{backgroundColor:'#143C9A'}} onClick={handleSignIn}  variant="contained">Sign In</Button>
-                    }
-                    <Button  style={{backgroundColor:'#143C9A'}}  onClick={handleGuest}   variant="contained">Guest</Button>
+
+            <div className='splash-main'> 
+                {Login=="SignIn" ? <img className="images" src={player}/> :''}
+                <div className='splash-form'>
+                    { Login=="SignIn" ? <LoginScreen/>: <RegisterScreen/>}
+                    <Divider className='divider'>OR</Divider>
+                    <div className='button-group'>
+                        {Login=="SignIn" 
+                        ?<Button style={{backgroundColor:'#143C9A'}}  onClick={handleRegister} variant="contained">Register</Button>
+                        :<Button style={{backgroundColor:'#143C9A'}} onClick={handleSignIn}  variant="contained">Sign In</Button>
+                        }
+                        <Button  style={{backgroundColor:'#143C9A'}}  onClick={handleGuest}   variant="contained">Guest</Button>
+                    </div>
                 </div>
             </div>
+            
             <Copyright/>
         </div>
     )
