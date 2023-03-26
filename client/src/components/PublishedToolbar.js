@@ -26,28 +26,28 @@ function PublishedToolbar(props) {
         u=auth.user.userName;
     }
     return (
-        <div style={{alignSelf:'flex-end'}}>
-                <Button
+        <div style={{ display:'flex',gap:'0.3rem'}}>
+                <button
+                id='delete-button'
                 disabled={userName  !==  u}
-                style={{backgroundColor:'#678983'}}
                 variant="contained"
                 onClick={(event) => {
                             handleDeleteList(event,id)
                         }} 
                 aria-label='delete'>
-                    <DeleteIcon style={{fontSize:'22pt'}} />
-                </Button>
+                    <DeleteIcon/>
+                </button>
 
-                <Button
+                <button
+                id='duplicate-button'
                 disabled={!auth.loggedIn}
-                style={{backgroundColor:'#678983'}}
                 variant="contained"
                 onClick={(event) => {
                             handleDuplicate(event,id)
                         }} 
                 aria-label='duplicate'>
-                    <ContentCopyIcon style={{fontSize:'22pt'}} />
-                </Button>
+                    <ContentCopyIcon/>
+                </button>
         </div>
     )
 }

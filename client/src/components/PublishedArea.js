@@ -14,15 +14,15 @@ function PublishedArea(props) {
     return (
         <div className='workspace'>
             <List 
-                id="published-list" 
+                id="list-selector-list" 
                 sx={{  width:'100%' , backgroundColor: 'transparent' }}
             >
                 {
                 store.currentList? store.currentList.songs.map((song, index) => (
-                    <div onClick={(event)=>{handleSongSelect(index,event) }}  key={index+1}>
-                        <p key={index} style={{color: store.playIndex===index? 'red':''}}>
+                    <div className='song-card' onClick={(event)=>{handleSongSelect(index,event) }}  key={index+1}>
+                        <h4  className="song-name" key={index} style={{color: store.playIndex===index? '#7369ff':'white'}}>
                         {index + 1}. {song.title} by {song.artist}
-                        </p>
+                        </h4>
                     </div>
                     )):""
                 }
