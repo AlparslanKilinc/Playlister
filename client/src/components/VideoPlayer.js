@@ -20,7 +20,7 @@ const {selection} = props;
 const playerOptions = {
   height:'100%',
   width:'100%',
-  borderRadius:'10px',
+  borderRadius:'5px',
   playerVars: {
     mute:0,
     controls:0,
@@ -97,7 +97,7 @@ let onPlayerStateChange= (event)=>{
   }
 }
 return(
-    <div style={{ opacity: selection === "contained" ? '1' :'0' , pointerEvents: selection === "contained" ? 'auto' :'none' }} className='video-player'>
+    <div className='video-player'>
           { store.currentList? 
           <YouTube
           disabled={selection !== "contained"}

@@ -19,7 +19,7 @@ const AllListScreen = () => {
 const theme = createTheme({
   palette: {
   primary: {
-  main: '#678983',
+  main: '#143C9A',
   darker: '#1565c0',
     },
   },
@@ -28,6 +28,7 @@ const theme = createTheme({
 const { store } = useContext(GlobalStoreContext);
 const [playerVariant, setPlayerVariant] = useState("contained");
 const [commentsVariant, setCommentsVariant] = useState("outlined");
+const [content,setContent]=useState("player");
 store.history = useHistory();
 
 useEffect(() => {
@@ -37,18 +38,21 @@ useEffect(() => {
 
 let togglePlayer = ()=>{
   setPlayerVariant("contained");
-  setCommentsVariant("outlined");      
+  setCommentsVariant("outlined");
+  setContent("player");        
 }
 let toggleComments =()=>{
   setPlayerVariant("outlined");
   setCommentsVariant("contained");
+  setContent("comments");
 }
 return (
   <div id="home-screen">
     <AppBanner/>
     <div className="home-main">
         <AppTools published={true}/>
-         <ListArea parent={"AllListScreen"}/>
+        <div className='home-content'> 
+          <ListArea parent={"AllListScreen"}/> 
           <div className='player-comments'>
             <ButtonGroup className='buttonGroup'>
               <ThemeProvider theme={theme}>
@@ -56,10 +60,9 @@ return (
                 <Button onClick={toggleComments}  color="primary" variant={commentsVariant}>Comments</Button>
               </ThemeProvider>
             </ButtonGroup>
-            <VideoPlayer selection={playerVariant}/>
-            <Comments selection={commentsVariant}/>
-          </div>     
-           
+            {content=="player"?<VideoPlayer/>:<Comments/>}
+          </div>  
+        </div>    
     </div>
   <MUIDeleteModal/>
   <MUIAccessErrorModal/>

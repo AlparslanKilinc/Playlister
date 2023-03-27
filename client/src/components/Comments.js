@@ -43,7 +43,7 @@ export const Comments = (props) => {
       ))
   }
   return (
-    <div  className='comments' style={{opacity: selection === "contained" ? '1' :'0' , pointerEvents: selection === "contained" ? 'auto' :'none' }}>
+    <div  className='comments'>
         <div id="comments" className='comments-area'>
                {comments}
         </div>

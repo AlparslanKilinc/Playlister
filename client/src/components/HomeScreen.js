@@ -38,6 +38,7 @@ const HomeScreen = () => {
     const { store } = useContext(GlobalStoreContext);
     const [playerVariant, setPlayerVariant] = useState("contained");
     const [commentsVariant, setCommentsVariant] = useState("outlined");
+    const [content,setContent]=useState("player");
     const [expanded, setExpanded] = useState(false);
     store.history = useHistory();
 
@@ -64,11 +65,13 @@ const HomeScreen = () => {
     }
     let togglePlayer = ()=>{
       setPlayerVariant("contained");
-      setCommentsVariant("outlined");     
+      setCommentsVariant("outlined");
+      setContent("player");    
     }
     let toggleComments =()=>{
       setPlayerVariant("outlined");
       setCommentsVariant("contained");
+      setContent("comments");
     }
     let modalJSX = "";
     if (store.isEditSongModalOpen()) {
@@ -85,7 +88,7 @@ const HomeScreen = () => {
           {
             playlists.map((list) => (
             <Accordion 
-            key={list._id} id='user-list' 
+            key={list._id} id='list-item' 
             style={{backgroundColor: store.currentList && store.currentList._id===list._id ? '#143C9A': list.published? '#0e2c74' : '#1a4072' ,color:'white'}}
             expanded={store.currentList && store.currentList._id === list._id ?(expanded === 'panel' ):false}
             onChange={handleChange('panel',list._id)}
@@ -111,27 +114,27 @@ const HomeScreen = () => {
             <AppBanner/>
                 <div className="home-main">
                   <AppTools published={false}/>
-                  <div className="add-button"style={{marginTop:'4rem'}} >
-                    <Fab
-                        aria-label="add"
-                        id="add-list-button"
-                        size='medium'
-                        onClick={handleCreateNewList}
-                    >
-                        <AddIcon />
-                    </Fab>
-                  </div>
-                  {Lists}
-                  <h4 className='list-text'>Lists</h4>
-                  <div className='player-comments'>
-                    <ButtonGroup className='buttonGroup'>
-                      <ThemeProvider theme={theme}>
-                          <Button onClick={togglePlayer} color="primary"  variant={playerVariant} >Player</Button>
-                          <Button onClick={toggleComments} disabled={!store.currentList || (store.currentList && !store.currentList.published)} color="primary" variant={commentsVariant}>Comments</Button>
-                      </ThemeProvider>
-                    </ButtonGroup>
-                      <VideoPlayer selection={playerVariant}/>
-                      <Comments selection={commentsVariant}/>
+                  <div className='home-content'>
+                    <div className='list-parent'>{Lists}</div>
+                    <div className='player-comments'>
+                      <ButtonGroup className='buttonGroup'>
+                        <ThemeProvider theme={theme}>
+                            <Button onClick={togglePlayer} color="primary"  variant={playerVariant} >Player</Button>
+                            <Button onClick={toggleComments} disabled={!store.currentList || (store.currentList && !store.currentList.published)} color="primary" variant={commentsVariant}>Comments</Button>
+                        </ThemeProvider>
+                      </ButtonGroup>
+                      {content=="player"?<VideoPlayer/>:<Comments/>}
+                    </div>
+                    <div className="add-button"style={{marginTop:'4rem'}} >
+                      <Fab
+                          aria-label="add"
+                          id="add-list-button"
+                          size='medium'
+                          onClick={handleCreateNewList}
+                      >
+                          <AddIcon />
+                      </Fab>
+                    </div>
                   </div>
                 </div>
             <MUIDeleteModal/>

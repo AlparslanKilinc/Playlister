@@ -26,12 +26,12 @@ const handleChange = (panel,id) => (event, isExpanded) => {
 if (store.PublishedPlaylists) {
   let playlists=store.PublishedPlaylists;
 ListArea= 
-    <List sx={{width: '90%', left: '5%'}}>
+    <List className='list-area'>
     {playlists.map((list) => (   
     <Accordion 
     style={{backgroundColor: store.currentList && store.currentList._id===list._id? '#143C9A': list.published? '#0e2c74':'#1a4072' , color:'white'}}
     key={list._id} 
-    id='user-list' 
+    id='list-item' 
     expanded={store.currentList && store.currentList._id === list._id ? (expanded === 'panel'): false } 
     onChange={handleChange('panel',list._id)}
     >
@@ -46,6 +46,6 @@ ListArea=
     ))}
     </List>}
 return (
-  <div className='list-area'>{ListArea}</div>
+  <div className='list-parent'>{ListArea}</div>
 )
 }

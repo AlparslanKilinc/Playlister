@@ -24,7 +24,7 @@ const style = {
         },
         palette: {
         primary: {
-            main: '#678983',
+            main: '#0e2c74',
             darker: '#053e85',
         },
         neutral: {
