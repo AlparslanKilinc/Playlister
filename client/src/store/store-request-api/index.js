@@ -1,7 +1,7 @@
 import axios from 'axios'
 axios.defaults.withCredentials = true;
 const api = axios.create({
-    baseURL: 'http://localhost:4000/api',
+    baseURL: 'https://playlister-api.onrender.com/api',
 })
 // API Functions 
 export const createPlaylist = (newListName, newSongs, email,newComments,Username) => {

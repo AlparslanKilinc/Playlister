@@ -1,7 +1,7 @@
 import axios from 'axios'
 axios.defaults.withCredentials = true;
 const api = axios.create({
-    baseURL: 'http://localhost:4000/auth',
+    baseURL: 'https://playlister-api.onrender.com/auth',
 })
 export const getLoggedIn = () => api.get(`/loggedIn/`);
 export const loginUser = (userName, password) => {
