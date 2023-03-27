@@ -12,6 +12,7 @@ body,html{
   font-family: 'Lato', sans-serif;
   font-weight: bold;
   min-height: 100vh;
+  padding-bottom: env(safe-area-inset-bottom);
 }
 * { 
   margin: 0;
@@ -34,6 +35,7 @@ body,html{
   font-family: 'Lato', sans-serif;
   font-weight: bold;
   height: 100vh;
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 /* App Banner */
@@ -72,7 +74,8 @@ body,html{
   font-size: 14px;
   padding: 1rem;
   justify-content: space-around;
-  height: 100vh;
+  max-height: 100vh;
+  gap: 1rem;
 }
 .splash-header{
   display: flex;
@@ -80,20 +83,17 @@ body,html{
   gap: 0.2rem;
   align-items: center;
   justify-content: center;
-  margin: 1rem;
 }
 .splash-main{
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
 }
 .splash-form{
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1rem;
-  margin-bottom: 3rem;
   flex: 1;
 }
 .button-group{
@@ -105,11 +105,11 @@ body,html{
   width: 100%;
 }
 .logo{
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
 }
 .images{
-  width: 85%;
+  width: 40%;
 }
 
 /* Home Screen */

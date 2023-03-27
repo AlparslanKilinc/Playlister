@@ -40,13 +40,14 @@ export default function RegisterScreen() {
                         alignItems: 'center',
                     }}
                 >
-                    <Typography  variant="h5" sx={{mb:1}}>
+                    <Typography  variant="h5" sx={{}}>
                         Register
                     </Typography>
                     <Box component="form" noValidate onSubmit={handleSubmit}>
                         <Grid container spacing={1}>
                             <Grid item xs={12} >
                                 <TextField
+                                size='small'
                                     required
                                     fullWidth
                                     id="userName"
@@ -57,6 +58,7 @@ export default function RegisterScreen() {
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
+                                    size='small'
                                     required
                                     fullWidth
                                     id="email"
@@ -67,6 +69,7 @@ export default function RegisterScreen() {
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
+                                    size='small'
                                     autoComplete="fname"
                                     name="firstName"
                                     required
@@ -78,6 +81,7 @@ export default function RegisterScreen() {
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
+                                    size='small'
                                     required
                                     fullWidth
                                     id="lastName"
@@ -89,6 +93,7 @@ export default function RegisterScreen() {
                           
                             <Grid item xs={12}>
                                 <TextField
+                                    size='small'
                                     required
                                     fullWidth
                                     name="password"
@@ -100,6 +105,7 @@ export default function RegisterScreen() {
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
+                                    size='small'
                                     required
                                     fullWidth
                                     name="passwordVerify"
