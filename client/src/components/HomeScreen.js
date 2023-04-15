@@ -84,7 +84,7 @@ const HomeScreen = () => {
       if (store.playlists) {
         let playlists=store.playlists;
         Lists = 
-        <List sx={{padding:'1rem'}} id="scroll-list" className='list-area'>
+        <List  id="scroll-list" className='list-area'>
           {
             playlists.map((list) => (
             <Accordion 
@@ -119,8 +119,8 @@ const HomeScreen = () => {
                     <div className='player-comments'>
                       <ButtonGroup className='buttonGroup'>
                         <ThemeProvider theme={theme}>
-                            <Button onClick={togglePlayer} color="primary"  variant={playerVariant} >Player</Button>
-                            <Button onClick={toggleComments} disabled={!store.currentList || (store.currentList && !store.currentList.published)} color="primary" variant={commentsVariant}>Comments</Button>
+                            <Button onClick={togglePlayer}  color="primary"  variant={playerVariant} >Player</Button>
+                            <Button onClick={toggleComments}  disabled={!store.currentList || (store.currentList && !store.currentList.published)} color="primary" variant={commentsVariant}>Comments</Button>
                         </ThemeProvider>
                       </ButtonGroup>
                       {content=="player"?<VideoPlayer/>:<Comments/>}

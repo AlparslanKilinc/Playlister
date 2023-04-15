@@ -29,7 +29,7 @@ export default function AppBanner() {
 
     return (
         <Box>
-            <AppBar position="static">
+            <AppBar className='banner' position="static">
                 <Toolbar id='app-banner'>
                     <Link style={{ textDecoration: 'none'}} to={ auth.loggedIn? '/home/':'/'}>
                         <img className="banner-logo" src={logo}/>   
