@@ -132,7 +132,7 @@ body,html{
   display: flex;
   flex-direction: column-reverse;
   justify-content:center;
-  max-height: 80vh;
+  height: 80vh;
 }
 .add-button{
   position: absolute;
@@ -299,6 +299,7 @@ body,html{
 .video-area{
   display: flex;
   border-radius: 5px;
+  height: 29vh;
 }
 .video-actions{
   display: flex;
@@ -317,8 +318,8 @@ body,html{
   flex: 1;
   padding: 0.5rem;
   gap: 1rem;
-  min-height: 29vh;
   max-height: 29vh;
+  min-height: 29vh;
 }
 .comments-area{
   flex: 1;

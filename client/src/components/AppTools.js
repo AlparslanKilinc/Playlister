@@ -36,11 +36,14 @@ const handleSearch = (event) => {
 
 let loadScreen = (screen) =>{
   if(screen == "home"){
+    store.clearCurrentList();
     store.history.push("/home/");
   }else if(screen=="public"){
+    store.clearCurrentList();
     store.history.push("/public/");
     
   }else if(screen=="users"){
+    store.clearCurrentList();
     store.history.push("/users/");
   }
 }

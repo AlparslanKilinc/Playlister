@@ -16,6 +16,7 @@ export default function AppBanner() {
     store.history = useHistory();
 
     const handleLogout = () => {
+        store.clearCurrentList();
         auth.logoutUser();
         store.clearTransaction();
     }

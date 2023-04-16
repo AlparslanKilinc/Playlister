@@ -587,6 +587,12 @@ function GlobalStoreContextProvider(props) {
         }
         asyncSetCurrentList(id);
     }
+    store.clearCurrentList=function(){
+        storeReducer({
+            type: GlobalStoreActionType.SET_CURRENT_LIST,
+            payload: null,
+        });
+    }
     store.markListForDeletion = function (id) {
         async function getListToDelete(id) {
             let response = await api.getPlaylistById(id);
