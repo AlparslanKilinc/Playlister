@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 require('dotenv').config({ path: '../.env' });
 
 mongoose
-    .connect(process.env.DB_CONNECT, {useUnifiedTopology: true,useCreateIndex: true, useNewUrlParser: true })
+    .connect(process.env.DB_CONNECT, {useUnifiedTopology: true,useNewUrlParser: true })
     .catch(e => {
         console.error('Connection error', e.message)
     })

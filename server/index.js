@@ -12,7 +12,7 @@ const app = express()
 // SETUP THE MIDDLEWARE
 app.use(express.urlencoded({ extended: true }))
 app.use(cors({
-    origin: ['https://playlister.onrender.com'],
+    origin: ["https://playlister.onrender.com"],
     credentials: true
 }))
 app.use(express.json())
