@@ -132,7 +132,8 @@ body,html{
   display: flex;
   flex-direction: column-reverse;
   justify-content:center;
-  height: 80vh;
+  max-height: 80vh;
+  min-height: 80vh;
 }
 .add-button{
   position: absolute;
@@ -299,7 +300,8 @@ body,html{
 .video-area{
   display: flex;
   border-radius: 5px;
-  height: 29vh;
+  min-height: 29vh;
+  max-height: 29vh;
 }
 .video-actions{
   display: flex;
