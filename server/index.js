@@ -12,8 +12,8 @@ const app = express()
 // SETUP THE MIDDLEWARE
 app.use(express.urlencoded({ extended: true }))
 app.use(cors({
-    origin: ["https://playlister.onrender.com"],
-    credentials: true
+    origin: ["http://localhost:3000"],
+    credentials: true,
 }))
 app.use(express.json())
 app.use(cookieParser())

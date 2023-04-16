@@ -150,7 +150,7 @@ getPlaylists = async (req, res) => {
         async function asyncFindList(email) {
             let query ={ownerEmail: email};
             if(search!==""){
-                query.name = {$regex: "^"+search, $options: "?i"};
+                query.name = {$regex: "^"+search, $options: "i"};
             }
             let sort_method = "name";
             if(sort !== ""){
@@ -348,9 +348,9 @@ getPublishedPlaylists = async (req, res) => {
         let search_type = body.search_type;
         let query ={published: true}
         if(search_type==="name"){
-            query.name = {$regex: "^"+search, $options: "?i"}
+            query.name = {$regex: "^"+search, $options: "i"}
         }else{
-            query.owner = {$regex: "^"+search, $options: "?i"}
+            query.owner = {$regex: "^"+search, $options: "i"}
         }
         let sort_method = "name";
         if(sort !== ""){
