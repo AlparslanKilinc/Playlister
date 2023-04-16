@@ -139,10 +139,7 @@ function AuthContextProvider(props) {
                 payload: {
                     user: response.data.user
                 }
-            })
-            /// Go to Playlister
-           
-            history.push("/home/");
+            },history.push("/home/"))
         }
         }catch(error){
             authReducer({
@@ -156,8 +153,6 @@ function AuthContextProvider(props) {
 
         }
         
-    
-
     auth.logoutUser = async function() {
         const response = await api.logoutUser();
         if (response.status === 200) {
