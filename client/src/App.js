@@ -1,6 +1,6 @@
 import './App.css';
 import { React } from 'react'
-import { HashRouter, Route, Switch} from 'react-router-dom'
+import { HashRouter, Route, Switch,BrowserRouter} from 'react-router-dom'
 import { AuthContextProvider } from './auth';
 import { GlobalStoreContextProvider } from './store'
 
@@ -16,7 +16,7 @@ import {
 
 const App = () => {   
     return (
-        <HashRouter>
+        <BrowserRouter>
             <AuthContextProvider>
                 <GlobalStoreContextProvider>         
                     <Switch>
@@ -27,10 +27,9 @@ const App = () => {
                         <Route path="/register/" exact component={RegisterScreen} />
                         <Route path="/" exact component={SplashScreen} /> 
                     </Switch>
-                     
                 </GlobalStoreContextProvider>
             </AuthContextProvider>
-        </HashRouter>
+        </BrowserRouter>
     )
 }
 
