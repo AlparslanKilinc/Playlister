@@ -16,7 +16,7 @@ import {
 
 const App = () => {   
     return (
-        <BrowserRouter>
+        <HashRouter>
             <AuthContextProvider>
                 <GlobalStoreContextProvider>         
                     <Switch>
@@ -29,7 +29,7 @@ const App = () => {
                     </Switch>
                 </GlobalStoreContextProvider>
             </AuthContextProvider>
-        </BrowserRouter>
+        </HashRouter>
     )
 }
 
