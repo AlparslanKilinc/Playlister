@@ -463,7 +463,11 @@ input {
 }
 /* Mobile */
 @media screen and (max-width: 425px) {
-
+  #nav-bar{
+    position: fixed;
+    bottom: 0;
+    bottom: env(safe-area-inset-bottom);
+   }
 }
 
 
@@ -499,8 +503,7 @@ input {
     top: 12%;
   }
   /* List */
-  .list-area{
-  }
+
   .list-parent{
     max-height: 70vh;
     min-height: 70vh;
