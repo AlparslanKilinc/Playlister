@@ -28,13 +28,12 @@ export default function SplashScreen() {
     return (
         <div id="splash-screen">
              <div className='splash-header'>
-                    <img className="logo" src={logo}/>
+                    <img className="splash-logo" src={logo}/>
                     <h2>Welcome to PlayLister</h2>
                     <h4 style={{fontStyle:'italic'}}>Create and Publish PlayLists for the World to See!</h4>
             </div>
 
             <div className='splash-main'> 
-                {Login=="SignIn" ? <img className="images" src={player}/> :''}
                 <div className='splash-form'>
                     { Login=="SignIn" ? <LoginScreen/>: <RegisterScreen/>}
                     <Divider className='divider'>OR</Divider>
