@@ -464,7 +464,7 @@ input {
 /* Mobile */
 @media screen and (max-width: 425px) {
   #nav-bar{
-    position: fixed;
+    position: relative;
     bottom: 0;
     bottom: env(safe-area-inset-bottom);
    }
